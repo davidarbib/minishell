@@ -6,14 +6,15 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/11/20 16:05:26 by darbib           ###   ########.fr       */
+/*   Updated: 2020/11/20 18:41:36 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-#include <stdlib.h>
+# include <stdlib.h>
+# define TOKENS_NB	11
 
 enum			e_token
 {
@@ -37,8 +38,5 @@ typedef struct	s_lexer
 	size_t			size;
 }				t_lexer;
 
-t_token		static const g_remarkable_tokens[1] = 
-{
-	{redir_token, ">>", 2}
-};
+
 #endif
