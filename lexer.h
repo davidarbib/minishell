@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/11/20 18:41:36 by darbib           ###   ########.fr       */
+/*   Updated: 2020/11/26 02:00:48 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,31 @@
 # define LEXER_H
 
 # include <stdlib.h>
-# define TOKENS_NB	11
+# define TOKENS_NB	6
 
+/*
+** token types
+** please add operators after pipe, and non-operator before
+*/
 enum			e_token
 {
-	white_token,
-	word_token,
-	pipe_token,
-	separator_token,
-	redir_token
+	DUMMY_TOKEN,
+	NEWLINE_TOKEN,
+	WORD_TOKEN,
+	TEXT_TOKEN,
+	PIPE_TOKEN,
+	SCOLON_TOKEN,
+	DGREAT_TOKEN,
+	GREAT_TOKEN,
+	LESS_TOKEN
+};
+
+enum			e_fsm
+{
+	NORMAL_STATE,
+	QUOTE_STATE,
+	DQUOTE_STATE,
+	ESCAPE_STATE
 };
 
 typedef struct	s_token
@@ -38,5 +54,14 @@ typedef struct	s_lexer
 	size_t			size;
 }				t_lexer;
 
+typedef struct	s_fsm
+{
+	enum e_fsm	state;
+	t_token		current_token;
+	char		buf[1024];
+	int			count;
+	size_t		size;
+}				t_fsm;
 
+int		is_operator(t_token *token);
 #endif

@@ -6,61 +6,108 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2020/11/20 21:25:11 by darbib           ###   ########.fr       */
+/*   Updated: 2020/11/26 02:10:25 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
+#include <strings.h>
 #include <stdio.h>
 #include "lexer.h"
 
 t_token		const g_seeked_tokens[TOKENS_NB] = 
 {
-	{redir_token, ">>", 2},
-	{redir_token, ">", 1},
-	{redir_token, "<", 1},
-	{pipe_token, "|", 1},
-	{separator_token, ";", 1},
-	{white_token, " ", 1},
-	{white_token, "\f", 1},
-	{white_token, "\t", 1},
-	{white_token, "\n", 1},
-	{white_token, "\r", 1},
-	{white_token, "\v", 1}
+	{DGREAT_TOKEN, ">>", 2},
+	{GREAT_TOKEN, ">", 1},
+	{LESS_TOKEN, "<", 1},
+	{PIPE_TOKEN, "|", 1},
+	{SCOLON_TOKEN, ";", 1},
+	{NEWLINE_TOKEN, "\n", 1}
 };
 
-size_t		apply_known_patterns(char *command, t_lexer *lexer)
+/*
+void		fsm_flush(t_lexer *lexer, t_fsm *fsm)
+{	
+	t_token		word_token;
+	
+	word_token.type = WORD_TOKEN;
+	word_token.value = strdup(fsm->buf);
+	word_token.size = fsm->size;
+	lexer->tokens[lexer->size++] = word_token;
+}
+*/
+
+
+t_token		match_operator(char *tested_op)
 {
 	int		i;
 	t_token	token;
 
 	i = 0;
-
 	while (i < TOKENS_NB)
 	{	
 		token = g_seeked_tokens[i];
-		if (!(strncmp(token.value, command, token.size)))
-		{
-			lexer->tokens[lexer->size++] = token;
-			return (token.size);
-		}
+		if (!(strstr(token.value, tested_op)))
+			return (token);
 		i++;
 	}
-	return (0);
+	token.type = DUMMY_TOKEN;
+	return (token);
+}
+
+
+void		test_operator_completion(t_lexer *lexer, t_fsm *fsm, 
+			char current_char)
+{
+	char	test_op[2];
+	t_token	matched_token;
+
+	test_op[0] = fsm->buf[fsm->count];
+	test_op[1] = current_char;
+	if (!(strstr(fsm->current_token.value, test_op)))
+		matched_token = match_operator(test_op);
+}
+
+void		handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)
+{
+
+	if (is_operator(&fsm->current_token))
+		test_operator_completion(lexer, fsm, current_char);
+	//2
+	//3
+	//4
+	//5
+	//6
+	//7
+}
+
+void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)
+{
+	lexer->tokens = malloc(sizeof(t_token) * 32);
+	lexer->size = 0;
+	fsm->state = NORMAL_STATE;
+	fsm->current_token.type = DUMMY_TOKEN;
+	fsm->size = 1024;
+	bzero(fsm->buf, fsm->size);
+	fsm->count = 0;
 }
 
 t_lexer		analyse_command(char *command)
 {
 	t_lexer		lexer;
+	t_fsm		fsm;
 	int			i;
 
-	lexer.tokens = malloc(sizeof(t_token) * 32);
-	lexer.size = 0;
+	init_lexer_fsm(&lexer, &fsm);
 	i = 0;
 	while (command[i])
-		i += apply_known_patterns(command + i, &lexer);
+	{
+		if (fsm.state == NORMAL_STATE)
+			handle_notquoted_char(&lexer, &fsm, command[i]);
+	}
 	return (lexer);
 }
+
 
 int main()
 {
