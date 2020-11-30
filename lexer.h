@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/11/26 02:00:48 by darbib           ###   ########.fr       */
+/*   Updated: 2020/11/27 14:36:50 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct	s_token
 typedef struct	s_lexer
 {
 	t_token			*tokens;
+	int				count;
 	size_t			size;
 }				t_lexer;
 

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 00:58:04 by darbib            #+#    #+#             */
-/*   Updated: 2020/11/26 01:56:55 by darbib           ###   ########.fr       */
+/*   Updated: 2020/11/30 17:46:57 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		is_operator(t_token *token)
 	return (0);
 }
 
+/*
 int main()
 {
 	t_token token;
@@ -33,3 +34,4 @@ int main()
 	token.type = TEXT_TOKEN;
 	printf("text is an operator : %d\n", is_operator(&token));
 }
+*/

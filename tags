@@ -1,0 +1,51 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+DGREAT_TOKEN	lexer.h	/^	DGREAT_TOKEN,$/;"	e	enum:e_token
+DQUOTE_STATE	lexer.h	/^	DQUOTE_STATE,$/;"	e	enum:e_fsm
+DUMMY_TOKEN	lexer.h	/^	DUMMY_TOKEN,$/;"	e	enum:e_token
+ESCAPE_STATE	lexer.h	/^	ESCAPE_STATE$/;"	e	enum:e_fsm
+GREAT_TOKEN	lexer.h	/^	GREAT_TOKEN,$/;"	e	enum:e_token
+LESS_TOKEN	lexer.h	/^	LESS_TOKEN$/;"	e	enum:e_token
+LEXERSIZE	lexer.c	141;"	d	file:
+LEXER_H	lexer.h	14;"	d
+NEWLINE_TOKEN	lexer.h	/^	NEWLINE_TOKEN,$/;"	e	enum:e_token
+NORMAL_STATE	lexer.h	/^	NORMAL_STATE,$/;"	e	enum:e_fsm
+PIPE_TOKEN	lexer.h	/^	PIPE_TOKEN,$/;"	e	enum:e_token
+QUOTE_STATE	lexer.h	/^	QUOTE_STATE,$/;"	e	enum:e_fsm
+SCOLON_TOKEN	lexer.h	/^	SCOLON_TOKEN,$/;"	e	enum:e_token
+TEXT_TOKEN	lexer.h	/^	TEXT_TOKEN,$/;"	e	enum:e_token
+TOKENS_NB	lexer.h	17;"	d
+WORD_TOKEN	lexer.h	/^	WORD_TOKEN,$/;"	e	enum:e_token
+analyse_command	lexer.c	/^t_lexer		analyse_command(char *command)$/;"	f
+buf	lexer.h	/^	char		buf[1024];$/;"	m	struct:s_fsm
+count	lexer.h	/^	int				count;$/;"	m	struct:s_lexer
+count	lexer.h	/^	int			count;$/;"	m	struct:s_fsm
+current_token	lexer.h	/^	t_token		current_token;$/;"	m	struct:s_fsm
+delimit_token	lexer.c	/^void		delimit_token(t_lexer *lexer, t_fsm *fsm)$/;"	f
+e_fsm	lexer.h	/^enum			e_fsm$/;"	g
+e_token	lexer.h	/^enum			e_token$/;"	g
+g_seeked_tokens	lexer.c	/^t_token		const g_seeked_tokens[TOKENS_NB] = $/;"	v
+handle_notquoted_char	lexer.c	/^void		handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)$/;"	f
+init_lexer_fsm	lexer.c	/^void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)$/;"	f
+is_operator	token.c	/^int		is_operator(t_token *token)$/;"	f
+main	lexer.c	/^int main()$/;"	f
+main	token.c	/^int main()$/;"	f
+match_operator	lexer.c	/^match_operator(char *tested_op)$/;"	f
+s_fsm	lexer.h	/^typedef struct	s_fsm$/;"	s
+s_lexer	lexer.h	/^typedef struct	s_lexer$/;"	s
+s_token	lexer.h	/^typedef struct	s_token$/;"	s
+size	lexer.h	/^	size_t			size;$/;"	m	struct:s_lexer
+size	lexer.h	/^	size_t			size;$/;"	m	struct:s_token
+size	lexer.h	/^	size_t		size;$/;"	m	struct:s_fsm
+state	lexer.h	/^	enum e_fsm	state;$/;"	m	struct:s_fsm	typeref:enum:s_fsm::e_fsm
+t_fsm	lexer.h	/^}				t_fsm;$/;"	t	typeref:struct:s_fsm
+t_lexer	lexer.h	/^}				t_lexer;$/;"	t	typeref:struct:s_lexer
+t_token	lexer.h	/^}				t_token;$/;"	t	typeref:struct:s_token
+test_operator_completion	lexer.c	/^int			test_operator_completion(t_lexer *lexer, t_fsm *fsm, $/;"	f
+tokens	lexer.h	/^	t_token			*tokens;$/;"	m	struct:s_lexer
+type	lexer.h	/^	enum e_token	type;$/;"	m	struct:s_token	typeref:enum:s_token::e_token
+value	lexer.h	/^	const char 		*value;$/;"	m	struct:s_token
