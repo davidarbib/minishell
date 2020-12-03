@@ -4,48 +4,63 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-DGREAT_TOKEN	lexer.h	/^	DGREAT_TOKEN,$/;"	e	enum:e_token
-DQUOTE_STATE	lexer.h	/^	DQUOTE_STATE,$/;"	e	enum:e_fsm
-DUMMY_TOKEN	lexer.h	/^	DUMMY_TOKEN,$/;"	e	enum:e_token
-ESCAPE_STATE	lexer.h	/^	ESCAPE_STATE$/;"	e	enum:e_fsm
-GREAT_TOKEN	lexer.h	/^	GREAT_TOKEN,$/;"	e	enum:e_token
-LESS_TOKEN	lexer.h	/^	LESS_TOKEN$/;"	e	enum:e_token
-LEXERSIZE	lexer.c	141;"	d	file:
-LEXER_H	lexer.h	14;"	d
-NEWLINE_TOKEN	lexer.h	/^	NEWLINE_TOKEN,$/;"	e	enum:e_token
-NORMAL_STATE	lexer.h	/^	NORMAL_STATE,$/;"	e	enum:e_fsm
-PIPE_TOKEN	lexer.h	/^	PIPE_TOKEN,$/;"	e	enum:e_token
-QUOTE_STATE	lexer.h	/^	QUOTE_STATE,$/;"	e	enum:e_fsm
-SCOLON_TOKEN	lexer.h	/^	SCOLON_TOKEN,$/;"	e	enum:e_token
-TEXT_TOKEN	lexer.h	/^	TEXT_TOKEN,$/;"	e	enum:e_token
-TOKENS_NB	lexer.h	17;"	d
-WORD_TOKEN	lexer.h	/^	WORD_TOKEN,$/;"	e	enum:e_token
-analyse_command	lexer.c	/^t_lexer		analyse_command(char *command)$/;"	f
-buf	lexer.h	/^	char		buf[1024];$/;"	m	struct:s_fsm
-count	lexer.h	/^	int				count;$/;"	m	struct:s_lexer
-count	lexer.h	/^	int			count;$/;"	m	struct:s_fsm
-current_token	lexer.h	/^	t_token		current_token;$/;"	m	struct:s_fsm
-delimit_token	lexer.c	/^void		delimit_token(t_lexer *lexer, t_fsm *fsm)$/;"	f
-e_fsm	lexer.h	/^enum			e_fsm$/;"	g
-e_token	lexer.h	/^enum			e_token$/;"	g
-g_seeked_tokens	lexer.c	/^t_token		const g_seeked_tokens[TOKENS_NB] = $/;"	v
-handle_notquoted_char	lexer.c	/^void		handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)$/;"	f
-init_lexer_fsm	lexer.c	/^void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)$/;"	f
-is_operator	token.c	/^int		is_operator(t_token *token)$/;"	f
-main	lexer.c	/^int main()$/;"	f
-main	token.c	/^int main()$/;"	f
-match_operator	lexer.c	/^match_operator(char *tested_op)$/;"	f
-s_fsm	lexer.h	/^typedef struct	s_fsm$/;"	s
-s_lexer	lexer.h	/^typedef struct	s_lexer$/;"	s
-s_token	lexer.h	/^typedef struct	s_token$/;"	s
-size	lexer.h	/^	size_t			size;$/;"	m	struct:s_lexer
-size	lexer.h	/^	size_t			size;$/;"	m	struct:s_token
-size	lexer.h	/^	size_t		size;$/;"	m	struct:s_fsm
-state	lexer.h	/^	enum e_fsm	state;$/;"	m	struct:s_fsm	typeref:enum:s_fsm::e_fsm
-t_fsm	lexer.h	/^}				t_fsm;$/;"	t	typeref:struct:s_fsm
-t_lexer	lexer.h	/^}				t_lexer;$/;"	t	typeref:struct:s_lexer
-t_token	lexer.h	/^}				t_token;$/;"	t	typeref:struct:s_token
-test_operator_completion	lexer.c	/^int			test_operator_completion(t_lexer *lexer, t_fsm *fsm, $/;"	f
-tokens	lexer.h	/^	t_token			*tokens;$/;"	m	struct:s_lexer
-type	lexer.h	/^	enum e_token	type;$/;"	m	struct:s_token	typeref:enum:s_token::e_token
-value	lexer.h	/^	const char 		*value;$/;"	m	struct:s_token
+CC	Makefile	/^CC = clang$/;"	m
+CFLAGS	Makefile	/^CFLAGS= -Wall -Wextra -Werror$/;"	m
+DGREAT_TOKEN	includes/lexer.h	/^	DGREAT_TOKEN,$/;"	e	enum:e_token
+DQUOTE_STATE	includes/lexer.h	/^	DQUOTE_STATE,$/;"	e	enum:e_fsm
+DUMMY_TOKEN	includes/lexer.h	/^	DUMMY_TOKEN,$/;"	e	enum:e_token
+ESCAPE_STATE	includes/lexer.h	/^	ESCAPE_STATE$/;"	e	enum:e_fsm
+GREAT_TOKEN	includes/lexer.h	/^	GREAT_TOKEN,$/;"	e	enum:e_token
+INC	Makefile	/^INC = $(addprefix -I, $(INC_DIRS))$/;"	m
+INC_DIRS	Makefile	/^INC_DIRS = .\/libft\/includes \\$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS = $(addprefix -L, $(LIBFT_DIR))$/;"	m
+LESS_TOKEN	includes/lexer.h	/^	LESS_TOKEN$/;"	e	enum:e_token
+LEXERSIZE	srcs/lexer.c	125;"	d	file:
+LEXER_H	includes/lexer.h	14;"	d
+LIBFT	Makefile	/^LIBFT = libft.a$/;"	m
+LIBFT_DIR	Makefile	/^LIBFT_DIR = .\/libft\/$/;"	m
+NAME	Makefile	/^NAME = minishell$/;"	m
+NEWLINE_TOKEN	includes/lexer.h	/^	NEWLINE_TOKEN,$/;"	e	enum:e_token
+NORMAL_STATE	includes/lexer.h	/^	NORMAL_STATE,$/;"	e	enum:e_fsm
+OBJ	Makefile	/^OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)$/;"	m
+OBJ_DIR	Makefile	/^OBJ_DIR = .\/objs\/$/;"	m
+PIPE_TOKEN	includes/lexer.h	/^	PIPE_TOKEN,$/;"	e	enum:e_token
+QUOTE_STATE	includes/lexer.h	/^	QUOTE_STATE,$/;"	e	enum:e_fsm
+SCOLON_TOKEN	includes/lexer.h	/^	SCOLON_TOKEN,$/;"	e	enum:e_token
+SRC	Makefile	/^SRC = lexer.c \\$/;"	m
+SRC_DIR	Makefile	/^SRC_DIR = .\/srcs\/$/;"	m
+TEXT_TOKEN	includes/lexer.h	/^	TEXT_TOKEN,$/;"	e	enum:e_token
+TOKENS_NB	includes/lexer.h	17;"	d
+WORD_TOKEN	includes/lexer.h	/^	WORD_TOKEN,$/;"	e	enum:e_token
+analyse_command	srcs/lexer.c	/^t_lexer		analyse_command(char *command)$/;"	f
+buf	includes/lexer.h	/^	char		buf[1024];$/;"	m	struct:s_fsm
+check_blank	srcs/char_handling_fts.c	/^void		check_blank(t_lexer *lexer, t_fsm *fsm, char current_char)$/;"	f
+check_new_op	srcs/char_handling_fts.c	/^int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char)$/;"	f
+check_operator_completion	srcs/char_handling_fts.c	/^int			check_operator_completion(t_lexer *lexer, t_fsm *fsm, $/;"	f
+check_quoting_char	srcs/char_handling_fts.c	/^int			check_quoting_char(t_fsm *fsm, char current_char)$/;"	f
+check_substitution_mark	srcs/char_handling_fts.c	/^int			check_substitution_mark(t_fsm *fsm, char current_char)$/;"	f
+count	includes/lexer.h	/^	int				count;$/;"	m	struct:s_lexer
+count	includes/lexer.h	/^	int			count;$/;"	m	struct:s_fsm
+current_token	includes/lexer.h	/^	t_token		current_token;$/;"	m	struct:s_fsm
+delimit_token	srcs/lexer.c	/^void		delimit_token(t_lexer *lexer, t_fsm *fsm)$/;"	f
+e_fsm	includes/lexer.h	/^enum			e_fsm$/;"	g
+e_token	includes/lexer.h	/^enum			e_token$/;"	g
+g_seeked_tokens	srcs/lexer.c	/^t_token		const g_seeked_tokens[TOKENS_NB] = $/;"	v
+handle_notquoted_char	srcs/lexer.c	/^void		handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)$/;"	f
+init_lexer_fsm	srcs/lexer.c	/^void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)$/;"	f
+is_operator	srcs/token.c	/^int		is_operator(t_token *token)$/;"	f
+main	srcs/lexer.c	/^int main()$/;"	f
+match_operator	srcs/lexer.c	/^match_operator(char *tested_op)$/;"	f
+s_fsm	includes/lexer.h	/^typedef struct	s_fsm$/;"	s
+s_lexer	includes/lexer.h	/^typedef struct	s_lexer$/;"	s
+s_token	includes/lexer.h	/^typedef struct	s_token$/;"	s
+size	includes/lexer.h	/^	size_t			size;$/;"	m	struct:s_lexer
+size	includes/lexer.h	/^	size_t			size;$/;"	m	struct:s_token
+size	includes/lexer.h	/^	size_t		size;$/;"	m	struct:s_fsm
+state	includes/lexer.h	/^	enum e_fsm	state;$/;"	m	struct:s_fsm	typeref:enum:s_fsm::e_fsm
+t_fsm	includes/lexer.h	/^}				t_fsm;$/;"	t	typeref:struct:s_fsm
+t_lexer	includes/lexer.h	/^}				t_lexer;$/;"	t	typeref:struct:s_lexer
+t_token	includes/lexer.h	/^}				t_token;$/;"	t	typeref:struct:s_token
+tokens	includes/lexer.h	/^	t_token			*tokens;$/;"	m	struct:s_lexer
+type	includes/lexer.h	/^	enum e_token	type;$/;"	m	struct:s_token	typeref:enum:s_token::e_token
+value	includes/lexer.h	/^	const char 		*value;$/;"	m	struct:s_token

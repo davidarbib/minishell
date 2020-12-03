@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/11/27 14:36:50 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/03 11:34:01 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,13 @@ typedef struct	s_fsm
 	size_t		size;
 }				t_fsm;
 
-int		is_operator(t_token *token);
+int			is_operator(t_token *token);
+t_token		match_operator(char *tested_op);
+void		delimit_token(t_lexer *lexer, t_fsm *fsm);
+int			check_operator_completion(t_lexer *lexer, t_fsm *fsm, 
+			char current_char);
+int			check_quoting_char(t_fsm *fsm, char current_char);
+int			check_substitution_mark(t_fsm *fsm, char current_char);
+int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char);
+void		check_blank(t_lexer *lexer, t_fsm *fsm, char current_char);
 #endif
