@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 11:37:03 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/03 11:41:48 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/04 17:59:04 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,12 @@ int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char)
 	return (0);
 }
 
-void		check_blank(t_lexer *lexer, t_fsm *fsm, char current_char)
+int			check_blank(t_lexer *lexer, t_fsm *fsm, char current_char)
 {
 	if (current_char != '\n' && isspace(current_char))
+	{
 		delimit_token(lexer, fsm);
+		return (1);
+	}
+	return (0);
 }

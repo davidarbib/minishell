@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/03 11:34:01 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/04 14:02:49 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ enum			e_fsm
 	NORMAL_STATE,
 	QUOTE_STATE,
 	DQUOTE_STATE,
-	ESCAPE_STATE
+	ESCAPE_STATE,
+	COMMENT_STATE
 };
 
 typedef struct	s_token
@@ -72,5 +73,5 @@ int			check_operator_completion(t_lexer *lexer, t_fsm *fsm,
 int			check_quoting_char(t_fsm *fsm, char current_char);
 int			check_substitution_mark(t_fsm *fsm, char current_char);
 int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char);
-void		check_blank(t_lexer *lexer, t_fsm *fsm, char current_char);
+int			check_blank(t_lexer *lexer, t_fsm *fsm, char current_char);
 #endif

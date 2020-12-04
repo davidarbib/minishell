@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/03 11:41:56 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/04 18:11:12 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ match_operator(char *tested_op)
 	while (i < TOKENS_NB)
 	{	
 		token = g_seeked_tokens[i];
-		printf("tested_op : %s\n", tested_op);
+//		printf("tested_op : %s\n", tested_op);
 		if (strstr(token.value, tested_op))
 			return (token);
 		i++;
@@ -61,34 +61,44 @@ void		delimit_token(t_lexer *lexer, t_fsm *fsm)
 {
 	t_token		delimited_token;
 
+	if (fsm->current_token.type == DUMMY_TOKEN)
+		return ;
 	delimited_token.type = fsm->current_token.type;
 	delimited_token.value = strdup((const char *)fsm->buf);
 	bzero(fsm->buf, fsm->size);
 	delimited_token.size = fsm->count;
 	lexer->tokens[lexer->count++] = delimited_token;
+	fsm->count = 0;
+	fsm->current_token.type = DUMMY_TOKEN;
 }
 
-
-void		handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)
+/*
+** handler return 1 if current_char was handled, 0 if not
+*/
+int			handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)
 {
+	if (fsm->state != NORMAL_STATE)
+		return (0);	
 	if (is_operator(&fsm->current_token))
 	{
 		if (check_operator_completion(lexer, fsm, current_char))
-			return ;
+			return (1);
 	}
 	if (check_quoting_char(fsm, current_char))
-		return ;
+		return (1);
 	if (check_substitution_mark(fsm, current_char))
-		return ;
+		return (1);
 	if (check_new_op(lexer, fsm, current_char))
-		return ;
-	check_blank(lexer, fsm, current_char);
+		return (1);
+	if (check_blank(lexer, fsm, current_char))
+		return (1);
+	return (0);
 }
 
 void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)
 {
 	lexer->tokens = malloc(sizeof(t_token) * 32);
-	lexer->size = 0;
+	lexer->size = 32;
 	fsm->state = NORMAL_STATE;
 	fsm->current_token.type = DUMMY_TOKEN;
 	fsm->size = 1024;
@@ -96,6 +106,17 @@ void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)
 	fsm->count = 0;
 }
 
+void		handle_quote_cancel_char(t_fsm *fsm, char current_char)
+{
+	if (fsm->state == QUOTE_STATE && current_char == '\'')
+		fsm->state = NORMAL_STATE;
+	if (fsm->state == DQUOTE_STATE && current_char == '\"')
+		fsm->state = NORMAL_STATE;
+}
+
+/*
+** Token recognition rule 9 is ignored on purpose here ('#' handling)
+*/
 t_lexer		analyse_command(char *command)
 {
 	t_lexer		lexer;
@@ -103,12 +124,20 @@ t_lexer		analyse_command(char *command)
 	int			i;
 
 	init_lexer_fsm(&lexer, &fsm);
-	i = 0;
-	while (command[i])
+	i = -1;
+	while (command[++i])
 	{
-		if (fsm.state == NORMAL_STATE)
-			handle_notquoted_char(&lexer, &fsm, command[i]);
+		if (handle_notquoted_char(&lexer, &fsm, command[i]))
+			continue;
+		handle_quote_cancel_char(&fsm, command[i]);
+		fsm.buf[fsm.count++] = command[i];
+		fsm.current_token.type = WORD_TOKEN;
+		if (fsm.state == ESCAPE_STATE)
+			fsm.state = NORMAL_STATE;
 	}
+//	if (fsm.state != NORMAL_STATE)
+	if (fsm.current_token.type != DUMMY_TOKEN)
+		delimit_token(&lexer, &fsm);
 	return (lexer);
 }
 
@@ -255,12 +284,15 @@ int main()
 	//lexer2 = analyse_command(input);
 	
 	//-----tests for analyse_command
-	/*
-	char *input = ">> ok > \nc'est bien";
-	t_lexer lexer = analyse_command(input);
-	size_t i = 0;
-	while (i < lexer.size)
-		printf("token : %s\n", lexer.tokens[i++].value);
-	*/
+	printf("-----------------------------\n");
+	char *input = ">> ok > c'est bien";
+	t_lexer lexer7 = analyse_command(input);
+	int i = 0;
+	while (i <= lexer.count)
+	{
+		printf("token : %s\n", lexer7.tokens[i].value);
+		printf("token type: %u\n", lexer7.tokens[i].type);
+		i++;
+	}
 	return (0);
 }
