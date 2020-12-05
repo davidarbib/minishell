@@ -1,0 +1,66 @@
+[
+ {
+  "directory": "/home/daav/minishell",
+  "arguments": [
+   "clang",
+   "-I./libft/includes",
+   "-I./includes",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "srcs/lexer.c",
+   "-o",
+   "objs/lexer.o"
+  ],
+  "file": "srcs/lexer.c"
+ },
+ {
+  "directory": "/home/daav/minishell",
+  "arguments": [
+   "clang",
+   "-I./libft/includes",
+   "-I./includes",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "srcs/token.c",
+   "-o",
+   "objs/token.o"
+  ],
+  "file": "srcs/token.c"
+ },
+ {
+  "directory": "/home/daav/minishell",
+  "arguments": [
+   "clang",
+   "-I./libft/includes",
+   "-I./includes",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "srcs/char_handling_fts.c",
+   "-o",
+   "objs/char_handling_fts.o"
+  ],
+  "file": "srcs/char_handling_fts.c"
+ },
+ {
+  "directory": "/home/daav/minishell",
+  "arguments": [
+   "clang",
+   "-I./libft/includes",
+   "-I./includes",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-c",
+   "srcs/lexer_fsm_tools.c",
+   "-o",
+   "objs/lexer_fsm_tools.o"
+  ],
+  "file": "srcs/lexer_fsm_tools.c"
+ }
+]

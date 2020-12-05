@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/04 14:02:49 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/05 20:07:44 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct	s_fsm
 {
 	enum e_fsm	state;
 	t_token		current_token;
-	char		buf[1024];
+	char		*buf;
 	int			count;
 	size_t		size;
 }				t_fsm;
@@ -74,4 +74,5 @@ int			check_quoting_char(t_fsm *fsm, char current_char);
 int			check_substitution_mark(t_fsm *fsm, char current_char);
 int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char);
 int			check_blank(t_lexer *lexer, t_fsm *fsm, char current_char);
+void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm);
 #endif

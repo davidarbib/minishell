@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2020/12/03 12:27:58 by darbib           ###   ########.fr        #
+#    Updated: 2020/12/05 16:24:04 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ LIBFT = libft.a
 LIB_LIBFT += $(addprefix $(LIBFT_DIR), $(LIBFT))
 
 LDFLAGS = $(addprefix -L, $(LIBFT_DIR))
+LDFLAGS += -lft
 OBJ = $(SRC:%.c=$(OBJ_DIR)%.o)
 
 INC_DIRS = ./libft/includes \
@@ -52,7 +53,8 @@ INC = $(addprefix -I, $(INC_DIRS))
 
 SRC = lexer.c \
 	  token.c \
-	  char_handling_fts.c
+	  char_handling_fts.c \
+	  lexer_fsm_tools.c
 
 # ------------------------------------------------------------------------------
 
@@ -66,14 +68,14 @@ all : $(NAME)
 
 bonus : $(NAME)
 
-$(NAME): $(OBJ) $(LIBS)
-	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
+$(NAME): $(OBJ) $(LIB_LIBFT)
+	@$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
 	@echo $(GREEN) $@ " is ready to use !" $(RESET)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@mkdir -p objs
 	@echo $(BLUE) "compiling" $< $(RESET)
-	@$(CC) $(INC) $(CFLAGS) -c $< -o $@
+	$(CC) $(INC) $(CFLAGS) -c $< -o $@
 
 $(LIB_LIBFT) :
 	@echo "Compile libft.."
@@ -89,7 +91,7 @@ clean :
 fclean : clean
 	@echo $(MAGENTA) "Total cleaning..." $(RESET)
 	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_DIR)
+	@rm -f $(LIB_LIBFT)
 	@echo $(MAGENTA) "...done" $(RESET)
 
 re : fclean all
