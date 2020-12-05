@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/05 20:07:44 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/05 23:22:24 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # define TOKENS_NB	6
+# define FSMBUFSIZE	1024
+# define LEXERSIZE	32
 
 /*
 ** token types

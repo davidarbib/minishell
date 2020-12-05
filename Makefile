@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2020/12/05 16:24:04 by darbib           ###   ########.fr        #
+#    Updated: 2020/12/06 00:17:46 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,8 @@ INC = $(addprefix -I, $(INC_DIRS))
 
 SRC = lexer.c \
 	  token.c \
+	  error.c \
+	  destroy.c \
 	  char_handling_fts.c \
 	  lexer_fsm_tools.c
 
