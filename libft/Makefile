@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 14:53:36 by darbib            #+#    #+#              #
-#    Updated: 2020/12/05 14:05:28 by darbib           ###   ########.fr        #
+#    Updated: 2020/12/07 16:41:30 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC = ft_atoi.c \
 	ft_isdigit.c \
 	ft_isprint.c \
 	ft_isblank.c \
+	ft_isnumber.c \
 	ft_min.c \
 	ft_max.c \
 	ft_itoa.c \

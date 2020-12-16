@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 21:23:40 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/05 14:04:04 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/07 17:42:44 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <lexer.h>
+#include "libft.h"
 
 extern	t_token g_seeked_tokens[TOKENS_NB];
 

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/05 23:22:24 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/07 17:41:34 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 
 /*
 ** token types
+**
+** WORD type means non operator TOKEN in lexer layer
+** further distinctions on WORD are made in parser layer :
+** the token can be requalified IONUMBER if it is next to redirection operator
+** (My posix interpretation :) );
 ** please add operators after pipe, and non-operator before
 */
 enum			e_token
@@ -28,6 +33,7 @@ enum			e_token
 	NEWLINE_TOKEN,
 	WORD_TOKEN,
 	TEXT_TOKEN,
+	IONUMBER_TOKEN,
 	PIPE_TOKEN,
 	SCOLON_TOKEN,
 	DGREAT_TOKEN,
@@ -51,6 +57,11 @@ typedef struct	s_token
 	size_t			size;
 }				t_token;
 
+/*
+** in lexer and fsm structures 'size' field refers to allocated memory area for 
+** tokens or buffer. 
+** 'count' refers to token array or chars buffer current_index.
+*/
 typedef struct	s_lexer
 {
 	t_token			*tokens;

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/05 16:31:58 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/09 00:45:32 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,11 @@ t_lexer		analyse_command(char *command)
 	return (lexer);
 }
 
-/*
 int main()
 {	
 	//-----tests for analyse_command
 	printf("-----------------------------\n");
-	char *input = "ok ;  \"<c'est'\" bien";
+	char *input = "cat 35> || cat";
 	t_lexer lexer7 = analyse_command(input);
 	int i = 0;
 	while (i < lexer7.count)
@@ -101,4 +100,3 @@ int main()
 	}
 	return (0);
 }
-*/

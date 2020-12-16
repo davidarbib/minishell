@@ -1,0 +1,17 @@
+graph G {
+label="cat test.txt | grep ok > out.txt ; foo=bar" ;
+    node [style=filled];
+    sep_op -- pipe;
+    sep_op -- "foo=bar"
+    
+    pipe -- simple_command0
+    pipe -- simple_command1
+    simple_command0 -- cat
+    simple_command0 -- "test.txt"
+    simple_command1 -- grep
+    simple_command1 -- suffix
+    suffix -- ok
+    suffix -- io_redirect
+    io_redirect -- ">"
+    io_redirect -- "out.txt"
+}

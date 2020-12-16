@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/04 22:47:42 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/07 17:24:53 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
+int					ft_isnumber(const char *s);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 void				*ft_calloc(size_t count, size_t size);
