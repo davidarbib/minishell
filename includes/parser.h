@@ -6,14 +6,22 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/17 00:22:37 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/18 11:49:34 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "lexer.h"
+# include "lexer.h"
+
+# define cmd_prefix_type		1
+# define cmd_name_type			2
+# define cmd_word_type			4
+# define cmd_suffix_type		8
+# define assign_type			16	
+# define word_type				32
+# define redirect_type			64
 
 typedef struct	s_io_file
 {
@@ -41,12 +49,14 @@ union			u_redirect_assign
 
 typedef struct	s_cmd_suffix
 {
+	int						type_flag;
 	struct s_cmd_suffix		*cmd_suffix;
 	union u_redirect_word	*redirect_word;
 }				t_cmd_suffix;
 
 typedef struct	s_cmd_prefix
 {
+	int						type_flag;
 	struct s_cmd_prefix		*cmd_prefix;
 	union u_redirect_word	*redirect_word;
 }				t_cmd_prefix;
@@ -68,12 +78,23 @@ union			u_cmd_word_suffix
 
 typedef struct	s_simple_command
 {
-	struct s_cmd_prefix		*cmd_prefix;
+	int						type_flag;
 	union u_cmd_prefix_name	*cmd_prefix_name;
+	union u_cmd_word_suffix	*cmd_word_suffix;
+	t_cmd_suffix			*cmd_suffix;
 }				t_simple_command;
 
-typedef struct s_complete_command
+typedef struct	s_pipeline
 {
-	
-}				
+	struct s_pipeline	*pipeline;
+	t_token				*pipe_token;
+	t_simple_command	*simple_command;
+}				t_pipeline;	
+
+typedef struct	s_shell_list
+{
+	struct s_shell_list	*shell_list;
+	t_token				*separator;
+	t_pipeline			*pipeline;
+}				t_shell_list;
 #endif
