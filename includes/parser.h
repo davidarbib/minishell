@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/18 11:49:34 by darbib           ###   ########.fr       */
+/*   Updated: 2020/12/21 23:05:17 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # define assign_type			16	
 # define word_type				32
 # define redirect_type			64
+
+typedef struct	s_llparser
+{
+	t_token		*tokens;
+	int			token_idx;
+}				t_llparser;
 
 typedef struct	s_io_file
 {

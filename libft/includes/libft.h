@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/07 17:24:53 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/07 14:57:08 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ typedef struct		s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_dlist
+{
+	void			*content;
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}					t_dlist;
 
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
@@ -82,6 +89,12 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstlast(t_list *lst);
 void				*ft_lsttotab(t_list *lst, size_t type_size,
 					int *array_size);
+t_dlist				*ft_dlstnew(void *content);
+int					ft_dlstsize(t_dlist *lst);
+void				ft_dlstadd_back(t_dlist **alst, t_dlist *new);
+void				ft_dlstclear(t_dlist **lst, void (*del)(void*));
+void				ft_dlstiter(t_dlist *lst, void (*f)(void *));
+t_dlist				*ft_dlstlast(t_dlist *lst);
 char				*ft_pass_spaces(char *s);
 int					ft_isblank(int c);
 int					ft_abs(int x);
