@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lsttotab.c                                      :+:      :+:    :+:   */
+/*   ft_dlsttotab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 22:04:16 by darbib            #+#    #+#             */
-/*   Updated: 2020/08/09 18:31:21 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/08 10:07:05 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_lsttotab(t_list *lst, size_t type_size, int *array_size)
+void	*ft_dlsttotab(t_dlist *lst, size_t type_size, int *array_size)
 {
 	int				i;
 	unsigned char	*array;
 
-	*array_size = ft_lstsize(lst);
+	*array_size = ft_dlstsize(lst);
 	if (!(array = ft_calloc((*array_size + 1), type_size)))
 		return (NULL);
 	i = 0;
