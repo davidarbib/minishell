@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 15:20:57 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/07 16:24:45 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/09 12:48:40 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_dlist	*ft_dlstfirst(t_dlist *lst)
 		lst = lst->prev;
 	return (lst);
 }
-
+/*
 int main()
 {
 	t_dlist *head = ft_dlstnew(strdup("haha"));
@@ -39,3 +39,4 @@ int main()
 	printf("head content (by dlstfirst): %s\n", first->content);
 	ft_dlstclear(&head, delete);
 }
+*/

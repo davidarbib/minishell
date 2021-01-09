@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/09 00:45:32 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/09 13:47:47 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "lexer.h"
+#include "libft.h"
 
 t_token		const g_seeked_tokens[TOKENS_NB] = 
 {
@@ -85,6 +86,11 @@ t_lexer		analyse_command(char *command)
 	return (lexer);
 }
 
+void	delete_token(void *content)
+{
+	free(content);
+}
+
 int main()
 {	
 	//-----tests for analyse_command
@@ -98,5 +104,28 @@ int main()
 		printf("token type: %u\n", lexer7.tokens[i].type);
 		i++;
 	}
+	printf("-----------------------------\n");
+	t_dlist *tokens_lst = ft_tabtodlst(lexer7.tokens, lexer7.count, sizeof(t_token));
+	t_dlist *token_node = tokens_lst;
+	while (token_node)
+	{
+		t_token *token = (t_token *)token_node->content;
+		printf("token : %s\n", token->value);
+		printf("token type: %u\n", token->type);
+		printf("token next: %p\n", token_node->next);
+		token_node = token_node->next;
+	} 
+	printf("-----------------------------\n");
+	token_node = ft_dlstlast(tokens_lst);
+	while (token_node)
+	{
+		t_token *token = (t_token *)token_node->content;
+		printf("token : %s\n", token->value);
+		printf("token type: %u\n", token->type);
+		printf("token prev: %p\n", token_node->prev);
+		token_node = token_node->prev;
+	}
+	free(lexer7.tokens);
+	ft_dlstclear(&tokens_lst, delete_token);
 	return (0);
 }

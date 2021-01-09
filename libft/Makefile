@@ -6,20 +6,20 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 14:53:36 by darbib            #+#    #+#              #
-#    Updated: 2020/12/07 16:41:30 by darbib           ###   ########.fr        #
+#    Updated: 2021/01/09 13:07:19 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-CC = gcc
-#CFLAGS = -Wall -Wextra -Werror 
-CFLAGS = -Wall -Wextra
+CC = clang
+CFLAGS = -Wall -Wextra -Werror 
+#CFLAGS = -Wall -Wextra
 
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g3
 endif
 
-ifeq ($(SANITY), 1)
+ifeq ($(SANITIZE), 1)
 	CFLAGS += -fsanitize=address 
 endif
 
@@ -95,6 +95,14 @@ SRC = ft_atoi.c \
 	ft_lstiter.c \
 	ft_lstlast.c \
 	ft_lsttotab.c \
+	ft_dlstnew.c \
+	ft_dlstsize.c \
+	ft_dlstadd_back.c \
+	ft_dlstclear.c \
+	ft_dlstiter.c \
+	ft_dlstlast.c \
+	ft_dlstfirst.c \
+	ft_tabtodlst.c \
 	ft_abs.c \
 	ft_pass_spaces.c \
 	ft_printf.c \

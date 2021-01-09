@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/07 14:57:08 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/09 12:53:10 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void				ft_dlstadd_back(t_dlist **alst, t_dlist *new);
 void				ft_dlstclear(t_dlist **lst, void (*del)(void*));
 void				ft_dlstiter(t_dlist *lst, void (*f)(void *));
 t_dlist				*ft_dlstlast(t_dlist *lst);
+t_dlist				*ft_tabtodlst(void *array, int array_size, int type_size);
 char				*ft_pass_spaces(char *s);
 int					ft_isblank(int c);
 int					ft_abs(int x);
