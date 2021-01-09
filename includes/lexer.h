@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/07 17:41:34 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/09 16:23:45 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ enum			e_token
 	DUMMY_TOKEN,
 	NEWLINE_TOKEN,
 	WORD_TOKEN,
+	ASSIGNMENT_TOKEN,
 	TEXT_TOKEN,
 	IONUMBER_TOKEN,
 	PIPE_TOKEN,
@@ -56,6 +57,15 @@ typedef struct	s_token
 	const char 		*value;
 	size_t			size;
 }				t_token;
+
+/*
+typedef struct	s_token
+{
+	enum e_token		type;
+	const unsigned char	*value;
+	size_t				size;
+}				t_token;
+*/
 
 /*
 ** in lexer and fsm structures 'size' field refers to allocated memory area for 
