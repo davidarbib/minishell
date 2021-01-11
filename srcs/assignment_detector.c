@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 14:26:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/09 16:30:39 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/11 16:03:51 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	init_transitions_tb(unsigned char transitions[STATE_NB][INPUT_NB])
 	ft_memset(transitions[EQUAL_STATE], EQUAL_STATE, INPUT_NB);
 }
 
+#include <stdio.h>
 static void	check_word(t_token *token,
 						unsigned char transitions[STATE_NB][INPUT_NB])
 {
@@ -49,8 +50,10 @@ static void	check_word(t_token *token,
 		return ;
 	i = 0;
 	state = BASE_STATE;
+	printf("token size : %zu\n", token->size);
 	while ((size_t)i < token->size)
 	{
+		printf("state : %u\n", state);
 		state = transitions[state][(unsigned char)token->value[i]];
 		if (state == ERROR_STATE)
 			return ;
@@ -69,4 +72,47 @@ void		detect_assignment(t_lexer *lexer)
 	i = 0;
 	while (i < lexer->count)
 		check_word(lexer->tokens + i, transitions);
+}
+
+#include <stdlib.h>
+#include <string.h>
+int main()
+{
+	t_token token;
+	unsigned char	transitions[STATE_NB][INPUT_NB];	
+
+	init_transitions_tb(transitions); //for UT
+	token.type=WORD_TOKEN;
+	char *str = "ok=43";
+	token.value = str;
+	token.size = strlen(str);
+	check_word(&token, transitions);
+	printf("token type : %d\n", token.type);
+	printf("------------------------------\n");
+	token.type=WORD_TOKEN;
+	str = "fdslfkjd";
+	token.value = str;
+	token.size = strlen(str);
+	check_word(&token, transitions);
+	printf("token type : %d\n", token.type);
+	printf("------------------------------\n");
+	token.type=WORD_TOKEN;
+	str = "=2";
+	token.value = str;
+	check_word(&token, transitions);
+	printf("token type : %d\n", token.type);
+	printf("------------------------------\n");
+	token.type=WORD_TOKEN;
+	str = "_=56";
+	token.value = str;
+	check_word(&token, transitions);
+	printf("token type : %d\n", token.type);
+	printf("------------------------------\n");
+	token.type=WORD_TOKEN;
+	str = "9=97";
+	token.value = str;
+	token.size = strlen(str);
+	check_word(&token, transitions);
+	printf("token type : %d\n", token.type);
+	printf("------------------------------\n");
 }
