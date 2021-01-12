@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/21 23:05:17 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/12 15:44:40 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,7 @@ typedef struct	s_shell_list
 	t_token				*separator;
 	t_pipeline			*pipeline;
 }				t_shell_list;
+
+int		isredirection_op(t_token *token);
+void	detect_ionumber(t_lexer *lexer);
 #endif

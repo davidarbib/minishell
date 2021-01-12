@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/09 16:23:45 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/12 16:03:07 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 **
 ** WORD type means non operator TOKEN in lexer layer
 ** further distinctions on WORD are made in parser layer :
-** the token can be requalified IONUMBER if it is next to redirection operator
-** (My posix interpretation :) );
+** the token can be requalified IONUMBER if it is a number
+** next to redirection operator (My posix interpretation :) );
 ** please add operators after pipe, and non-operator before
 */
 enum			e_token
