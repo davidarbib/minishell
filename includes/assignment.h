@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:09:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/09 16:03:41 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/12 11:53:53 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,4 @@
 # define EQUAL_STATE	2
 # define ERROR_STATE	3
 
-typedef struct		s_assignment_fsm
-{
-	unsigned char	state;
-
-}					t_assignment_fsm;
 #endif
