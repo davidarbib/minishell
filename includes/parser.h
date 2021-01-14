@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/12 15:44:40 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/14 16:46:03 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,18 @@
 # define word_type				32
 # define redirect_type			64
 
+enum			e_parser_state
+{
+	base,
+	found,
+	error
+};
+
 typedef struct	s_llparser
 {
 	t_token		*tokens;
 	int			token_idx;
+	int			state;
 }				t_llparser;
 
 typedef struct	s_io_file
@@ -106,4 +114,5 @@ typedef struct	s_shell_list
 
 int		isredirection_op(t_token *token);
 void	detect_ionumber(t_lexer *lexer);
+void	parse_prefix(t_llparser *parser);
 #endif

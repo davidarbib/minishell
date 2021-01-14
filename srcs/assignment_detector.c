@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 14:26:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/12 13:00:55 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/13 14:11:24 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void		detect_assignment(t_lexer *lexer)
 #include <string.h>
 #include <unistd.h>
 
+/*
 static void	print_transitions(unsigned char	transitions[STATE_NB][INPUT_NB])
 {
 	for (int i = 0; i < STATE_NB; i++)
@@ -150,3 +151,4 @@ int main()
 	printf("token value : %s\n", token.value);
 	printf("token type : %d\n", token.type);
 }
+*/

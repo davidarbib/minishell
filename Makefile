@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2020/12/06 00:17:46 by darbib           ###   ########.fr        #
+#    Updated: 2021/01/14 16:52:39 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,11 +52,13 @@ INC_DIRS = ./libft/includes \
 INC = $(addprefix -I, $(INC_DIRS))
 
 SRC = lexer.c \
+	  parser.c \
 	  token.c \
 	  error.c \
 	  destroy.c \
 	  char_handling_fts.c \
-	  lexer_fsm_tools.c
+	  lexer_fsm_tools.c \
+	  isredirection_op.c
 
 # ------------------------------------------------------------------------------
 

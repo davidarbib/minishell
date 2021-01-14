@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/09 13:47:47 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/14 17:07:40 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,31 @@ void	delete_token(void *content)
 	free(content);
 }
 
+#include "parser.h"
+
+int main()
+{	
+	//-----parsing tests-----
+	//
+	printf("-----------------------------\n");
+	//char *input = "cat 35> || cat";
+	char *input = "> out > less > true";
+	t_lexer lexer = analyse_command(input);
+	int i = 0;
+	while (i < lexer.count)
+	{
+		printf("token : %s\n", lexer.tokens[i].value);
+		printf("token type: %u\n", lexer.tokens[i].type);
+		i++;
+	}
+	t_llparser parser;
+	parser.tokens = lexer.tokens;
+	parser.token_idx = 0;
+	parser.state = base;
+	parse_prefix(&parser);
+}
+
+/*
 int main()
 {	
 	//-----tests for analyse_command
@@ -129,3 +154,4 @@ int main()
 	ft_dlstclear(&tokens_lst, delete_token);
 	return (0);
 }
+*/

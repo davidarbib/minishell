@@ -4,14 +4,18 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ALPHA_STATE	includes/assignment.h	26;"	d
+ASSIGNMENT_H	includes/assignment.h	14;"	d
+ASSIGNMENT_TOKEN	includes/lexer.h	/^	ASSIGNMENT_TOKEN,$/;"	e	enum:e_token
+BASE_STATE	includes/assignment.h	25;"	d
 BLUE	Makefile	/^BLUE = 		'\\033[0;34m'$/;"	m
 BUFFER_SIZE	libft/includes/get_next_line.h	16;"	d
 BUFOUT_SIZE	libft/includes/ft_sprintf.h	20;"	d
 BUF_SIZE	libft/includes/ft_printf.h	23;"	d
 CC	Makefile	/^CC = clang$/;"	m
-CC	libft/Makefile	/^CC = gcc$/;"	m
+CC	libft/Makefile	/^CC = clang$/;"	m
 CFLAGS	Makefile	/^CFLAGS= -Wall -Wextra -Werror$/;"	m
-CFLAGS	libft/Makefile	/^CFLAGS = -Wall -Wextra$/;"	m
+CFLAGS	libft/Makefile	/^CFLAGS = -Wall -Wextra -Werror $/;"	m
 COMMENT_STATE	includes/lexer.h	/^	COMMENT_STATE$/;"	e	enum:e_fsm
 CONV_NB	libft/includes/ft_printf.h	28;"	d
 CONV_S	libft/includes/ft_printf.h	27;"	d
@@ -19,7 +23,9 @@ DGREAT_TOKEN	includes/lexer.h	/^	DGREAT_TOKEN,$/;"	e	enum:e_token
 DOT	libft/includes/ft_printf.h	32;"	d
 DQUOTE_STATE	includes/lexer.h	/^	DQUOTE_STATE,$/;"	e	enum:e_fsm
 DUMMY_TOKEN	includes/lexer.h	/^	DUMMY_TOKEN,$/;"	e	enum:e_token
+EQUAL_STATE	includes/assignment.h	27;"	d
 ERROR_H	includes/error.h	14;"	d
+ERROR_STATE	includes/assignment.h	28;"	d
 ESCAPE_STATE	includes/lexer.h	/^	ESCAPE_STATE,$/;"	e	enum:e_fsm
 FLAGS_S	libft/includes/ft_printf.h	26;"	d
 FONT_BLUE	includes/font_color.h	21;"	d
@@ -43,6 +49,7 @@ GREEN	Makefile	/^GREEN = 	'\\033[0;32m'$/;"	m
 INC	Makefile	/^INC = $(addprefix -I, $(INC_DIRS))$/;"	m
 INC_DIR	libft/Makefile	/^INC_DIR = includes$/;"	m
 INC_DIRS	Makefile	/^INC_DIRS = .\/libft\/includes \\$/;"	m
+INPUT_NB	includes/assignment.h	17;"	d
 INTMAX	libft/includes/ft_printf.h	19;"	d
 INTMIN	libft/includes/ft_printf.h	20;"	d
 IONUMBER_TOKEN	includes/lexer.h	/^	IONUMBER_TOKEN,$/;"	e	enum:e_token
@@ -78,6 +85,7 @@ SCOLON_TOKEN	includes/lexer.h	/^	SCOLON_TOKEN,$/;"	e	enum:e_token
 SRC	Makefile	/^SRC = lexer.c \\$/;"	m
 SRC	libft/Makefile	/^SRC = ft_atoi.c \\$/;"	m
 SRC_DIR	Makefile	/^SRC_DIR = .\/srcs\/$/;"	m
+STATE_NB	includes/assignment.h	16;"	d
 STDOUT	libft/includes/ft_printf.h	24;"	d
 TEXT_TOKEN	includes/lexer.h	/^	TEXT_TOKEN,$/;"	e	enum:e_token
 TOKENS_NB	includes/lexer.h	17;"	d
@@ -107,6 +115,7 @@ check_new_op	srcs/char_handling_fts.c	/^int			check_new_op(t_lexer *lexer, t_fsm
 check_operator_completion	srcs/char_handling_fts.c	/^int			check_operator_completion(t_lexer *lexer, t_fsm *fsm, $/;"	f
 check_quoting_char	srcs/char_handling_fts.c	/^int			check_quoting_char(t_fsm *fsm, char current_char)$/;"	f
 check_substitution_mark	srcs/char_handling_fts.c	/^int			check_substitution_mark(t_fsm *fsm, char current_char)$/;"	f
+check_word	srcs/assignment_detector.c	/^static void	check_word(t_token *token,$/;"	f	file:
 cmd_name	includes/parser.h	/^	t_cmd_name		cmd_name;$/;"	m	union:u_cmd_prefix_name
 cmd_name_type	includes/parser.h	19;"	d
 cmd_prefix	includes/parser.h	/^	struct s_cmd_prefix		*cmd_prefix;$/;"	m	struct:s_cmd_prefix	typeref:struct:s_cmd_prefix::s_cmd_prefix
@@ -133,9 +142,12 @@ count_w	libft/src/ft_split_blank.c	/^static size_t	count_w(char const *s)$/;"	f	
 current_token	includes/lexer.h	/^	t_token		current_token;$/;"	m	struct:s_fsm
 delete	libft/src/ft_dlstfirst.c	/^void	delete(void *content)$/;"	f
 delete_content	libft/src/ft_tabtodlst.c	/^static void	delete_content(void *content)$/;"	f	file:
+delete_token	srcs/lexer.c	/^void	delete_token(void *content)$/;"	f
 delimit_token	srcs/token.c	/^void		delimit_token(t_lexer *lexer, t_fsm *fsm)$/;"	f
 destroy_fsm	srcs/destroy.c	/^void	destroy_fsm(t_fsm *fsm)$/;"	f
 destroy_lexer	srcs/destroy.c	/^void	destroy_lexer(t_lexer *lexer)$/;"	f
+detect_assignment	srcs/assignment_detector.c	/^void		detect_assignment(t_lexer *lexer)$/;"	f
+detect_ionumber	srcs/ionumber_detector.c	/^void	detect_ionumber(t_lexer *lexer)$/;"	f
 di_convert	libft/src/ft_printf/di_convert.c	/^int			di_convert(t_buf *buf, t_conv *conv, va_list args)$/;"	f
 divide	libft/src/ft_split.c	/^static char		**divide(char const *s, char c, size_t nb)$/;"	f	file:
 divide	libft/src/ft_split_blank.c	/^static char		**divide(char const *s, size_t nb)$/;"	f	file:
@@ -242,6 +254,7 @@ init_nb	libft/src/ft_printf/x_convert.c	/^static void	init_nb(t_conv *conv, va_l
 init_ptr	libft/src/ft_printf/p_convert.c	/^static unsigned long	init_ptr(t_conv *conv, va_list args)$/;"	f	file:
 init_s	libft/src/ft_printf/nocs_convert.c	/^static char	*init_s(char *filler, t_conv *conv, va_list args)$/;"	f	file:
 init_sign_nb	libft/src/ft_printf/di_convert.c	/^static char	init_sign_nb(t_conv *conv, va_list args, int *nb)$/;"	f	file:
+init_transitions_tb	srcs/assignment_detector.c	/^static void	init_transitions_tb(unsigned char transitions[STATE_NB][INPUT_NB])$/;"	f	file:
 int_part	libft/src/ft_atof.c	/^static double	int_part(char **str, double f)$/;"	f	file:
 int_part	libft/src/ft_atof_mv.c	/^static double	int_part(char **str, double f)$/;"	f	file:
 io_file	includes/parser.h	/^	t_io_file	*io_file;$/;"	m	struct:s_io_redirect
@@ -250,6 +263,7 @@ io_redirect	includes/parser.h	/^	t_io_redirect	io_redirect;$/;"	m	union:u_redire
 io_redirect	includes/parser.h	/^	t_io_redirect	io_redirect;$/;"	m	union:u_redirect_word
 is_operator	srcs/token.c	/^int		is_operator(t_token *token)$/;"	f
 is_true_option	libft/src/ft_printf/utils.c	/^char	is_true_option(char c)$/;"	f
+isredirection_op	srcs/isredirection_op.c	/^int	isredirection_op(t_token *token)$/;"	f
 lmc	libft/includes/ft_printf.h	/^	int		lmc;$/;"	m	struct:s_conv
 main	srcs/lexer.c	/^int main()$/;"	f
 make_content	libft/src/ft_tabtodlst.c	/^static void	*make_content(void *array_ptr, int type_size)$/;"	f	file:
