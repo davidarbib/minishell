@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/14 17:07:40 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/15 13:20:30 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int main()
 	//
 	printf("-----------------------------\n");
 	//char *input = "cat 35> || cat";
-	char *input = "> out > less > true";
+	char *input = " a=42 > out > less > true";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)

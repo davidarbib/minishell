@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/14 17:04:44 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/15 17:06:54 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,44 +29,29 @@ t_token	read_token(t_llparser *parser)
 	return (parser->tokens[parser->token_idx]);
 }
 
-void	parse_filename(t_llparser *parser)
+t_token	*ref_token(t_llparser *parser)
 {
-	if (read_token(parser).type == WORD_TOKEN)
-	{
-		parser->state = found;
-		eat(parser);
-	}
-	else
-		parser->state = error;
+	return (&parser->tokens[parser->token_idx]);
 }
 
-void	parse_io_file(t_llparser *parser)
-{
-	t_token current_token;
-	
-	current_token = read_token(parser);
-	if (isredirection_op(&current_token))
-	{
-		eat(parser);
-		parse_filename(parser);
-	}
-}
 
-void	parse_io_redirect(t_llparser *parser)
-{
-	parser->state = base;
-	parse_io_file(parser);
-}
 
+#include "assignment.h"
 void	parse_assignment(t_llparser *parser)
 {
+	t_token token;
+
+	token = read_token(parser);
+	detect_assignment(&token);
 	parser->state = base;
-	if (read_token(parser).type == ASSIGNMENT_TOKEN)
+	if (token.type == ASSIGNMENT_TOKEN)
+	{
 		parser->state = found;
+		eat(parser);
+	}
 }
 
 #include <stdio.h>
-
 void	parse_prefix(t_llparser *parser)
 {
 	printf("parser->state : %d\n", parser->state);

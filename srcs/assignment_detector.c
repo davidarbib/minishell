@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 14:26:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/13 14:11:24 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/15 13:41:50 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ static void	check_word(t_token *token,
 		return ;
 	i = 0;
 	state = BASE_STATE;
-	printf("token size : %zu\n", token->size);
 	while ((size_t)i < token->size)
 	{
-		printf("state : %u\n", state);
 		state = transitions[state][(unsigned char)token->value[i]];
 		if (state == ERROR_STATE)
 			return ;
@@ -67,15 +65,17 @@ static void	check_word(t_token *token,
 		token->type = ASSIGNMENT_TOKEN;
 }
 
-void		detect_assignment(t_lexer *lexer)
+void		detect_assignment(t_token *token)
 {
-	unsigned char	transitions[STATE_NB][INPUT_NB];	
-	int				i;
+	static unsigned char	transitions[STATE_NB][INPUT_NB];	
+	static int				filled_table = 0;
 
-	init_transitions_tb(transitions);
-	i = 0;
-	while (i < lexer->count)
-		check_word(lexer->tokens + i, transitions);
+	if (!filled_table)
+	{
+		init_transitions_tb(transitions);
+		filled_table = 1;
+	}
+	check_word(token, transitions);
 }
 
 #include <stdlib.h>

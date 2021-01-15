@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/14 16:46:03 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/15 17:06:01 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSER_H
 
 # include "lexer.h"
+# include "libft.h"
 
 # define cmd_prefix_type		1
 # define cmd_name_type			2
@@ -28,6 +29,13 @@ enum			e_parser_state
 	base,
 	found,
 	error
+};
+
+enum			e_redirect_type
+{
+	i_redirect,
+	oc_redirect,
+	oa_redirect
 };
 
 typedef struct	s_llparser
@@ -45,8 +53,9 @@ typedef struct	s_io_file
 
 typedef struct	s_io_redirect
 {
-	t_token		*io_number;
-	t_io_file	*io_file;
+	t_token					*io_number;
+	t_token					*filename;
+	enum e_redirect_type	type;
 }				t_io_redirect;
 
 union			u_redirect_word
@@ -92,11 +101,20 @@ union			u_cmd_word_suffix
 
 typedef struct	s_simple_command
 {
+	t_list		*redirections;
+	t_list		*assignments;
+	t_list		*args;
+}				t_simple_command;
+
+/*
+typedef struct	s_simple_command
+{
 	int						type_flag;
 	union u_cmd_prefix_name	*cmd_prefix_name;
 	union u_cmd_word_suffix	*cmd_word_suffix;
 	t_cmd_suffix			*cmd_suffix;
 }				t_simple_command;
+*/
 
 typedef struct	s_pipeline
 {
@@ -115,4 +133,8 @@ typedef struct	s_shell_list
 int		isredirection_op(t_token *token);
 void	detect_ionumber(t_lexer *lexer);
 void	parse_prefix(t_llparser *parser);
+void	parse_io_redirect(t_llparser *parser);
+t_token	read_token(t_llparser *parser);
+t_token	*ref_token(t_llparser *parser);
+void	eat(t_llparser *parser);
 #endif
