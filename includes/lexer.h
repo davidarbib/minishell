@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/12 16:03:07 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/17 11:42:05 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ enum			e_fsm
 typedef struct	s_token
 {
 	enum e_token	type;
-	const char 		*value;
+	char			*value;
 	size_t			size;
 }				t_token;
 

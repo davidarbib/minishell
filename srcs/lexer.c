@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/15 13:20:30 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/17 19:52:51 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 t_token		const g_seeked_tokens[TOKENS_NB] = 
 {
-	{DGREAT_TOKEN, ">>", 2},
 	{GREAT_TOKEN, ">", 1},
+	{DGREAT_TOKEN, ">>", 2},
 	{LESS_TOKEN, "<", 1},
 	{PIPE_TOKEN, "|", 1},
 	{SCOLON_TOKEN, ";", 1},
@@ -99,7 +99,7 @@ int main()
 	//
 	printf("-----------------------------\n");
 	//char *input = "cat 35> || cat";
-	char *input = " a=42 > out > less > true";
+	char *input = " a=42 > out > less > true >> haha < ok";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)
@@ -108,11 +108,22 @@ int main()
 		printf("token type: %u\n", lexer.tokens[i].type);
 		i++;
 	}
+	detect_ionumber(&lexer);
 	t_llparser parser;
 	parser.tokens = lexer.tokens;
 	parser.token_idx = 0;
 	parser.state = base;
+	parser.redirections = NULL;
 	parse_prefix(&parser);
+	t_list *node = parser.redirections;
+	while (node)
+	{
+		t_io_redirect *redirection = (t_io_redirect *)node->content;
+		printf("redir.ionumber : %d\n", redirection->io_number);
+		printf("redir.filename : %s\n", redirection->filename);
+		printf("redir.type : %d\n", redirection->type);
+		node = node->next;
+	}
 }
 
 /*

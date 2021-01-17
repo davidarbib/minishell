@@ -6,12 +6,22 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/15 17:06:54 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/17 18:08:31 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
 #include "parser.h"
+
+char	*extract_word(t_token token)
+{
+	char	*word;
+
+	word = ft_calloc(token.size + 1, sizeof(char));
+	if (!word)
+		return (NULL);
+	ft_memmove(word, token.value, token.size);
+	return (word);
+}
 
 void	eat(t_llparser *parser)
 {
@@ -35,6 +45,24 @@ t_token	*ref_token(t_llparser *parser)
 }
 
 
+/*
+#include <string.h>
+#include <stdio.h>
+int main()
+{
+	t_token token;
+	
+	token.value = strdup("test");
+	token.size = strlen(token.value);
+	token.type = 0;
+	char *word = extract_word(token);
+	printf("word : --%s--\n", word);
+	printf("word len : --%zu--\n", strlen(word));
+	free(word);
+	free(token.value);
+	return (0);
+}
+*/
 
 #include "assignment.h"
 void	parse_assignment(t_llparser *parser)

@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/15 13:22:26 by darbib           ###   ########.fr        #
+#    Updated: 2021/01/17 19:21:19 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,8 @@ SRC = lexer.c \
 	  char_handling_fts.c \
 	  lexer_fsm_tools.c \
 	  assignment_detector.c \
+	  ionumber_detector.c \
+	  redirection_parser.c \
 	  isredirection_op.c
 
 # ------------------------------------------------------------------------------
@@ -80,7 +82,7 @@ $(NAME): $(OBJ) $(LIB_LIBFT)
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@mkdir -p objs
 	@echo $(BLUE) "compiling" $< $(RESET)
-	$(CC) $(INC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(INC) $(CFLAGS) -c $< -o $@
 
 $(LIB_LIBFT) :
 	@echo "Compile libft.."

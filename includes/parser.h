@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/15 17:06:01 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/17 18:05:12 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,37 +38,28 @@ enum			e_redirect_type
 	oa_redirect
 };
 
+typedef struct	s_simple_command
+{
+	t_list		*redirections;
+	t_list		*assignments;
+	t_list		*args;
+}				t_simple_command;
+
 typedef struct	s_llparser
 {
-	t_token		*tokens;
-	int			token_idx;
-	int			state;
+	t_token				*tokens;
+	int					token_idx;
+	int					state;
+	t_list				*redirections;
+	t_simple_command	*command;
 }				t_llparser;
-
-typedef struct	s_io_file
-{
-	t_token		*redir_op;
-	t_token		*filename;
-}				t_io_file;
 
 typedef struct	s_io_redirect
 {
-	t_token					*io_number;
-	t_token					*filename;
+	int						io_number;
+	char					*filename;
 	enum e_redirect_type	type;
 }				t_io_redirect;
-
-union			u_redirect_word
-{
-	t_io_redirect	io_redirect;
-	t_token			word;
-};
-
-union			u_redirect_assign
-{
-	t_io_redirect	io_redirect;
-	t_token			assignment_word;
-};
 
 typedef struct	s_cmd_suffix
 {
@@ -99,13 +90,6 @@ union			u_cmd_word_suffix
 	t_cmd_suffix	cmd_suffix;
 };
 
-typedef struct	s_simple_command
-{
-	t_list		*redirections;
-	t_list		*assignments;
-	t_list		*args;
-}				t_simple_command;
-
 /*
 typedef struct	s_simple_command
 {
@@ -130,11 +114,13 @@ typedef struct	s_shell_list
 	t_pipeline			*pipeline;
 }				t_shell_list;
 
-int		isredirection_op(t_token *token);
-void	detect_ionumber(t_lexer *lexer);
-void	parse_prefix(t_llparser *parser);
-void	parse_io_redirect(t_llparser *parser);
-t_token	read_token(t_llparser *parser);
-t_token	*ref_token(t_llparser *parser);
-void	eat(t_llparser *parser);
+int						isredirection_op(t_token *token);
+void					detect_ionumber(t_lexer *lexer);
+void					parse_prefix(t_llparser *parser);
+void					parse_io_redirect(t_llparser *parser);
+t_token					read_token(t_llparser *parser);
+t_token					*ref_token(t_llparser *parser);
+void					eat(t_llparser *parser);
+char					*extract_word(t_token token);
+enum e_redirect_type	get_redirection_type(t_token token);
 #endif
