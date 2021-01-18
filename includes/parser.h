@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/18 11:37:05 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/18 15:25:24 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,32 @@
 # define assign_type			16	
 # define word_type				32
 # define redirect_type			64
+
+//----Structures a la sortie du parser---
+// fait pas attention a t_llparser actuel plus pratique pour mes tests unitaires
+//typedef struct	s_llparser
+//{
+//	t_token				*tokens;
+//	int					token_idx;
+//	int					state;
+//	t_shell_list		*shell_list;
+//}				t_llparser;
+//
+//typedef t_list t_shell_list;
+//typedef t_dlist t_pipeline;
+//
+// une t_shell_list a pour content une *t_pipeline
+// une t_pipeline a pour content une *t_simple_command
+//
+// attention : t_pipeline est doublement chainee dans l'idee
+//
+// toutes les infos sont recuperees des tokens lors du parsing,
+// pour free les tokens au plus vite
+// on gardera juste la shell_list
+//
+// je me tate a executer les assignations pdt le parsing mais jaime bien les archis
+// en couches, quen penses tu ?
+//-----------------------------------------------------------------------------
 
 enum			e_parser_state
 {
@@ -55,6 +81,7 @@ typedef struct	s_llparser
 	t_simple_command	*command;
 }				t_llparser;
 
+
 typedef struct	s_io_redirect
 {
 	int						io_number;
@@ -67,59 +94,6 @@ typedef struct	s_assignment
 	char					*key;
 	char					*value;
 }				t_assignment;
-
-typedef struct	s_cmd_suffix
-{
-	int						type_flag;
-	struct s_cmd_suffix		*cmd_suffix;
-	union u_redirect_word	*redirect_word;
-}				t_cmd_suffix;
-
-typedef struct	s_cmd_prefix
-{
-	int						type_flag;
-	struct s_cmd_prefix		*cmd_prefix;
-	union u_redirect_word	*redirect_word;
-}				t_cmd_prefix;
-
-typedef	t_token	t_cmd_name;
-typedef	t_token	t_cmd_word;
-
-union			u_cmd_prefix_name
-{
-	t_cmd_prefix	cmd_prefix;
-	t_cmd_name		cmd_name;
-};
-
-union			u_cmd_word_suffix
-{
-	t_cmd_word		cmd_word;
-	t_cmd_suffix	cmd_suffix;
-};
-
-/*
-typedef struct	s_simple_command
-{
-	int						type_flag;
-	union u_cmd_prefix_name	*cmd_prefix_name;
-	union u_cmd_word_suffix	*cmd_word_suffix;
-	t_cmd_suffix			*cmd_suffix;
-}				t_simple_command;
-*/
-
-typedef struct	s_pipeline
-{
-	struct s_pipeline	*pipeline;
-	t_token				*pipe_token;
-	t_simple_command	*simple_command;
-}				t_pipeline;	
-
-typedef struct	s_shell_list
-{
-	struct s_shell_list	*shell_list;
-	t_token				*separator;
-	t_pipeline			*pipeline;
-}				t_shell_list;
 
 int						isredirection_op(t_token *token);
 void					detect_ionumber(t_lexer *lexer);
