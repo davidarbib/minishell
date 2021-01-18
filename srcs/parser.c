@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/17 18:08:31 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/18 11:33:04 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,6 @@ char	*extract_word(t_token token)
 	ft_memmove(word, token.value, token.size);
 	return (word);
 }
-
-void	eat(t_llparser *parser)
-{
-	parser->token_idx++;
-}
-
-/*
-void	accept(t_llparser *parser)
-{
-}
-*/
-
-t_token	read_token(t_llparser *parser)
-{
-	return (parser->tokens[parser->token_idx]);
-}
-
-t_token	*ref_token(t_llparser *parser)
-{
-	return (&parser->tokens[parser->token_idx]);
-}
-
 
 /*
 #include <string.h>
@@ -64,19 +42,25 @@ int main()
 }
 */
 
-#include "assignment.h"
-void	parse_assignment(t_llparser *parser)
+void	eat(t_llparser *parser)
 {
-	t_token token;
+	parser->token_idx++;
+}
 
-	token = read_token(parser);
-	detect_assignment(&token);
-	parser->state = base;
-	if (token.type == ASSIGNMENT_TOKEN)
-	{
-		parser->state = found;
-		eat(parser);
-	}
+/*
+void	accept(t_llparser *parser)
+{
+}
+*/
+
+t_token	read_token(t_llparser *parser)
+{
+	return (parser->tokens[parser->token_idx]);
+}
+
+t_token	*ref_token(t_llparser *parser)
+{
+	return (&parser->tokens[parser->token_idx]);
 }
 
 #include <stdio.h>

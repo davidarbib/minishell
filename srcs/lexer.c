@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/17 19:52:51 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/18 11:42:26 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int main()
 	//
 	printf("-----------------------------\n");
 	//char *input = "cat 35> || cat";
-	char *input = " a=42 > out > less > true >> haha < ok";
+	char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)
@@ -114,6 +114,7 @@ int main()
 	parser.token_idx = 0;
 	parser.state = base;
 	parser.redirections = NULL;
+	parser.assignments = NULL;
 	parse_prefix(&parser);
 	t_list *node = parser.redirections;
 	while (node)
@@ -123,6 +124,15 @@ int main()
 		printf("redir.filename : %s\n", redirection->filename);
 		printf("redir.type : %d\n", redirection->type);
 		node = node->next;
+	}
+	printf("------------------------------------\n");
+	t_list *node2 = parser.assignments;
+	while (node2)
+	{
+		t_assignment *assignment = (t_assignment *)node2->content;
+		printf("key : %s\n", assignment->key);
+		printf("value : %s\n", assignment->value);
+		node2 = node2->next;
 	}
 }
 

@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/17 19:21:19 by darbib           ###   ########.fr        #
+#    Updated: 2021/01/18 11:37:26 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ SRC = lexer.c \
 	  char_handling_fts.c \
 	  lexer_fsm_tools.c \
 	  assignment_detector.c \
+	  assignment_parser.c \
 	  ionumber_detector.c \
 	  redirection_parser.c \
 	  isredirection_op.c
