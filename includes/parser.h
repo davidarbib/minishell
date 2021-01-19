@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/18 11:37:05 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/19 15:50:40 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct	s_llparser
 	int					state;
 	t_list				*redirections;
 	t_list				*assignments;
+	t_list				*args;
 	t_simple_command	*command;
 }				t_llparser;
 
@@ -127,9 +128,11 @@ void					parse_prefix(t_llparser *parser);
 void					parse_io_redirect(t_llparser *parser);
 void					parse_assignment(t_llparser *parser);
 void					detect_assignment(t_token *token);
+void					detect_assignments(t_lexer *lexer);
 t_token					read_token(t_llparser *parser);
 t_token					*ref_token(t_llparser *parser);
 void					eat(t_llparser *parser);
 char					*extract_word(t_token token);
 enum e_redirect_type	get_redirection_type(t_token token);
+int						store_args(t_list **args, char *arg);
 #endif
