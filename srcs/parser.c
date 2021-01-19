@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/18 11:33:04 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/19 15:50:17 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,22 @@ t_token	*ref_token(t_llparser *parser)
 	return (&parser->tokens[parser->token_idx]);
 }
 
+void	parse_cmd_name(t_llparser *parser)
+{
+	char	*arg;
+	t_token	current_token;
+
+	parser->state = base;
+	current_token = read_token(parser);
+	if (current_token.type == WORD_TOKEN)
+	{
+		parser->state = found;
+		arg = extract_word(current_token);
+		store_args(&parser->args, arg);
+		eat(parser);
+	}
+}
+
 #include <stdio.h>
 void	parse_prefix(t_llparser *parser)
 {
@@ -71,5 +87,12 @@ void	parse_prefix(t_llparser *parser)
 	if (parser->state != found)
 		parse_io_redirect(parser);
 	if (parser->state == found)
+		parse_prefix(parser);
+}
+
+void	parse_simple_command(t_llparser *parser)
+{
+	parse_cmd_name(parser);
+	if (parser->state != found)	
 		parse_prefix(parser);
 }
