@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/18 11:42:26 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/20 15:25:15 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int main()
 	//-----parsing tests-----
 	//
 	printf("-----------------------------\n");
-	//char *input = "cat 35> || cat";
-	char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok";
+	//char *input = "echo \'ohoh\'";
+	char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)
@@ -109,13 +109,16 @@ int main()
 		i++;
 	}
 	detect_ionumber(&lexer);
+	detect_assignments(&lexer);
 	t_llparser parser;
 	parser.tokens = lexer.tokens;
 	parser.token_idx = 0;
 	parser.state = base;
 	parser.redirections = NULL;
 	parser.assignments = NULL;
-	parse_prefix(&parser);
+	parser.args = NULL;
+//	parse_prefix(&parser);
+	parse_simple_command(&parser);
 	t_list *node = parser.redirections;
 	while (node)
 	{
@@ -133,6 +136,16 @@ int main()
 		printf("key : %s\n", assignment->key);
 		printf("value : %s\n", assignment->value);
 		node2 = node2->next;
+	}
+	printf("------------------------------------\n");
+	t_list *node3 = parser.args;
+	int j = 0;
+	while (node3)
+	{
+		char *arg = (char *)node3->content;
+		printf("arg[%d] : %s\n", j, arg);
+		node3 = node3->next;
+		j++;
 	}
 }
 
