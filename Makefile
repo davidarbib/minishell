@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/18 11:37:26 by darbib           ###   ########.fr        #
+#    Updated: 2021/01/20 15:11:21 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRC = lexer.c \
 	  assignment_parser.c \
 	  ionumber_detector.c \
 	  redirection_parser.c \
+	  args_parser.c \
 	  isredirection_op.c
 
 # ------------------------------------------------------------------------------

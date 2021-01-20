@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/19 15:50:40 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/20 15:24:03 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ t_token					read_token(t_llparser *parser);
 t_token					*ref_token(t_llparser *parser);
 void					eat(t_llparser *parser);
 char					*extract_word(t_token token);
+void					parse_word(t_llparser *parser);
 enum e_redirect_type	get_redirection_type(t_token token);
 int						store_args(t_list **args, char *arg);
+void					parse_simple_command(t_llparser *parser);
 #endif
