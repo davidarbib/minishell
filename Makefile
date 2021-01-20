@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/18 11:37:26 by darbib           ###   ########.fr        #
+#    Updated: 2021/01/20 15:09:15 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MAGENTA = 	'\033[0;35m'
 RESET = 	'\033[0m'
 
 NAME = minishell
-CFLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror -fsanitize=address
 CC = clang
 
 ifeq ($(DEBUG), 1)
@@ -62,7 +62,8 @@ SRC = lexer.c \
 	  assignment_parser.c \
 	  ionumber_detector.c \
 	  redirection_parser.c \
-	  isredirection_op.c
+	  isredirection_op.c \
+		test.c
 
 # ------------------------------------------------------------------------------
 
@@ -101,5 +102,7 @@ fclean : clean
 	@rm -f $(NAME)
 	@rm -f $(LIB_LIBFT)
 	@echo $(MAGENTA) "...done" $(RESET)
+
+test: 
 
 re : fclean all
