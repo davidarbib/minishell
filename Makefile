@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/20 15:09:15 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/01/21 10:16:04 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,11 @@ MAGENTA = 	'\033[0;35m'
 RESET = 	'\033[0m'
 
 NAME = minishell
-CFLAGS= -Wall -Wextra -Werror -fsanitize=address
+CFLAGS= -Wall -Wextra -Werror
 CC = clang
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -g3
+	CFLAGS += -g3 -fsanitize=address
 endif
 
 ifeq ($(SANITIZE), 1)
