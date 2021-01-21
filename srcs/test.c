@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 11:06:13 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/01/20 16:06:13 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/01/21 12:35:30 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/wait.h>
 
 void	print_tokens_acc(t_list *tokens, int first)
 {
@@ -37,41 +38,66 @@ void	print_tokens(t_list *tokens)
 	print_tokens_acc(tokens, 1);
 }
 
-void	eval(t_list *command)
+void	del(void* vd)
+{
+	(void)vd;
+}
+
+void	eval(t_list **command)
 {
 	char	**tab;
 	int		size;
 
-	tab = (char**)ft_lsttotab(command, 8, &size);
-	/*char **rest = tab + 8;*/
+	tab = (char**)ft_lsttotab(*command, 8, &size);
+	ft_lstclear(command, del);
+	tab[size] = 0;
 	printf("%d\n", size);
-	//tab[size] = 0;
-	printf("-%s-\n", (char*)tab[0]);
-	/*execve((char*)tab, rest, NULL);*/
-	/*printf("%d\n", size);*/
-	/*int size;*/
-
-	/*tab = ft_lsttotab(list, 8, &size);*/
-	/*printf("%p\n", tab);*/
-	/*for (int i = 0; i < size; i++)*/
-	/*{*/
-		/*printf("%s\n", (char*)(tab + i));*/
-	/*}*/
-	/*execve(tab[0], tab + 8, NULL);*/
+	/*printf("here : %s\n", (((char*const*)tab) + 1)[2]);*/
+	/*if (execve((char*)tab[0], ((char*const*)tab) + 1, NULL) == -1)*/
+	if (execve((char*)tab[0], (char*const*)tab, NULL) == -1)
+	{
+		perror("minishell");
+	}
 }
 
-int main ()
+int	main()
 {
-	t_list	*list = ft_lstnew("/bin/lsurieqopuiewqouioqurioqwep");
-	t_list	*list2 = ft_lstnew(ft_strdup("-a"));
-	t_list	*list3 = ft_lstnew(ft_strdup("-l"));
+	int	pid;
+	int	ret_wait;
+	int	status;
+
+	t_list	*list = ft_lstnew("/bin/ls");
+	t_list	*list2 = ft_lstnew("caca");
+	t_list	*list3 = ft_lstnew("-l");
+	t_list	*list4 = ft_lstnew("-a");
 	ft_lstadd_back(&list, list2);
 	ft_lstadd_back(&list, list3);
+	ft_lstadd_back(&list, list4);
 
-	eval(list);
-	/*printf("length = %d\n", ft_lstsize(list));*/
-
-	/*printf("size = %d\n", number);*/
-	/*for (int i = 0; i < 16; i += 8)*/
-		/*printf("\"%s\"\n", *(toto + i));*/
+	pid = fork();
+	status = 50;
+	if (pid == 0)
+	{
+		printf("child evaluating");
+		eval(&list);
+		return (0);
+	}
+	else if (pid < 0)
+		perror("minishell");
+	else
+	{
+		while (1)
+		{
+			if ((ret_wait = waitpid(-1, &status, WUNTRACED)) == -1)
+			{
+				perror("minishell"); // Voir si EINTR est une erreur qui peut avoir lieu ou pas
+				continue;
+			}
+			if (WIFEXITED(status) || WIFSIGNALED(status))
+				break;
+		}
+	}
+	printf("Return from parent\n");
+	printf("child exit code = %d\n", WEXITSTATUS(status));
+	return (0);
 }
