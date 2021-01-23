@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/21 10:16:04 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/01/23 17:41:56 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CFLAGS= -Wall -Wextra -Werror
 CC = clang
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -g3 -fsanitize=address
+	CFLAGS += -g3
 endif
 
 ifeq ($(SANITIZE), 1)
