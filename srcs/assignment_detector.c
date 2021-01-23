@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 14:26:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/15 13:41:50 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/19 11:02:51 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,18 @@ void		detect_assignment(t_token *token)
 		filled_table = 1;
 	}
 	check_word(token, transitions);
+}
+
+void		detect_assignments(t_lexer *lexer)
+{
+	int i;
+	
+	i = 0;
+	while (i < lexer->count)
+	{
+		detect_assignment(lexer->tokens + i);
+		i++;
+	}
 }
 
 #include <stdlib.h>
