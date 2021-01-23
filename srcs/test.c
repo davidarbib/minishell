@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 11:06:13 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/01/21 12:35:30 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/01/23 15:14:55 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main()
 	ft_lstadd_back(&list, list4);
 
 	pid = fork();
-	status = 50;
+	status = 0;
 	if (pid == 0)
 	{
 		printf("child evaluating");
