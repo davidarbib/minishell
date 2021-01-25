@@ -3,55 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/14 18:46:56 by darbib            #+#    #+#             */
-/*   Updated: 2020/08/09 18:30:52 by darbib           ###   ########.fr       */
+/*   Created: 2019/11/20 14:19:32 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2020/04/22 15:26:19 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "get_next_line.h"
-#include "libft.h"
+#include <stdio.h>
 
-int		read_and_join(char **line, int fd)
+int	get_next_line(int fd, char **line)
 {
-	int		same_char;
-	int		rd_result;
-	char	buf[1];
-	char	tmp;
+	static t_parse_state	st[OPEN_MAX];
 
-	same_char = 0;
-	tmp = 0;
-	while ((rd_result = read(fd, buf, 1)) > 0)
-	{
-		if (*buf == '\n')
-			break ;
-		if (tmp == *buf)
-			same_char++;
-		if (same_char > 1000)
-			return (-1);
-		else
-			same_char = 0;
-		if (!(*line = ft_strjoinfree(*line, buf, 1)))
-			return (-1);
-		tmp = *buf;
-	}
-	if (rd_result < 1)
-		return (rd_result);
-	return (1);
-}
-
-int		get_next_line(int fd, char **line)
-{
-	int		result;
-
-	if (fd < 0 || !line)
-		return (-1);
-	if (!(*line = ft_calloc(1, sizeof(char))))
-		return (-1);
-	result = read_and_join(line, fd);
-	if (result < 1)
-		return (result);
-	return (1);
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > OPEN_MAX - 1 || !line)
+		return (RET_ERROR);
+	if (!(*line = malloc(1)))
+		return (RET_ERROR);
+	(*line)[0] = '\0';
+	if (st[fd].flag == READ_FILE)
+		return (ft_gnl_read_file(fd, line, &(st[fd])));
+	else
+		return (ft_gnl_read_buffer(fd, line, &(st[fd])));
 }
