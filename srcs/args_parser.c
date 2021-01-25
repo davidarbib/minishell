@@ -1,28 +1,26 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   args_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/04 22:02:25 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/21 14:47:12 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2021/01/19 15:24:55 by darbib            #+#    #+#             */
+/*   Updated: 2021/01/19 15:32:13 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <string.h>
-#include <stdio.h>
-
-void	*ft_realloc(void *area, size_t in_bytes_n, size_t out_bytes_n)
+#include "parser.h"
+int		store_args(t_list **args, char *arg)
 {
-	void	*p_out;
-	if (in_bytes_n > out_bytes_n)
-		in_bytes_n = out_bytes_n;
-	if (!(p_out = ft_calloc(out_bytes_n, sizeof(unsigned char))))
-		return (NULL);
-	ft_memcpy(p_out, (const void *)area, in_bytes_n);
-	free(area);
-	return (p_out);
+	t_list			*args_node;
+	
+	args_node = ft_lstnew(arg);
+	if (!args_node)
+		return (0);
+	if (!*args)
+		*args = args_node;
+	else
+		ft_lstadd_back(args, args_node);
+	return (1);
 }
