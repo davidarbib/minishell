@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 11:06:13 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/01/23 15:14:55 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/01/25 14:49:43 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,11 @@ void	eval(t_list **command)
 	tab = (char**)ft_lsttotab(*command, 8, &size);
 	ft_lstclear(command, del);
 	tab[size] = 0;
-	printf("%d\n", size);
-	/*printf("here : %s\n", (((char*const*)tab) + 1)[2]);*/
-	/*if (execve((char*)tab[0], ((char*const*)tab) + 1, NULL) == -1)*/
+	printf("size = %d\n", size);
+	for (int i = 0; i < size; i++)
+		printf("mimi: %s\n", tab[i]);
 	if (execve((char*)tab[0], (char*const*)tab, NULL) == -1)
-	{
 		perror("minishell");
-	}
 }
 
 int	main()
@@ -78,7 +76,6 @@ int	main()
 	status = 0;
 	if (pid == 0)
 	{
-		printf("child evaluating");
 		eval(&list);
 		return (0);
 	}
@@ -94,10 +91,8 @@ int	main()
 				continue;
 			}
 			if (WIFEXITED(status) || WIFSIGNALED(status))
-				break;
+				break ;
 		}
 	}
-	printf("Return from parent\n");
-	printf("child exit code = %d\n", WEXITSTATUS(status));
 	return (0);
 }
