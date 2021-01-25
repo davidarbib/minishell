@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/20 15:25:15 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/25 14:05:09 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	delete_token(void *content)
 	free(content);
 }
 
-#include "parser.h"
+/*#include "parser.h"
 
 int main()
 {	
@@ -147,7 +147,7 @@ int main()
 		node3 = node3->next;
 		j++;
 	}
-}
+}*/
 
 /*
 int main()
