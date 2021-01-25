@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 16:45:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/17 19:57:34 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/25 14:05:28 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ enum e_redirect_type	get_redirection_type(t_token token)
 	return (i_redirect);
 }
 
-void	parse_filename(t_llparser *parser, t_io_redirect *redirection)
+int	parse_filename(t_llparser *parser, t_io_redirect *redirection)
 {
 	t_token current_token;
 
@@ -52,12 +52,13 @@ void	parse_filename(t_llparser *parser, t_io_redirect *redirection)
 		//if (!redirection->filename)
 		//	sys_error;
 		eat(parser);
+		return (1);
 	}
-	else
-		parser->state = error;
+	parser->state = error;
+	return (0);
 }
 
-void	parse_io_file(t_llparser *parser, t_io_redirect *redirection)
+int	parse_io_file(t_llparser *parser, t_io_redirect *redirection)
 {
 	t_token current_token;
 	
@@ -65,16 +66,19 @@ void	parse_io_file(t_llparser *parser, t_io_redirect *redirection)
 	if (isredirection_op(&current_token))
 	{
 		eat(parser);
-		parse_filename(parser, redirection);
+		if (!parse_filename(parser, redirection))
+			return (0);
 		redirection->type = get_redirection_type(current_token);
+		return (1);
 	}
+	return (0);
 }
 
-void	parse_io_redirect(t_llparser *parser)
+int	parse_io_redirect(t_llparser *parser)
 {
 	t_io_redirect	redirection;
 	t_token			current_token;
-	int				store_success;
+	int				success;
 
 	current_token = read_token(parser);
 	redirection.io_number = -1; 
@@ -83,11 +87,14 @@ void	parse_io_redirect(t_llparser *parser)
 		eat(parser);
 		redirection.io_number = ft_atoi(current_token.value);
 	}
-	parser->state = base;
-	parse_io_file(parser, &redirection);
-	store_success = 1;
-	if (parser->state == found)
-		store_success = store_redirection(&parser->redirections, &redirection);
+	if (parse_io_file(parser, &redirection))
+	{
+		success = 1;
+		success = store_redirection(&parser->current_command->redirections,
+									&redirection);
+		return (1);
+	}
+	return (0);
 	//if (!store_success)	
 	//	sys_error
 }
