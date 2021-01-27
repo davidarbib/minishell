@@ -3,82 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/15 17:21:28 by darbib            #+#    #+#             */
-/*   Updated: 2020/02/24 16:19:07 by darbib           ###   ########.fr       */
+/*   Created: 2019/11/20 14:19:55 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2020/04/22 20:25:38 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+static int
+	ft_strlen(char *str)
 {
-	size_t	i;
-	size_t	len_dst;
+	int	i;
 
-	len_dst = ft_strlen(dst);
-	if (dstsize && dstsize > len_dst)
-	{
-		dst += len_dst;
-		i = 0;
-		while (src[i] && i < dstsize - len_dst - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = 0;
-		return (len_dst + ft_strlen(src));
-	}
-	return (ft_strlen(src) + dstsize);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-char	*ft_strjoinfree(char const *s1, char const *s2, char clear)
+/*
+** Goes to no more than index=n (excluded)
+*/
+
+static char
+	*update(char **line, t_parse_state *st, size_t n)
 {
-	char	*s_out;
-	size_t	len_s1;
-	size_t	len_s2;
-	size_t	i;
+	char	*ret;
+	int		i;
+	int		l;
+	int		to_add;
 
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	if (!(s_out = ft_calloc(len_s1 + len_s2 + 1, sizeof(char))))
-		return (NULL);
-	if (len_s1 + 1)
-	{
-		i = 0;
-		while (s1[i] && i < len_s1)
-		{
-			s_out[i] = s1[i];
-			i++;
-		}
-		s_out[i] = 0;
-	}
-	ft_strlcat(s_out, s2, len_s1 + len_s2 + 1);
-	if (clear == 1 || clear == 3)
-		free((void *)s1);
-	if (clear == 2 || clear == 3)
-		free((void *)s2);
-	return (s_out);
-}
-
-char	*ft_strdupfree(const char *s1, char clear)
-{
-	size_t	len;
-	size_t	i;
-	char	*s_out;
-
-	len = ft_strlen(s1);
-	if (!(s_out = ft_calloc(len + 1, sizeof(char))))
+	l = ft_strlen(*line);
+	to_add = n - st->cursor;
+	if (!(ret = malloc(l + to_add + 1)))
 		return (NULL);
 	i = 0;
-	while (i < len)
+	while (i < l)
 	{
-		((unsigned char *)s_out)[i] = ((unsigned char *)s1)[i];
+		ret[i] = (*line)[i];
 		i++;
 	}
-	s_out[len] = 0;
-	if (clear)
-		free((void *)s1);
-	return (s_out);
+	free(*line);
+	while (i < l + to_add)
+	{
+		ret[i] = (st->buffer)[st->cursor];
+		i++;
+		st->cursor++;
+	}
+	ret[i] = '\0';
+	return (ret);
+}
+
+/*
+** -1 if not found, index i is returned if occurence is found after
+** cursor (included)
+*/
+
+static int
+	occurence(char c, t_parse_state *st)
+{
+	int	i;
+
+	i = st->cursor;
+	while (i < st->char_nb)
+	{
+		if (st->buffer[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int
+	ft_gnl_read_buffer(int fd, char **line, t_parse_state *st)
+{
+	int		j;
+
+	st->flag = READ_BUF;
+	if (st->cursor < st->char_nb && (j = occurence('\n', st)) != -1)
+	{
+		if (!(*line = update(line, st, j)))
+			return (RET_ERROR);
+		st->cursor++;
+		return (RET_FILE_READ);
+	}
+	else
+	{
+		if (st->cursor < st->char_nb)
+			if (!(*line = update(line, st, st->char_nb)))
+				return (RET_ERROR);
+		return (ft_gnl_read_file(fd, line, st));
+	}
+	return (RET_ERROR);
+}
+
+int
+	ft_gnl_read_file(int fd, char **line, t_parse_state *st)
+{
+	st->flag = READ_FILE;
+	st->cursor = 0;
+	if ((st->char_nb = read(fd, st->buffer, BUFFER_SIZE)) > 0)
+		return (ft_gnl_read_buffer(fd, line, st));
+	else if (st->char_nb == 0)
+		return (RET_FILE_END);
+	else
+		return (RET_ERROR);
 }
