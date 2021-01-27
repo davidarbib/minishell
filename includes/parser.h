@@ -6,8 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 13:32:26 by fyusuf-a         ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2021/01/27 13:47:55 by fyusuf-a         ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
@@ -71,6 +70,8 @@ typedef struct	s_simple_command
 	t_list		*args;
 }				t_simple_command;
 
+typedef t_dlist t_pipeline;
+
 typedef struct	s_llparser
 {
 	t_token				*tokens;
@@ -79,7 +80,8 @@ typedef struct	s_llparser
 	t_list				*redirections;
 	t_list				*assignments;
 	t_list				*args;
-	t_simple_command	*command;
+	t_simple_command	*current_command;
+	t_pipeline			*current_pipeline;
 }				t_llparser;
 
 
@@ -98,17 +100,23 @@ typedef struct	s_assignment
 
 int						isredirection_op(t_token *token);
 void					detect_ionumber(t_lexer *lexer);
-void					parse_prefix(t_llparser *parser);
-void					parse_io_redirect(t_llparser *parser);
-void					parse_assignment(t_llparser *parser);
+int						parse_prefix(t_llparser *parser);
+int						parse_io_redirect(t_llparser *parser);
+int						parse_assignment(t_llparser *parser);
 void					detect_assignment(t_token *token);
 void					detect_assignments(t_lexer *lexer);
 t_token					read_token(t_llparser *parser);
 t_token					*ref_token(t_llparser *parser);
 void					eat(t_llparser *parser);
 char					*extract_word(t_token token);
-void					parse_word(t_llparser *parser);
+int						parse_word(t_llparser *parser);
+int						parse_suffix(t_llparser *parser);
+int						parse_cmd_name(t_llparser *parser);
+int						parse_cmd_word(t_llparser *parser);
 enum e_redirect_type	get_redirection_type(t_token token);
 int						store_args(t_list **args, char *arg);
-void					parse_simple_command(t_llparser *parser);
+int						parse_simple_command(t_llparser *parser, 
+						t_pipeline **current_pipeline);
+int						parse_pipeline(t_llparser *parser, 
+						t_pipeline **current_pipeline);
 #endif

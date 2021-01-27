@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 09:33:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/18 11:44:00 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/25 13:23:31 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,27 @@ int main()
 }
 */
 
-void	parse_assignment(t_llparser *parser)
+int		parse_assignment(t_llparser *parser)
 {
 	t_token			token;
 	t_assignment	assignment;
 	int				success;
 
 	token = read_token(parser);
-	detect_assignment(&token);
-	parser->state = base;
+	//detect_assignment(&token);
+	//parser->state = base;
 	assignment.key = NULL;
 	assignment.value = NULL;
 	if (token.type == ASSIGNMENT_TOKEN)
 	{
-		parser->state = found;
 		eat(parser);
 		success = split_assignment(token, &assignment);
 		//if (!success)
 		//	sys_error();
-		success = store_assignment(&parser->assignments, &assignment);
+		success = store_assignment(&parser->current_command->assignments, &assignment);
 		//if (!success)
 		//	sys_error();
+		return (1);
 	}
+	return (0);
 }

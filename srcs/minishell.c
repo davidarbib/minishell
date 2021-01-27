@@ -12,24 +12,25 @@ void	initialize_parser(t_llparser *parser, t_lexer *lexer)
 	parser->tokens = lexer->tokens;
 	parser->token_idx = 0;
 	parser->state = base;
-	parser->redirections = NULL;
-	parser->assignments = NULL;
-	parser->args = NULL;
+	parser->current_pipeline = NULL;
+	/*parser->redirections = NULL;*/
+	/*parser->assignments = NULL;*/
+	/*parser->args = NULL;*/
 }
 
-void	launch(t_list **command)
+void	launch(t_list *command)
 {
 	char	**tab;
 	int		size;
 
-	tab = (char**)ft_lsttotab(*command, 8, &size);
-	ft_lstclear(command, del);
+	tab = (char**)ft_lsttotab(command, 8, &size);
+	/*ft_lstclear(command, del);*/
 	tab[size] = 0;
 	execve((char*)tab[0], (char*const*)tab, NULL);
 	perror("minishell");
 }
 
-int		eval(t_list **command)
+int		eval(t_pipeline* pipeline)
 {
 	int	pid;
 	int	ret_wait;
@@ -39,7 +40,7 @@ int		eval(t_list **command)
 	status = 0;
 	if (pid == 0)
 	{
-		launch(command);
+		launch(((t_simple_command*)pipeline->content)->args);
 		return (0);
 	}
 	else if (pid < 0)
@@ -66,14 +67,14 @@ int		parse(t_lexer *lexer, t_llparser *parser, char *line)
 	detect_ionumber(lexer);
 	detect_assignments(lexer);
 	initialize_parser(parser, lexer);
-	parse_simple_command(parser);
+	parse_pipeline(parser, &parser->current_pipeline);
 	return (0);
 }
 
 void	run_once(t_lexer *lexer, t_llparser *parser, char *line)
 {
 	parse(lexer, parser, line);
-	eval(&parser->args);
+	eval(parser->current_pipeline);
 }
 
 int		main(int argc, char **argv)
@@ -83,6 +84,7 @@ int		main(int argc, char **argv)
 	t_lexer		lexer;
 	t_llparser	parser;
 
+	(void)argv;
 	if (argc == 1)
 	{
 		while (1)
@@ -98,9 +100,9 @@ int		main(int argc, char **argv)
 				exit(EXIT_SUCCESS);
 			}
 			parse(&lexer, &parser, line);
-			eval(&parser.args);
+			eval(parser.current_pipeline);
 		}
 	}
-	else	// for testing
+	else	 // for testing
 		run_once(&lexer, &parser, argv[1]);
 }
