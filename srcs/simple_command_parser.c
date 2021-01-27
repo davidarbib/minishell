@@ -6,11 +6,12 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:35:27 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 11:43:42 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 19:33:22 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "obj_destructor.h"
 
 int		store_simple_command(t_pipeline **pipeline, t_simple_command *command)
 {
@@ -23,7 +24,10 @@ int		store_simple_command(t_pipeline **pipeline, t_simple_command *command)
 	*pipeline_content = *command;
 	pipeline_node = ft_dlstnew(pipeline_content);
 	if (!pipeline_node)
+	{
+		ft_memdel((void **)&pipeline_content);
 		return (0);
+	}
 	if (!*pipeline)
 		*pipeline = pipeline_node;
 	else
@@ -38,10 +42,9 @@ void	init_simple_command(t_simple_command *command)
 	command->args = NULL;
 }
 
-int	parse_prefix(t_llparser *parser)
+int		parse_prefix(t_llparser *parser)
 {
 	int success;
-	//printf("parser->state : %d\n", parser->state);
 	success = parse_assignment(parser);
 	if (!success)
 		success = parse_io_redirect(parser);
@@ -53,7 +56,7 @@ int	parse_prefix(t_llparser *parser)
 	return (0);
 }
 
-int	parse_suffix(t_llparser *parser)
+int		parse_suffix(t_llparser *parser)
 {
 	int success;
 
@@ -69,7 +72,6 @@ int	parse_suffix(t_llparser *parser)
 int		parse_simple_command(t_llparser *parser, t_pipeline **current_pipeline)
 {
 	t_simple_command	command;
-	int					success;
 
 	init_simple_command(&command);
 	parser->state = base;
@@ -83,8 +85,12 @@ int		parse_simple_command(t_llparser *parser, t_pipeline **current_pipeline)
 		if (parse_cmd_word(parser))
 			parse_suffix(parser);
 	}
-	success = store_simple_command(current_pipeline, &command);
-	//if (!success)
-	//	sys_error();
+	if (parser->state == sys_error || parser->state == no_filename_error)	
+		destroy_command(parser->current_command);
+	if (store_simple_command(current_pipeline, &command))
+	{
+		parser->state = sys_error;
+		return (0);
+	}
 	return (1);
 }

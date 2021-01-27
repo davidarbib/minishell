@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/09 12:53:10 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:42:32 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ int					ft_min(int a, int b);
 int					ft_max(int a, int b);
 void				*ft_realloc(void *area, size_t in_bytes_n, 
 					size_t out_bytes_n);
+void				ft_memdel(void **area_ptr);
 #endif

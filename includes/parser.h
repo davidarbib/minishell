@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 10:11:48 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 17:56:16 by darbib           ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
@@ -14,6 +14,7 @@
 
 # include "lexer.h"
 # include "libft.h"
+# include "assignment.h"
 
 # define cmd_prefix_type		1
 # define cmd_name_type			2
@@ -53,7 +54,9 @@ enum			e_parser_state
 {
 	base,
 	found,
-	error
+	multiline,
+	no_filename_error,
+	sys_error
 };
 
 enum			e_redirect_type
@@ -94,11 +97,6 @@ typedef struct	s_io_redirect
 	enum e_redirect_type	type;
 }				t_io_redirect;
 
-typedef struct	s_assignment
-{
-	char					*key;
-	char					*value;
-}				t_assignment;
 
 int						isredirection_op(t_token *token);
 void					detect_ionumber(t_lexer *lexer);

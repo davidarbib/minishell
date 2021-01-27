@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:09:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/15 11:43:22 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 17:18:40 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 # define EQUAL_STATE	2
 # define ERROR_STATE	3
 
-void		detect_assignment(t_token *token);
+typedef struct	s_assignment
+{
+	char					*key;
+	char					*value;
+}				t_assignment;
 
+void		detect_assignment(t_token *token);
 #endif
