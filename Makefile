@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/27 13:32:39 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/01/27 13:39:57 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,11 +64,7 @@ SRC = lexer.c \
 	  redirection_parser.c \
 	  isredirection_op.c \
 	  args_parser.c \
-<<<<<<< HEAD
-		minishell.c
-=======
 		minishell.c \
->>>>>>> f2bfdb9c63feac66febee1061818e3f5e57f2710
 
 # ------------------------------------------------------------------------------
 

@@ -23,7 +23,7 @@ void	*ft_realloc(void *area, size_t in_bytes_n, size_t out_bytes_n)
 		in_bytes_n = out_bytes_n;
 	if (!(p_out = ft_calloc(out_bytes_n, sizeof(unsigned char))))
 		return (NULL);
-	ft_memcpy(p_out, (const void *)area, bytes);
+	ft_memcpy(p_out, (const void *)area, in_bytes_n);
 	free(area);
 	return (p_out);
 }
