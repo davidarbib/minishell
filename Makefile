@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/27 13:22:17 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/01/27 13:27:51 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,18 +62,9 @@ SRC = lexer.c \
 	  assignment_parser.c \
 	  ionumber_detector.c \
 	  redirection_parser.c \
-<<<<<<< HEAD
 	  isredirection_op.c \
-<<<<<<< HEAD
-		test.c
-=======
 	  args_parser.c \
-	  isredirection_op.c
->>>>>>> simple command parsing done, todo further tests with quotes
-=======
-	  args_parser.c \
-		minishell.c \
->>>>>>> Problem with function get_next_line
+		minishell.c
 
 # ------------------------------------------------------------------------------
 
