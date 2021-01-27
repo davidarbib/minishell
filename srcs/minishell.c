@@ -17,7 +17,19 @@ void	initialize_parser(t_llparser *parser, t_lexer *lexer)
 	parser->args = NULL;
 }
 
-/*int	main()
+void	launch(t_list **command)
+{
+	char	**tab;
+	int		size;
+
+	tab = (char**)ft_lsttotab(*command, 8, &size);
+	ft_lstclear(command, del);
+	tab[size] = 0;
+	execve((char*)tab[0], (char*const*)tab, NULL);
+	perror("minishell");
+}
+
+int		eval(t_list **command)
 {
 	int	pid;
 	int	ret_wait;
@@ -27,7 +39,7 @@ void	initialize_parser(t_llparser *parser, t_lexer *lexer)
 	status = 0;
 	if (pid == 0)
 	{
-		eval(&list);
+		launch(command);
 		return (0);
 	}
 	else if (pid < 0)
@@ -46,38 +58,30 @@ void	initialize_parser(t_llparser *parser, t_lexer *lexer)
 		}
 	}
 	return (0);
-}*/
-
-void	eval2(t_list **command)
-{
-	char	**tab;
-	int		size;
-
-	tab = (char**)ft_lsttotab(*command, 8, &size);
-	ft_lstclear(command, del);
-	tab[size] = 0;
-	if (execve((char*)tab[0], (char*const*)tab, NULL) == -1)
-		perror("minishell");
 }
 
-int	eval(char *line)
+int		parse(t_lexer *lexer, t_llparser *parser, char *line)
 {
-	t_lexer		lexer;
-	t_llparser	parser;
-
-	lexer = analyse_command(line);
-	detect_ionumber(&lexer);
-	detect_assignments(&lexer);
-	initialize_parser(&parser, &lexer);
-	parse_simple_command(&parser);
-	eval2(&(parser.args));
+	*lexer = analyse_command(line);
+	detect_ionumber(lexer);
+	detect_assignments(lexer);
+	initialize_parser(parser, lexer);
+	parse_simple_command(parser);
 	return (0);
 }
 
-int	main(int argc, char **argv)
+void	run_once(t_lexer *lexer, t_llparser *parser, char *line)
 {
-	char	*line;
-	int		result;
+	parse(lexer, parser, line);
+	eval(&parser->args);
+}
+
+int		main(int argc, char **argv)
+{
+	char		*line;
+	int			result;
+	t_lexer		lexer;
+	t_llparser	parser;
 
 	if (argc == 1)
 	{
@@ -93,9 +97,10 @@ int	main(int argc, char **argv)
 				printf("exit\n");
 				exit(EXIT_SUCCESS);
 			}
-			eval(line);
+			parse(&lexer, &parser, line);
+			eval(&parser.args);
 		}
 	}
 	else	// for testing
-		eval(argv[1]);
+		run_once(&lexer, &parser, argv[1]);
 }
