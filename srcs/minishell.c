@@ -93,8 +93,6 @@ int	main(int argc, char **argv)
 				printf("exit\n");
 				exit(EXIT_SUCCESS);
 			}
-			printf("The line: >%s<\n", line);
-			printf("The size of the line: >%zu<\n", ft_strlen(line));
 			eval(line);
 		}
 	}
