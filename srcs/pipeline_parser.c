@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:21:02 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/25 14:21:30 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 10:43:24 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	parse_pipeline(t_llparser *parser, t_pipeline **current_pipeline)
 		parser->state = error;
 		return (0);
 	}
+	parser->state = found;
 	if (parse_pipe(parser))
 		return (parse_pipeline(parser, current_pipeline));
 	return (0);

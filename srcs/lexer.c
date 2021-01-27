@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/25 14:08:50 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 13:23:23 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,75 @@ void	delete_token(void *content)
 }
 
 #include "parser.h"
-
+int main()
+{	
+	//-----parsing tests with shell list-----
+	//
+	printf("-----------------------------\n");
+	//char *input = "echo \'ohoh\'";
+	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
+	//char *input = "echo \"echo 4\"test";
+	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e";
+	char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
+	t_lexer lexer = analyse_command(input);
+	int i = 0;
+	while (i < lexer.count)
+	{
+		printf("token : %s\n", lexer.tokens[i].value);
+		printf("token type: %u\n", lexer.tokens[i].type);
+		i++;
+	}
+	detect_ionumber(&lexer);
+	detect_assignments(&lexer);
+	t_llparser parser;
+	parser.tokens = lexer.tokens;
+	parser.token_idx = 0;
+	parser.state = base;
+	parser.shell_list = NULL;
+	parse_shell_list(&parser, &parser.shell_list);
+	t_shell_list *node_shell_list = parser.shell_list;
+	while (node_shell_list)
+	{
+		printf("#################current pipeline################\n");
+		t_pipeline *node_pipeline = node_shell_list->content;
+		while (node_pipeline)
+		{
+			printf("-----------------current simple command-------------------\n");
+			t_simple_command *command = (t_simple_command *)node_pipeline->content;
+			t_list *node = command->redirections;
+			while (node)
+			{
+				t_io_redirect *redirection = (t_io_redirect *)node->content;
+				printf("redir.ionumber : %d\n", redirection->io_number);
+				printf("redir.filename : %s\n", redirection->filename);
+				printf("redir.type : %d\n", redirection->type);
+				node = node->next;
+			}
+			printf("------------------------------------\n");
+			t_list *node2 = command->assignments;
+			while (node2)
+			{
+				t_assignment *assignment = (t_assignment *)node2->content;
+				printf("key : %s\n", assignment->key);
+				printf("value : %s\n", assignment->value);
+				node2 = node2->next;
+			}
+			printf("------------------------------------\n");
+			t_list *node3 = command->args;
+			int j = 0;
+			while (node3)
+			{
+				char *arg = (char *)node3->content;
+				printf("arg[%d] : %s\n", j, arg);
+				node3 = node3->next;
+				j++;
+			}
+			node_pipeline = node_pipeline->next;
+		}
+		node_shell_list = node_shell_list->next;
+	}
+}
+/*
 int main()
 {	
 	//-----parsing tests with pipeline-----
@@ -155,6 +223,7 @@ int main()
 		node_pipeline = node_pipeline->next;
 	}
 }
+*/
 /*
 int main()
 {	

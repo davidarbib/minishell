@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:35:27 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/25 14:18:28 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 11:43:42 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 int		store_simple_command(t_pipeline **pipeline, t_simple_command *command)
 {
-	t_simple_command	*command_content;
-	t_pipeline			*command_node;
+	t_simple_command	*pipeline_content;
+	t_pipeline			*pipeline_node;
 	
-	command_content = (t_simple_command *)ft_calloc(1, sizeof(t_simple_command));
-	if (!command_content)
+	pipeline_content = (t_simple_command *)ft_calloc(1, sizeof(t_simple_command));
+	if (!pipeline_content)
 		return (0);
-	*command_content = *command;
-	command_node = ft_dlstnew(command_content);
-	if (!command_node)
+	*pipeline_content = *command;
+	pipeline_node = ft_dlstnew(pipeline_content);
+	if (!pipeline_node)
 		return (0);
 	if (!*pipeline)
-		*pipeline = command_node;
+		*pipeline = pipeline_node;
 	else
-		ft_dlstadd_back(pipeline, command_node);
+		ft_dlstadd_back(pipeline, pipeline_node);
 	return (1);
 }
 

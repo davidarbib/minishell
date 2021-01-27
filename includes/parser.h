@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/25 21:52:22 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 10:11:48 by darbib           ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
@@ -63,14 +63,15 @@ enum			e_redirect_type
 	oa_redirect
 };
 
+typedef t_dlist	t_pipeline;
+typedef t_list	t_shell_list;
+
 typedef struct	s_simple_command
 {
 	t_list		*redirections;
 	t_list		*assignments;
 	t_list		*args;
 }				t_simple_command;
-
-typedef t_dlist t_pipeline;
 
 typedef struct	s_llparser
 {
@@ -82,6 +83,7 @@ typedef struct	s_llparser
 	t_list				*args;
 	t_simple_command	*current_command;
 	t_pipeline			*current_pipeline;
+	t_shell_list		*shell_list;
 }				t_llparser;
 
 
@@ -119,4 +121,6 @@ int						parse_simple_command(t_llparser *parser,
 						t_pipeline **current_pipeline);
 int						parse_pipeline(t_llparser *parser, 
 						t_pipeline **current_pipeline);
+int						parse_shell_list(t_llparser *parser, 
+						t_shell_list **shell_list);
 #endif

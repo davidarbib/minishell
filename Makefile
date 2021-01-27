@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/25 14:25:15 by darbib           ###   ########.fr        #
+#    Updated: 2021/01/26 11:41:56 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRC = lexer.c \
 	  args_parser.c \
 	  simple_command_parser.c \
 	  pipeline_parser.c \
+	  list_parser.c \
 	  isredirection_op.c
 
 # ------------------------------------------------------------------------------
