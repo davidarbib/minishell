@@ -4,3 +4,6 @@
 **/*.o
 **/*.a
 **/.clangd
+**/*.tmp
+**/*.gch
+minishell
