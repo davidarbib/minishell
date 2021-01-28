@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:35:27 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 19:33:22 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/28 14:52:34 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,11 @@ int		parse_simple_command(t_llparser *parser, t_pipeline **current_pipeline)
 			parse_suffix(parser);
 	}
 	if (parser->state == sys_error || parser->state == no_filename_error)	
+	{
 		destroy_command(parser->current_command);
-	if (store_simple_command(current_pipeline, &command))
+		return (0);
+	}
+	if (!store_simple_command(current_pipeline, &command))
 	{
 		parser->state = sys_error;
 		return (0);

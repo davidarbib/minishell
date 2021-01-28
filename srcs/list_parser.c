@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 22:16:35 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 20:06:13 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/28 15:21:57 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	store_pipeline(t_list **shell_list, t_pipeline *pipeline)
 
 int	parse_sep(t_llparser *parser)
 {
+	//t_token token = read_token(parser);
 	if (read_token(parser).type == SCOLON_TOKEN)
+	//if (token.type == SCOLON_TOKEN)
 	{
 		eat(parser);
 		return (1);

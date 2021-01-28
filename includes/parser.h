@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 17:56:16 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/28 14:53:59 by darbib           ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
@@ -46,9 +46,6 @@
 // pour free les tokens au plus vite
 // on gardera juste la shell_list
 //
-// je me tate a executer les assignations pdt le parsing mais jaime bien les archis
-// en couches, quen penses tu ?
-//-----------------------------------------------------------------------------
 
 enum			e_parser_state
 {

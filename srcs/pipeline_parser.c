@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:21:02 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 19:47:22 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/28 14:07:49 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	parse_pipeline(t_llparser *parser, t_pipeline **current_pipeline)
 	parser->state = found;
 	if (parse_pipe(parser))
 	{
-		if (!parse_pipeline(parser, current_pipeline))
+		parser->state = base;
+		parse_pipeline(parser, current_pipeline);
+		//if (!parse_pipeline(parser, current_pipeline))
+		if (parser->state == base)
 			parser->state = multiline;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 13:23:23 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/28 16:54:38 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_lexer		analyse_command(char *command)
 		printf("multiline requested\n");
 	if (fsm.current_token.type != DUMMY_TOKEN)
 		delimit_token(&lexer, &fsm);
+	ft_memdel((void **)&fsm.buf);
 	return (lexer);
 }
 
@@ -92,6 +93,8 @@ void	delete_token(void *content)
 }
 
 #include "parser.h"
+#include "obj_destructor.h"
+
 int main()
 {	
 	//-----parsing tests with shell list-----
@@ -101,7 +104,12 @@ int main()
 	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
 	//char *input = "echo \"echo 4\"test";
 	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e";
-	char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
+	//char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
+	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e |";
+	//char *input = "ls >";
+	//char *input = "ls > a.out | cat -e ;";
+	//char *input = "ls > a.out";
+	char *input = "ls";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)
@@ -117,7 +125,15 @@ int main()
 	parser.token_idx = 0;
 	parser.state = base;
 	parser.shell_list = NULL;
-	parse_shell_list(&parser, &parser.shell_list);
+	int ret = parse_shell_list(&parser, &parser.shell_list);
+	printf("parse return : %d\n", ret);
+	printf("parser state : %d\n", parser.state);
+	if (!ret)
+	{
+		destroy_shell_list(&parser.shell_list);
+		free(parser.tokens);
+		return (1);
+	}
 	t_shell_list *node_shell_list = parser.shell_list;
 	while (node_shell_list)
 	{

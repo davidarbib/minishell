@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 16:52:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 20:05:07 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/28 16:47:14 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	del_shell_list_content(void *content)
 	
 	pipeline = (t_pipeline *)content;
 	destroy_pipeline(&pipeline);
-	ft_memdel(&content);
+	//ft_memdel(&content);
 }
 
 void	destroy_pipeline(t_pipeline **pipeline)
