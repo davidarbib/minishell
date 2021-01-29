@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/25 14:05:37 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/01/29 22:22:55 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int			check_quoting_char(t_fsm *fsm, char current_char);
 int			check_substitution_mark(t_fsm *fsm, char current_char);
 int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char);
 int			check_blank(t_lexer *lexer, t_fsm *fsm, char current_char);
-void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm);
 t_lexer		analyse_command(char *command);
+int			init_lexer_fsm(t_lexer *lexer, t_fsm *fsm);
+int			add_char_to_fsm_buffer(t_fsm *fsm, char c);
+int			add_token(t_lexer *lexer, t_token token);
 #endif

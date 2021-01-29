@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstnew.c                                       :+:      :+:    :+:   */
+/*   ft_memdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/09 18:08:41 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/29 13:23:03 by darbib           ###   ########.fr       */
+/*   Created: 2021/01/27 15:39:03 by darbib            #+#    #+#             */
+/*   Updated: 2021/01/27 15:48:17 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <string.h>
-#include <stdio.h>
+#include "stdlib.h"
 
-t_dlist	*ft_dlstnew(void *content)
+void	ft_memdel(void **area_ptr)
 {
-	t_dlist	*node;
-
-	if (!(node = ft_calloc(1, sizeof(t_dlist))))
-		return (NULL);
-	node->content = content;
-	node->next = NULL;
-	node->prev = NULL;
-	return (node);
+	free(*area_ptr);
+	*area_ptr = NULL;
 }

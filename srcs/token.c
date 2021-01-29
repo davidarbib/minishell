@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 21:23:40 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/07 17:42:44 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/29 22:07:37 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ void		delimit_token(t_lexer *lexer, t_fsm *fsm)
 	if (fsm->current_token.type == DUMMY_TOKEN)
 		return ;
 	delimited_token.type = fsm->current_token.type;
-	delimited_token.value = strdup((const char *)fsm->buf);
+	delimited_token.value = ft_strdup((const char *)fsm->buf);
 	bzero(fsm->buf, fsm->size);
 	delimited_token.size = fsm->count;
 	lexer->tokens[lexer->count++] = delimited_token;
+	//use add token
 	fsm->count = 0;
 	fsm->current_token.type = DUMMY_TOKEN;
 }
