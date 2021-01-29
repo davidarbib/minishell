@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 22:16:35 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/29 20:54:52 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/29 21:34:14 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int	store_pipeline(t_list **shell_list, t_pipeline *pipeline)
 
 int	parse_sep(t_llparser *parser)
 {
-	//t_token token = read_token(parser);
 	if (read_token(parser).type == SCOLON_TOKEN)
-	//if (token.type == SCOLON_TOKEN)
 	{
 		eat(parser);
 		return (1);
@@ -62,13 +60,6 @@ int	parse_shell_list(t_llparser *parser, t_shell_list **shell_list)
 			destroy_pipeline(&current_pipeline);
 			return (0);
 		}
-		//for tests
-		//destroy_pipeline(&current_pipeline);
-		//destroy_shell_list(shell_list);
-		//destroy_tokens(&parser->tokens, 5);
-		//free(current_pipeline);
-		//exit(0);
-		//--------
 		if (parse_sep(parser))
 			return (parse_shell_list(parser, shell_list));
 	}

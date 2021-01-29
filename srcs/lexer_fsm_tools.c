@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 21:40:12 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/29 21:22:09 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/29 22:02:29 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "lexer.h"
 #include "libft.h"
 
-void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)
+int		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)
 {
 	lexer->tokens = NULL;
 	lexer->size = LEXERSIZE;
@@ -30,43 +30,42 @@ void		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)
 	fsm->size = FSMBUFSIZE;
 	fsm->buf = (char *)ft_calloc(fsm->size, sizeof(char));
 	fsm->count = 0;
+	if (fsm->buf && lexer->tokens)
+		return (1);
+	return (0);
 }
 
-void		add_token(t_lexer *lexer, t_token token, t_fsm *fsm)
+int		add_token(t_lexer *lexer, t_token token)
 {
 	size_t	actual_size_bytes;
 
 	if ((size_t)lexer->count == lexer->size)
 	{
 		actual_size_bytes = lexer->size * sizeof(t_token);
-		if (!(lexer->tokens = (t_token *)ft_realloc(lexer->tokens,
-								actual_size_bytes, actual_size_bytes * 2)))
-		{
-			//sys_error_in_lexing(lexer, fsm);
-			(void)fsm;
-			return ;
-		}
+		lexer->tokens = (t_token *)ft_realloc(lexer->tokens,
+								actual_size_bytes, actual_size_bytes * 2);
+		if (!lexer->tokens)
+			return (0);
 		lexer->size *= 2;
 	}
 	lexer->tokens[lexer->count] = token;
 	lexer->count++;
+	return (1);
 }
 
-void		add_char_to_fsm_buffer(t_fsm *fsm, char c, t_lexer *lexer)
+int		add_char_to_fsm_buffer(t_fsm *fsm, char c)
 {
 	if ((size_t)fsm->count + 1 == fsm->size)
 	{
 		if (!(fsm->buf = (char *)ft_realloc(fsm->buf, fsm->size, 
 											fsm->size * 2)))
-		{
-			//sys_error_in_lexing(fsm, fsm);
-			(void)lexer;
-			return ;
-		}
+		if (!fsm->buf)
+			return (0);
 		fsm->size *= 2;
 	}
 	fsm->buf[fsm->count] = c;
 	fsm->count++;
+	return (1);
 }
 
 /*

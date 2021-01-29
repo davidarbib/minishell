@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/29 21:07:31 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/29 22:08:33 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_lexer		analyse_command(char *command)
 			continue;
 		handle_quote_cancel_char(&fsm, command[i]);
 		fsm.buf[fsm.count++] = command[i];
+		//use add_char_to_fsm_buffer
 		fsm.current_token.type = WORD_TOKEN;
 		if (fsm.state == ESCAPE_STATE)
 			fsm.state = NORMAL_STATE;
