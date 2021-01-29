@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/28 16:54:38 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/29 21:07:31 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int main()
 	//char *input = "ls > a.out | cat -e ;";
 	//char *input = "ls > a.out";
 	char *input = "ls";
+	//char *input = "ls | cat | echo";
+	//char *input = "ls | cat | echo ; oxo";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)
@@ -125,13 +127,18 @@ int main()
 	parser.token_idx = 0;
 	parser.state = base;
 	parser.shell_list = NULL;
+	//t_pipeline *current_pipeline = NULL;
 	int ret = parse_shell_list(&parser, &parser.shell_list);
+	//int ret = parse_pipeline(&parser, &current_pipeline);
 	printf("parse return : %d\n", ret);
 	printf("parser state : %d\n", parser.state);
 	if (!ret)
 	{
+		//destroy_pipeline(&current_pipeline);
 		destroy_shell_list(&parser.shell_list);
-		free(parser.tokens);
+		destroy_tokens(&parser.tokens, lexer.count);
+		//while (1)
+		//	system("Leaks");
 		return (1);
 	}
 	t_shell_list *node_shell_list = parser.shell_list;

@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/28 09:19:43 by darbib           ###   ########.fr        #
+#    Updated: 2021/01/29 13:17:31 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MAGENTA = 	'\033[0;35m'
 RESET = 	'\033[0m'
 
 NAME = minishell
-CFLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror 
 CC = clang
 
 ifeq ($(DEBUG), 1)

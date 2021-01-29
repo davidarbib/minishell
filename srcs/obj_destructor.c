@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 16:52:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/28 16:47:14 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/28 22:29:24 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,24 @@
 #include "libft.h"
 #include "parser.h"
 #include "obj_destructor.h"
+
+void	destroy_token_value(t_token *token)
+{
+	ft_memdel((void **)&token->value);
+}
+
+void	destroy_tokens(t_token **tokens, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < size)
+	{
+		destroy_token_value(*tokens + i);
+		i++;
+	}
+	ft_memdel((void **)tokens);
+}
 
 void	destroy_assignment(t_assignment *assignment)
 {

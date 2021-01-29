@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 22:16:35 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/28 15:21:57 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/29 20:54:52 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	store_pipeline(t_list **shell_list, t_pipeline *pipeline)
 	if (!shell_list_content)
 		return (0);
 	*shell_list_content = *pipeline;
+	ft_memdel((void **)&pipeline);
 	shell_list_node = ft_lstnew(shell_list_content);
 	if (!shell_list_node)
 	{
-		ft_memdel((void **)shell_list_content);
+		ft_memdel((void **)&shell_list_content);
 		return (0);
 	}
 	if (!*shell_list)
@@ -61,6 +62,13 @@ int	parse_shell_list(t_llparser *parser, t_shell_list **shell_list)
 			destroy_pipeline(&current_pipeline);
 			return (0);
 		}
+		//for tests
+		//destroy_pipeline(&current_pipeline);
+		//destroy_shell_list(shell_list);
+		//destroy_tokens(&parser->tokens, 5);
+		//free(current_pipeline);
+		//exit(0);
+		//--------
 		if (parse_sep(parser))
 			return (parse_shell_list(parser, shell_list));
 	}
