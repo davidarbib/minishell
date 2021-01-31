@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/31 13:41:18 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/31 13:48:06 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	delete_token(void *content)
 
 #include "parser.h"
 #include "obj_destructor.h"
-
+/*
 int main()
 {	
 	//-----parsing tests with shell list-----
@@ -185,6 +185,7 @@ int main()
 		node_shell_list = node_shell_list->next;
 	}
 }
+*/
 /*
 int main()
 {	
