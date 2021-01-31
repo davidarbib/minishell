@@ -6,11 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/01/27 14:38:26 by fyusuf-a         ###   ########.fr       */
-=======
-/*   Updated: 2021/01/29 22:08:33 by darbib           ###   ########.fr       */
->>>>>>> list_parsing
+/*   Updated: 2021/01/31 13:41:18 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +74,16 @@ t_lexer		analyse_command(char *command)
 		if (handle_notquoted_char(&lexer, &fsm, command[i]))
 			continue;
 		handle_quote_cancel_char(&fsm, command[i]);
-		fsm.buf[fsm.count++] = command[i];
-		//use add_char_to_fsm_buffer
+		if (!add_char_to_fsm_buffer(&fsm, command[i]))
+			exit_lexing(&lexer, &fsm);
 		fsm.current_token.type = WORD_TOKEN;
 		if (fsm.state == ESCAPE_STATE)
 			fsm.state = NORMAL_STATE;
 	}
 	if (fsm.state != NORMAL_STATE)
-		printf("multiline requested\n");
-	if (fsm.current_token.type != DUMMY_TOKEN)
-		delimit_token(&lexer, &fsm);
+		lexer.multiline = 1;
+	if (!delimit_token(&lexer, &fsm))
+		exit_lexing(&lexer, &fsm);
 	ft_memdel((void **)&fsm.buf);
 	return (lexer);
 }
@@ -109,12 +105,12 @@ int main()
 	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
 	//char *input = "echo \"echo 4\"test";
 	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e";
-	//char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
+	char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
 	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e |";
 	//char *input = "ls >";
 	//char *input = "ls > a.out | cat -e ;";
 	//char *input = "ls > a.out";
-	char *input = "ls";
+	//char *input = "ls";
 	//char *input = "ls | cat | echo";
 	//char *input = "ls | cat | echo ; oxo";
 	t_lexer lexer = analyse_command(input);
@@ -137,6 +133,7 @@ int main()
 	//int ret = parse_pipeline(&parser, &current_pipeline);
 	printf("parse return : %d\n", ret);
 	printf("parser state : %d\n", parser.state);
+	ret =1;
 	if (!ret)
 	{
 		//destroy_pipeline(&current_pipeline);
