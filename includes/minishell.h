@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/01/31 20:11:35 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/01 19:56:37 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include "lexer.h"
 # include "parser.h"
 # include <stdio.h>
+
+typedef struct	s_reader {
+	t_lexer		lexer;
+	t_llparser	parser;
+}				t_reader;
 
 typedef struct	s_process {
 	int	pid;
@@ -35,7 +40,7 @@ t_list	*lookup(char *key, t_list *assignments);
 ** parser_interface.c
 */
 
-int		parse(t_lexer *lexer, t_llparser *parser, char *line);
-void	initialize_parser(t_llparser *parser, t_lexer *lexer);
+int		parse(t_reader *reader, char *line);
+void	initialize_parser(t_reader *reader);
 
 #endif

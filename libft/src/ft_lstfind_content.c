@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstremove_if.c                                  :+:      :+:    :+:   */
+/*   ft_lstfind_content.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 19:05:40 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/01 12:07:19 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/01 12:26:38 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 
-void				ft_lstremove_if(t_list **alst, void *data_ref,
-						int (*cmp)(), void free_fct(void *))
+void				*ft_lstfind_content(t_list *alst, void *data_ref,
+						int (*cmp)())
 {
 	if (!alst)
-		return ;
-	/*printf("alst = %p\n", alst);*/
-	/*printf("*alst = %p\n", *alst);*/
-	if (!(*alst))
-		return ;
-	if (cmp((*alst)->content, data_ref) == 0)
-	{
-		free_fct((*alst)->content);
-		if ((*alst)->next)
-		{
-			*alst = (*alst)->next;
-			ft_lstremove_if(&(*alst)->next, data_ref, cmp, free_fct);
-		}
-		else
-	
-		{
-			*alst = NULL;
-			return ;
-		}
-	}
-	ft_lstremove_if(&(*alst)->next, data_ref, cmp, free_fct);
+		return (NULL);
+	if (cmp(alst->content, data_ref) == 0)
+		return (alst->content);
+	return (ft_lstfind_content(alst->next, data_ref, cmp));
 }
