@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/01 20:48:59 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/01 21:45:39 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 	}
 	if ((pid = fork()) == 0)
 	{
-		redirect_and_launch(pipeline, pipe_stdin, p[1]);
+		redirect_and_launch(pipeline, pipe_stdin, p);
 		return ;
 	}
 	else if (pid < 0)

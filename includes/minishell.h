@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/01 20:47:26 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/01 21:46:00 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_list	*lookup(char *key, t_list *assignments);
 */
 
 void	wait_all_childs(void);
-void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int pipe_stdout);
+void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int p[]);
 
 /*
 ** parser_interface.c
