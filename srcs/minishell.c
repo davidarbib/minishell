@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/01/31 20:21:56 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/01 11:39:44 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		eval(t_pipeline *pipeline, int pipe_stdin, int fd)
 	int next_stdin;
 	int	status;
 	int debug = 1;
-	int	*pid_index;
+	/*int	*pid_index;*/
 	t_process	*process;
 
 	++i;
@@ -140,7 +140,7 @@ void	wait_all_childs()
 		printf("now:");
 		while (temp)
 		{
-			printf("%d - ", (t_process*)(temp->content)->pid);
+			printf("%d - ", ((t_process*)(temp->content))->pid);
 			temp = temp->next;
 		}
 		printf("\n");
