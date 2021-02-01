@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/01 19:56:37 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/01 20:47:26 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include "lexer.h"
 # include "parser.h"
 # include <stdio.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include <fcntl.h>
 
 typedef struct	s_reader {
 	t_lexer		lexer;
@@ -29,12 +32,25 @@ typedef struct	s_process {
 }				t_process;
 
 /*
+** g_all_childs is a list of t_process
+*/
+
+t_list	*g_all_childs;
+
+/*
 ** g_env is a t_list of t_assignment
 */
 
 t_list	*g_env;
 
 t_list	*lookup(char *key, t_list *assignments);
+
+/*
+** execution.c
+*/
+
+void	wait_all_childs(void);
+void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int pipe_stdout);
 
 /*
 ** parser_interface.c
