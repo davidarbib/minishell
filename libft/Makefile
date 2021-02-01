@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 14:53:36 by darbib            #+#    #+#              #
-#    Updated: 2021/02/01 12:26:14 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/02/01 22:03:23 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ SRC = ft_atoi.c \
 	ft_memcpy.c \
 	ft_memmove.c \
 	ft_memset.c \
+	ft_memdel.c \
 	ft_putchar_fd.c \
 	ft_putendl_fd.c	\
 	ft_putnbr_fd.c \

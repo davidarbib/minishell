@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy.c                                          :+:      :+:    :+:   */
+/*   ft_memdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/05 23:19:24 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/31 13:28:09 by darbib           ###   ########.fr       */
+/*   Created: 2021/01/27 15:39:03 by darbib            #+#    #+#             */
+/*   Updated: 2021/01/27 15:48:17 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "libft.h"
-#include <stdio.h>
+#include "stdlib.h"
 
-void	destroy_lexer(t_lexer *lexer)
+void	ft_memdel(void **area_ptr)
 {
-	ft_memdel((void **)&lexer->tokens);
-}
-
-void	destroy_fsm(t_fsm *fsm)
-{
-	ft_memdel((void **)&fsm->buf);
-}
-
-void	exit_lexing(t_lexer *lexer, t_fsm *fsm)
-{
-	destroy_lexer(lexer);
-	destroy_fsm(fsm);
-	perror("Error : ");
-	exit(EXIT_FAILURE);
+	free(*area_ptr);
+	*area_ptr = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/16 23:26:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 13:47:55 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/01/31 12:48:19 by darbib           ###   ########.fr       */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
@@ -14,6 +14,7 @@
 
 # include "lexer.h"
 # include "libft.h"
+# include "assignment.h"
 
 # define cmd_prefix_type		1
 # define cmd_name_type			2
@@ -45,15 +46,14 @@
 // pour free les tokens au plus vite
 // on gardera juste la shell_list
 //
-// je me tate a executer les assignations pdt le parsing mais jaime bien les archis
-// en couches, quen penses tu ?
-//-----------------------------------------------------------------------------
 
 enum			e_parser_state
 {
 	base,
 	found,
-	error
+	multiline,
+	no_filename_error,
+	sys_error
 };
 
 enum			e_redirect_type
@@ -63,14 +63,15 @@ enum			e_redirect_type
 	oa_redirect
 };
 
+typedef t_dlist	t_pipeline;
+typedef t_list	t_shell_list;
+
 typedef struct	s_simple_command
 {
 	t_list		*redirections;
 	t_list		*assignments;
 	t_list		*args;
 }				t_simple_command;
-
-typedef t_dlist t_pipeline;
 
 typedef struct	s_llparser
 {
@@ -82,6 +83,7 @@ typedef struct	s_llparser
 	t_list				*args;
 	t_simple_command	*current_command;
 	t_pipeline			*current_pipeline;
+	t_shell_list		*shell_list;
 }				t_llparser;
 
 
@@ -92,11 +94,6 @@ typedef struct	s_io_redirect
 	enum e_redirect_type	type;
 }				t_io_redirect;
 
-typedef struct	s_assignment
-{
-	char					*key;
-	char					*value;
-}				t_assignment;
 
 int						isredirection_op(t_token *token);
 void					detect_ionumber(t_lexer *lexer);
@@ -119,4 +116,6 @@ int						parse_simple_command(t_llparser *parser,
 						t_pipeline **current_pipeline);
 int						parse_pipeline(t_llparser *parser, 
 						t_pipeline **current_pipeline);
+int						parse_shell_list(t_llparser *parser, 
+						t_shell_list **shell_list);
 #endif

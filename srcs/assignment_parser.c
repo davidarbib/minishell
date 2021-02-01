@@ -6,11 +6,12 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 09:33:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/25 13:23:31 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 17:14:57 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "assignment.h"
+#include "obj_destructor.h"
 #include "parser.h"
 
 int		store_assignment(t_list **assignments, t_assignment *assignment)
@@ -24,7 +25,10 @@ int		store_assignment(t_list **assignments, t_assignment *assignment)
 	*assignment_content = *assignment;
 	assignment_node = ft_lstnew(assignment_content);
 	if (!assignment_node)
+	{
+		ft_memdel((void **)&assignment_content);
 		return (0);
+	}
 	if (!*assignments)
 		*assignments = assignment_node;
 	else
@@ -35,6 +39,7 @@ int		store_assignment(t_list **assignments, t_assignment *assignment)
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 int		split_assignment(t_token token, t_assignment *assignment)
 {
 	char	*equal_ptr;
@@ -74,22 +79,25 @@ int		parse_assignment(t_llparser *parser)
 {
 	t_token			token;
 	t_assignment	assignment;
-	int				success;
 
 	token = read_token(parser);
-	//detect_assignment(&token);
-	//parser->state = base;
 	assignment.key = NULL;
 	assignment.value = NULL;
 	if (token.type == ASSIGNMENT_TOKEN)
 	{
 		eat(parser);
-		success = split_assignment(token, &assignment);
-		//if (!success)
-		//	sys_error();
-		success = store_assignment(&parser->current_command->assignments, &assignment);
-		//if (!success)
-		//	sys_error();
+		if (!split_assignment(token, &assignment))
+		{
+			destroy_assignment(&assignment);
+			parser->state = sys_error;
+			return (0);
+		}
+		if (!store_assignment(&parser->current_command->assignments, &assignment))
+		{
+			destroy_assignment(&assignment);
+			parser->state = sys_error;
+			return (0);
+		}
 		return (1);
 	}
 	return (0);

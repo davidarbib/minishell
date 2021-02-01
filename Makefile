@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/01 20:30:22 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/02/01 22:04:53 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ MAGENTA = 	'\033[0;35m'
 RESET = 	'\033[0m'
 
 NAME = minishell
-CFLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror 
 CC = clang
 
 ifeq ($(DEBUG), 1)
@@ -56,6 +56,7 @@ SRC = lexer.c \
 	  token.c \
 	  error.c \
 	  destroy.c \
+	  obj_destructor.c \
 	  char_handling_fts.c \
 	  lexer_fsm_tools.c \
 	  assignment_detector.c \
@@ -68,6 +69,7 @@ SRC = lexer.c \
       execution.c \
 	  simple_command_parser.c \
 	  pipeline_parser.c \
+	  list_parser.c \
 	  parser_interface.c \
 
 # ------------------------------------------------------------------------------

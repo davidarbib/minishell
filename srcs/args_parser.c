@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:24:55 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/25 14:20:08 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:43:59 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,18 @@ int	parse_word(t_llparser *parser)
 	if (current_token.type == WORD_TOKEN)
 	{
 		arg = extract_word(current_token);
-		//printf("current arg : %s\n", arg);
+		if (!arg)
+		{
+			parser->state = sys_error;
+			return (0);
+		}
 		success = store_args(&parser->current_command->args, arg);
-		//if (!success)
-		//	sys_error();
+		if (!success)
+		{
+			parser->state = sys_error;
+			ft_memdel((void **)&arg);
+			return (0);
+		}
 		eat(parser);
 		return (1);
 	}

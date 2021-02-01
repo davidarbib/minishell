@@ -6,13 +6,11 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 13:41:07 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/12 15:45:58 by darbib           ###   ########.fr       */
+/*   Updated: 2021/01/31 12:54:16 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "string.h"
-#include <stdio.h>
 
 int	isredirection_op(t_token *token)
 {
