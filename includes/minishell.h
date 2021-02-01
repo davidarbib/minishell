@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/01/28 14:47:58 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/01/31 20:11:35 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include "lexer.h"
 # include "parser.h"
 # include <stdio.h>
+
+typedef struct	s_process {
+	int	pid;
+	int	pipe_out;
+}				t_process;
 
 /*
 ** g_env is a t_list of t_assignment

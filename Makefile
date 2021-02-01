@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/01/28 11:34:44 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/01/31 19:52:58 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,17 +82,15 @@ all : $(NAME)
 bonus : $(NAME)
 
 $(NAME): $(OBJ) $(LIB_LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
-	@echo $(GREEN) $@ " is ready to use !" $(RESET)
+	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@mkdir -p objs
-	@echo $(BLUE) "compiling" $< $(RESET)
-	@$(CC) $(INC) $(CFLAGS) -c $< -o $@
+	$(CC) $(INC) $(CFLAGS) -c $< -o $@
 
 $(LIB_LIBFT) :
 	@echo "Compile libft.."
-	@make -C $(LIBFT_DIR)
+	@make DEBUG=$(DEBUG) -C $(LIBFT_DIR)
 
 clean :
 	@echo $(MAGENTA) "Cleaning objs..." $(RESET)
