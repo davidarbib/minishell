@@ -76,7 +76,7 @@ void	run_once(t_lexer *lexer, t_llparser *parser, char *line)
 	parse(lexer, parser, line);
 	eval(parser->current_pipeline);
 }
-
+/*
 int		main(int argc, char **argv)
 {
 	char		*line;
@@ -106,3 +106,4 @@ int		main(int argc, char **argv)
 	else	 // for testing
 		run_once(&lexer, &parser, argv[1]);
 }
+*/

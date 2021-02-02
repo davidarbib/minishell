@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 09:33:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 17:14:57 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/01 14:32:35 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ int		store_assignment(t_list **assignments, t_assignment *assignment)
 
 int		split_assignment(t_token token, t_assignment *assignment)
 {
+	if (!ft_split_dict(token.value, '=', &assignment->key, &assignment->value))
+		return (0);
+	return (1);
+}
+
+/*
+int		split_assignment(t_token token, t_assignment *assignment)
+{
 	char	*equal_ptr;
 	int		key_len;
 	int		value_len;
@@ -57,6 +65,7 @@ int		split_assignment(t_token token, t_assignment *assignment)
 		return (0);
 	return (1);	
 }
+*/
 
 /*
 int main()

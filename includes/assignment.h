@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:09:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 17:18:40 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/01 20:18:19 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ASSIGNMENT_H
 
 # include "lexer.h"
+# include "libft.h"
 # define STATE_NB		3
 # define INPUT_NB		256
 
@@ -35,4 +36,5 @@ typedef struct	s_assignment
 }				t_assignment;
 
 void		detect_assignment(t_token *token);
+int			store_assignment(t_list **assignments, t_assignment *assignment);
 #endif

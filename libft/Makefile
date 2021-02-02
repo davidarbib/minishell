@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 14:53:36 by darbib            #+#    #+#              #
-#    Updated: 2021/01/28 09:20:31 by darbib           ###   ########.fr        #
+#    Updated: 2021/02/01 13:04:00 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,7 +124,8 @@ SRC = ft_atoi.c \
 	u_convert.c \
 	x_convert.c \
 	p_convert.c \
-	ft_realloc.c
+	ft_realloc.c \
+	ft_split_dict.c
 
 ifeq ($(TEST), 1)
 	#shell echo "compiling test mode buffer.c"
