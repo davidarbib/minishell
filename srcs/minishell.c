@@ -1,22 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2021/01/28 15:47:26 by fyusuf-a         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <sys/wait.h>
 #include <unistd.h>
 
-void	del(void *arg)
+/*void	del(void *arg)
 {
 	(void)arg;
-}
-
-void	initialize_parser(t_llparser *parser, t_lexer *lexer)
-{
-	parser->tokens = lexer->tokens;
-	parser->token_idx = 0;
-	parser->state = base;
-	parser->current_pipeline = NULL;
-	/*parser->redirections = NULL;*/
-	/*parser->assignments = NULL;*/
-	/*parser->args = NULL;*/
-}
+}*/
 
 void	launch(t_list *command)
 {
@@ -30,16 +31,41 @@ void	launch(t_list *command)
 	perror("minishell");
 }
 
-int		eval(t_pipeline* pipeline)
+/*
+** pipe_stdin = -1 for the first process of stdin
+*/
+
+int		eval(t_pipeline *pipeline, int pipe_stdin)
 {
 	int	pid;
+	int p[2];
+	int next_stdin;
 	int	ret_wait;
 	int	status;
 
+	if (!pipeline)
+		return (0);
 	pid = fork();
 	status = 0;
+	if (pipeline->next)
+	{
+		pipe(p);
+		next_stdin = p[0];
+	}
 	if (pid == 0)
 	{
+		if (pipe_stdin != -1)
+		{
+			close(0);
+			dup(pipe_stdin);
+			close(pipe_stdin);
+		}
+		if (pipeline->next)
+		{
+			close(1);
+			dup(pipe[1]);
+			close(pipe[1]);
+		}
 		launch(((t_simple_command*)pipeline->content)->args);
 		return (0);
 	}
@@ -47,9 +73,11 @@ int		eval(t_pipeline* pipeline)
 		perror("minishell");
 	else
 	{
+		close(pipe[1]);
+		eval(pipeline->next, next_stdin);
 		while (1)
 		{
-			if ((ret_wait = waitpid(-1, &status, WUNTRACED)) == -1)
+			if ((ret_wait = waitpid(pid, &status, WUNTRACED)) == -1)
 			{
 				perror("minishell"); // Voir si EINTR est une erreur qui peut avoir lieu ou pas
 				continue;
@@ -58,17 +86,7 @@ int		eval(t_pipeline* pipeline)
 				break ;
 		}
 	}
-	return (0);
-}
-
-int		parse(t_lexer *lexer, t_llparser *parser, char *line)
-{
-	*lexer = analyse_command(line);
-	detect_ionumber(lexer);
-	detect_assignments(lexer);
-	initialize_parser(parser, lexer);
-	parse_pipeline(parser, &parser->current_pipeline);
-	return (0);
+	return (WEXITSTATUS(status));
 }
 
 void	run_once(t_lexer *lexer, t_llparser *parser, char *line)
