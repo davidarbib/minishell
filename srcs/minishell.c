@@ -6,101 +6,63 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/01/28 15:47:26 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/01 21:45:39 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <sys/wait.h>
-#include <unistd.h>
 
-/*void	del(void *arg)
+void	close_unused_in_parent(int pipe_stdin, int pipe_stdout)
 {
-	(void)arg;
-}*/
-
-void	launch(t_list *command)
-{
-	char	**tab;
-	int		size;
-
-	tab = (char**)ft_lsttotab(command, 8, &size);
-	/*ft_lstclear(command, del);*/
-	tab[size] = 0;
-	execve((char*)tab[0], (char*const*)tab, NULL);
-	perror("minishell");
+	close(pipe_stdout);
+	if (pipe_stdin != -1)
+		close(pipe_stdin);
 }
 
 /*
 ** pipe_stdin = -1 for the first process of stdin
 */
 
-int		eval(t_pipeline *pipeline, int pipe_stdin)
+void	eval(t_pipeline *pipeline, int pipe_stdin)
 {
-	int	pid;
-	int p[2];
-	int next_stdin;
-	int	ret_wait;
-	int	status;
+	int			pid;
+	int			p[2];
+	int			next_stdin;
+	t_process	*process;
 
 	if (!pipeline)
-		return (0);
-	pid = fork();
-	status = 0;
+		return ;
+	process = malloc(sizeof(t_process));
 	if (pipeline->next)
 	{
 		pipe(p);
 		next_stdin = p[0];
+		process->pipe_out = p[1];
 	}
-	if (pid == 0)
+	if ((pid = fork()) == 0)
 	{
-		if (pipe_stdin != -1)
-		{
-			close(0);
-			dup(pipe_stdin);
-			close(pipe_stdin);
-		}
-		if (pipeline->next)
-		{
-			close(1);
-			dup(pipe[1]);
-			close(pipe[1]);
-		}
-		launch(((t_simple_command*)pipeline->content)->args);
-		return (0);
+		redirect_and_launch(pipeline, pipe_stdin, p);
+		return ;
 	}
 	else if (pid < 0)
 		perror("minishell");
-	else
-	{
-		close(pipe[1]);
-		eval(pipeline->next, next_stdin);
-		while (1)
-		{
-			if ((ret_wait = waitpid(pid, &status, WUNTRACED)) == -1)
-			{
-				perror("minishell"); // Voir si EINTR est une erreur qui peut avoir lieu ou pas
-				continue;
-			}
-			if (WIFEXITED(status) || WIFSIGNALED(status))
-				break ;
-		}
-	}
-	return (WEXITSTATUS(status));
+	close_unused_in_parent(pipe_stdin, p[1]);
+	process->pid = pid;
+	ft_lstadd_back_elem(&g_all_childs, process);
+	eval(pipeline->next, next_stdin);
 }
 
-void	run_once(t_lexer *lexer, t_llparser *parser, char *line)
+void	run_once(t_reader *reader, char *line)
 {
-	parse(lexer, parser, line);
-	eval(parser->current_pipeline);
+	parse(reader, line);
+	eval(reader->parser.current_pipeline, -1);
 }
 
 int		main(int argc, char **argv)
 {
 	char		*line;
 	int			result;
-	t_lexer		lexer;
-	t_llparser	parser;
+	t_reader	reader;
 
 	(void)argv;
 	if (argc == 1)
@@ -111,16 +73,21 @@ int		main(int argc, char **argv)
 			fflush(stdout);
 			result = get_next_line(0, &line);
 			if (result == -1)
-				printf("minishell: error in get_next_line");
+				printf("minishell: error in get_next_line\n");
 			else if (result == 0)
 			{
 				printf("exit\n");
 				exit(EXIT_SUCCESS);
 			}
-			parse(&lexer, &parser, line);
-			eval(parser.current_pipeline);
+			parse(&reader, line);
+			eval(reader.parser.current_pipeline, -1);
+			wait_all_childs();
 		}
 	}
 	else	 // for testing
-		run_once(&lexer, &parser, argv[1]);
+	{
+		run_once(&reader, argv[1]);
+		wait_all_childs();
+	}
+	return (0);
 }
