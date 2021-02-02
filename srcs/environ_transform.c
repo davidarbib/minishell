@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:31:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/02 13:24:53 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/02 22:00:07 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,19 @@
 #include "assignment.h"
 #include "obj_destructor.h"
 
-t_list	*to_environ_list(char **environ)
+t_list	*to_environ_list(char **envp)
 {
 	int				i;
 	t_assignment	envvar;
 	t_list			*environ_list;
 
 	i = 0;
-	while (environ[i])
+	environ_list = NULL;
+	while (envp[i])
 	{
 		envvar.key = NULL;
 		envvar.value = NULL;
-		if (!ft_split_dict(environ[i], '=', &envvar.key, &envvar.value))
+		if (!ft_split_dict(envp[i], '=', &envvar.key, &envvar.value))
 		{
 			destroy_assignment(&envvar);
 			return (NULL);

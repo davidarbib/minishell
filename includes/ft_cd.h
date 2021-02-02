@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_cd.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
+/*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/02 14:00:19 by darbib           ###   ########.fr       */
+/*   Created: 2021/02/02 22:51:12 by darbib            #+#    #+#             */
+/*   Updated: 2021/02/02 23:46:52 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef FT_CD_H
+# define FT_CD_H
 
-# include "libft.h"
-# include "lexer.h"
-# include "parser.h"
-# include <stdio.h>
+# include "assignment.h"
 
-/*
-** g_env is a t_list of t_assignment
-*/
-
-t_list	*g_env;
-
-t_list	*lookup(const char* key, t_list *assignments);
-
+int		ft_cd(int ac, char **av, t_list *envlist);
 #endif
