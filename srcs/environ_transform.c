@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:31:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/01 21:43:06 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/02 13:24:53 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ t_list	*to_environ_list(char **environ)
 		i++;
 	}
 	return (environ_list);
-}
-
-char	*ft_getenv(const char *name, t_list *envlist)
-{
 }
 
 /*
