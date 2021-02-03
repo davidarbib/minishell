@@ -6,12 +6,14 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:35:27 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/29 14:43:31 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/02 14:22:10 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "obj_destructor.h"
+#include <stdio.h>
+#include <string.h>
 
 int		store_simple_command(t_pipeline **pipeline, t_simple_command *command)
 {
@@ -19,8 +21,6 @@ int		store_simple_command(t_pipeline **pipeline, t_simple_command *command)
 	t_pipeline			*pipeline_node;
 	static int			pass = 0;
 	
-#include <stdio.h>
-#include <string.h>
 	pass++;
 	printf("current command arg : %s\n", (char *)command->args->content);
 	pipeline_content = (t_simple_command *)ft_calloc(1, sizeof(t_simple_command));

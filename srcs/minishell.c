@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/01 21:45:39 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:49:35 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,25 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 	eval(pipeline->next, next_stdin);
 }
 
+void	eval_list(t_shell_list *list)
+{
+	if (!list)
+		return ;
+	eval(list->content, -1);
+	eval_list(list->next);
+}
 void	run_once(t_reader *reader, char *line)
 {
 	parse(reader, line);
-	eval(reader->parser.current_pipeline, -1);
+	/*eval_list(reader->parser.shell_list);*/
+	eval_list(reader->parser.shell_list);
 }
 
 int		main(int argc, char **argv)
 {
-	char		*line;
-	int			result;
-	t_reader	reader;
+	char			*line;
+	int				result;
+	t_reader		reader;
 
 	(void)argv;
 	if (argc == 1)
@@ -80,7 +88,8 @@ int		main(int argc, char **argv)
 				exit(EXIT_SUCCESS);
 			}
 			parse(&reader, line);
-			eval(reader.parser.current_pipeline, -1);
+			/*eval(reader.parser.current_pipeline, -1);*/
+			eval_list(reader.parser.shell_list);
 			wait_all_childs();
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/02 13:36:38 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/03 10:45:44 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int p[]);
 ** parser_interface.c
 */
 
-int		parse(t_reader *reader, char *line);
+void	parse(t_reader *reader, char *line);
 void	initialize_parser(t_reader *reader);
 
 #endif
