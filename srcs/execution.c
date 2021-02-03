@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:27:57 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/03 11:16:06 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:43:21 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	launch(t_list *command)
 	tab[size] = 0;
 	execve((char*)tab[0], (char*const*)tab, NULL);
 	perror("minishell");
+	exit(EXIT_FAILURE);
 }
 
 void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
