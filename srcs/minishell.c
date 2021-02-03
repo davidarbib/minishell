@@ -6,15 +6,16 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/03 11:03:47 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 13:53:02 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_unused_in_parent(int pipe_stdin, int pipe_stdout)
+void	close_unused_in_parent(t_pipeline* pipeline, int pipe_stdin, int pipe_stdout)
 {
-	close(pipe_stdout);
+	if (pipeline->next)
+		close(pipe_stdout);
 	if (pipe_stdin != -1)
 		close(pipe_stdin);
 }
@@ -46,7 +47,7 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 	}
 	else if (pid < 0)
 		perror("minishell");
-	close_unused_in_parent(pipe_stdin, p[1]);
+	close_unused_in_parent(pipeline, pipe_stdin, p[1]);
 	process->pid = pid;
 	/*ft_lstadd_back_elem(&g_all_childs, process);*/
 	ft_lstadd_front_elem(&g_all_childs, process);

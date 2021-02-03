@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:27:57 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/03 11:43:21 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 13:53:50 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,14 @@ void	wait_all_childs(void)
 
 	while (1)
 	{
+		if (!g_all_childs)
+			break ;
 		pid = ((t_process*)g_all_childs->content)->pid;
 		waitpid(pid, &status, WUNTRACED);
 		ft_lstdel_first(&g_all_childs, del);
 
 		/*stopped_pid = waitpid(-1, &status, WUNTRACED);*/
 		/*ft_lstremove_if(&g_all_childs, &stopped_pid, cmp, del);*/
-
-		if (!g_all_childs)
-			break ;
 	}
 }
 
@@ -67,6 +66,9 @@ void	launch(t_list *command)
 void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 									int p[])
 {
+	t_simple_command	command;
+
+	command = *(t_simple_command*)pipeline->content;
 	if (pipe_stdin != -1)
 	{
 		dup2(pipe_stdin, 0);
@@ -78,5 +80,5 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 		close(p[1]);
 		close(p[0]);
 	}
-	launch(((t_simple_command*)pipeline->content)->args);
+	launch(command.args);
 }
