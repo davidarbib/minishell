@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/03 10:49:35 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:03:47 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 		perror("minishell");
 	close_unused_in_parent(pipe_stdin, p[1]);
 	process->pid = pid;
-	ft_lstadd_back_elem(&g_all_childs, process);
+	/*ft_lstadd_back_elem(&g_all_childs, process);*/
+	ft_lstadd_front_elem(&g_all_childs, process);
 	eval(pipeline->next, next_stdin);
 }
 
@@ -62,7 +63,6 @@ void	eval_list(t_shell_list *list)
 void	run_once(t_reader *reader, char *line)
 {
 	parse(reader, line);
-	/*eval_list(reader->parser.shell_list);*/
 	eval_list(reader->parser.shell_list);
 }
 
@@ -88,7 +88,6 @@ int		main(int argc, char **argv)
 				exit(EXIT_SUCCESS);
 			}
 			parse(&reader, line);
-			/*eval(reader.parser.current_pipeline, -1);*/
 			eval_list(reader.parser.shell_list);
 			wait_all_childs();
 		}

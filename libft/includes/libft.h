@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/01 22:02:56 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:04:21 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_list				*ft_lstnew(void *content);
 int					ft_lstsize(t_list *lst);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 int					ft_lstadd_back_elem(t_list **alst, void *data);
+int					ft_lstadd_front_elem(t_list **alst, void *data);
 void				*ft_lstfind_content(t_list *alst, void *data_ref,
 						int (*cmp)());
 void				ft_lstremove_if(t_list **alst, void *data_ref,

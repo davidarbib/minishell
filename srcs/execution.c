@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:27:57 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/01 21:45:30 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:16:06 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,35 @@ void	del(void *arg)
 	free(arg);
 }
 
-int		cmp(void *process, void *pid_ref)
+/*int		cmp(void *process, void *pid_ref)
 {
 	return (((t_process*)process)->pid - *(int*)pid_ref);
+}*/
+
+void	ft_lstdel_first(t_list **lst, void (*del)(void*))
+{
+	t_list	*tmp;
+	
+	tmp = (*lst)->next;
+	del((*lst)->content);
+	free(*lst);
+	*lst = tmp;
 }
 
 void	wait_all_childs(void)
 {
 	int			status;
-	int			stopped_pid;
+	int			pid;
 
 	while (1)
 	{
-		stopped_pid = waitpid(-1, &status, WUNTRACED);
-		ft_lstremove_if(&g_all_childs, &stopped_pid, cmp, del);
+		pid = ((t_process*)g_all_childs->content)->pid;
+		waitpid(pid, &status, WUNTRACED);
+		ft_lstdel_first(&g_all_childs, del);
+
+		/*stopped_pid = waitpid(-1, &status, WUNTRACED);*/
+		/*ft_lstremove_if(&g_all_childs, &stopped_pid, cmp, del);*/
+
 		if (!g_all_childs)
 			break ;
 	}
