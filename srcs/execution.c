@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:27:57 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/03 14:08:59 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/04 15:57:06 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 									int p[])
 {
 	t_simple_command	command;
-	t_redirections		redir;
+	t_list				*redir_list;
+	t_io_redirect		redir;
+	int					*fd;
 
 	command = *(t_simple_command*)pipeline->content;
 	if (pipe_stdin != -1)
@@ -73,10 +75,30 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 		close(p[1]);
 		close(p[0]);
 	}
-	redir = command->redirections;
-	while (1)
+	redir_list = command.redirections;
+	while (redir_list)
 	{
-
+		redir = *(t_io_redirect*)redir_list->content;
+		fd = malloc(sizeof(int));
+		if (redir.type == i_redirect)
+		{
+			printf("redirecting stdin to %s\n", redir.filename);
+			*fd = open(redir.filename, O_RDONLY);
+			ft_lstadd_front_elem(&g_open_fds, fd);
+			dup2(*fd, redir.io_number == -1 ? 0 : redir.io_number);
+		}
+		else
+		{
+			printf("redirecting stdout to %s\n", redir.filename);
+			if (redir.type == oc_redirect)
+				*fd = open(redir.filename, O_WRONLY | O_CREAT, 0644);
+			else
+				*fd = open(redir.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			ft_lstadd_front_elem(&g_open_fds, fd);
+			dup2(*fd, redir.io_number == -1 ? 1 : redir.io_number);
+		}
+		fprintf(stderr, "redirs end\n");
+		redir_list = redir_list->next;
 	}
 	launch(command.args);
 }
