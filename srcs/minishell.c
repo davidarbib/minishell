@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/01 21:45:39 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/04 16:00:21 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	run_once(t_reader *reader, char *line)
 	parse(reader, line);
 	eval(reader->parser.current_pipeline, -1);
 }
-/*
+
 int		main(int argc, char **argv)
 {
 	char		*line;
@@ -91,4 +91,3 @@ int		main(int argc, char **argv)
 	}
 	return (0);
 }
-*/
