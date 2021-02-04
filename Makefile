@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/02 15:17:26 by darbib           ###   ########.fr        #
+#    Updated: 2021/02/03 19:17:45 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,8 @@ SRC = lexer.c \
 	  pipeline_parser.c \
 	  list_parser.c \
 	  environ_transform.c \
-	  envlist_interface.c
+	  envlist_interface.c \
+	  ft_cd.c
 
 # ------------------------------------------------------------------------------
 

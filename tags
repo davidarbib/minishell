@@ -4,14 +4,15 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-ALPHA_STATE	includes/assignment.h	27;"	d
+ALPHA_STATE	includes/assignment.h	28;"	d
 ASSIGNMENT_H	includes/assignment.h	14;"	d
 ASSIGNMENT_TOKEN	includes/lexer.h	/^	ASSIGNMENT_TOKEN,$/;"	e	enum:e_token
-BASE_STATE	includes/assignment.h	26;"	d
+BASE_STATE	includes/assignment.h	27;"	d
 BLUE	Makefile	/^BLUE = 		'\\033[0;34m'$/;"	m
 BLUE	libft/Makefile	/^BLUE = 		'\\033[0;34m'$/;"	m
 BUFFER_SIZE	libft/includes/get_next_line.h	21;"	d
 BUFOUT_SIZE	libft/includes/ft_sprintf.h	20;"	d
+BUFSIZE	includes/ft_cd.h	18;"	d
 BUF_SIZE	libft/includes/ft_printf.h	23;"	d
 CC	Makefile	/^CC = clang$/;"	m
 CC	libft/Makefile	/^CC = clang$/;"	m
@@ -24,10 +25,12 @@ DGREAT_TOKEN	includes/lexer.h	/^	DGREAT_TOKEN,$/;"	e	enum:e_token
 DOT	libft/includes/ft_printf.h	32;"	d
 DQUOTE_STATE	includes/lexer.h	/^	DQUOTE_STATE,$/;"	e	enum:e_fsm
 DUMMY_TOKEN	includes/lexer.h	/^	DUMMY_TOKEN,$/;"	e	enum:e_token
+ENOTHOME	includes/error.h	18;"	d
+ENOTOLDPWD	includes/error.h	19;"	d
 ENVIRON_H	includes/environ.h	14;"	d
-EQUAL_STATE	includes/assignment.h	28;"	d
+EQUAL_STATE	includes/assignment.h	29;"	d
 ERROR_H	includes/error.h	14;"	d
-ERROR_STATE	includes/assignment.h	29;"	d
+ERROR_STATE	includes/assignment.h	30;"	d
 ESCAPE_STATE	includes/lexer.h	/^	ESCAPE_STATE,$/;"	e	enum:e_fsm
 FLAGS_S	libft/includes/ft_printf.h	26;"	d
 FONT_BLUE	includes/font_color.h	21;"	d
@@ -42,6 +45,7 @@ FONT_RED8	includes/font_color.h	18;"	d
 FONT_RESET	includes/font_color.h	25;"	d
 FONT_YELLOW	includes/font_color.h	20;"	d
 FSMBUFSIZE	includes/lexer.h	18;"	d
+FT_CD_H	includes/ft_cd.h	14;"	d
 FT_PRINTF_H	libft/includes/ft_printf.h	14;"	d
 FT_SPRINTF_H	libft/includes/ft_sprintf.h	14;"	d
 F_DIG	libft/includes/libft.h	19;"	d
@@ -52,7 +56,7 @@ GREEN	libft/Makefile	/^GREEN = 	'\\033[0;32m'$/;"	m
 INC	Makefile	/^INC = $(addprefix -I, $(INC_DIRS))$/;"	m
 INC_DIR	libft/Makefile	/^INC_DIR = includes$/;"	m
 INC_DIRS	Makefile	/^INC_DIRS = .\/libft\/includes \\$/;"	m
-INPUT_NB	includes/assignment.h	18;"	d
+INPUT_NB	includes/assignment.h	19;"	d
 INTMAX	libft/includes/ft_printf.h	19;"	d
 INTMIN	libft/includes/ft_printf.h	20;"	d
 IONUMBER_TOKEN	includes/lexer.h	/^	IONUMBER_TOKEN,$/;"	e	enum:e_token
@@ -101,7 +105,7 @@ SCOLON_TOKEN	includes/lexer.h	/^	SCOLON_TOKEN,$/;"	e	enum:e_token
 SRC	Makefile	/^SRC = lexer.c \\$/;"	m
 SRC	libft/Makefile	/^SRC = ft_atoi.c \\$/;"	m
 SRC_DIR	Makefile	/^SRC_DIR = .\/srcs\/$/;"	m
-STATE_NB	includes/assignment.h	17;"	d
+STATE_NB	includes/assignment.h	18;"	d
 STDOUT	libft/includes/ft_printf.h	24;"	d
 TEXT_TOKEN	includes/lexer.h	/^	TEXT_TOKEN,$/;"	e	enum:e_token
 TOKENS_NB	includes/lexer.h	17;"	d
@@ -115,6 +119,7 @@ add_node	libft/src/ft_tabtodlst.c	/^static int	add_node(t_dlist **alst, void *ar
 add_option	libft/src/ft_printf/utils.c	/^void	add_option(char c, t_conv *conv)$/;"	f
 add_token	srcs/lexer_fsm_tools.c	/^int		add_token(t_lexer *lexer, t_token token)$/;"	f
 analyse_command	srcs/lexer.c	/^t_lexer		analyse_command(char *command)$/;"	f
+append_env	srcs/envlist_interface.c	/^static int	append_env(t_assignment *pair, t_list **envlistp)$/;"	f	file:
 args	includes/parser.h	/^	t_list				*args;$/;"	m	struct:s_llparser
 args	includes/parser.h	/^	t_list		*args;$/;"	m	struct:s_simple_command
 assign_type	includes/parser.h	23;"	d
@@ -207,6 +212,7 @@ ft_atoi	libft/src/ft_atoi.c	/^int		ft_atoi(const char *str)$/;"	f
 ft_atoi_mv	libft/src/ft_atoi_mv.c	/^int		ft_atoi_mv(char **str)$/;"	f
 ft_bzero	libft/src/ft_bzero.c	/^void	ft_bzero(void *s, size_t n)$/;"	f
 ft_calloc	libft/src/ft_calloc.c	/^void	*ft_calloc(size_t count, size_t size)$/;"	f
+ft_cd	srcs/ft_cd.c	/^int	ft_cd(int ac, char **av, t_list **envlist)$/;"	f
 ft_dlstadd_back	libft/src/ft_dlstadd_back.c	/^void	ft_dlstadd_back(t_dlist **alst, t_dlist *new)$/;"	f
 ft_dlstclear	libft/src/ft_dlstclear.c	/^void	ft_dlstclear(t_dlist **lst, void (*del)(void*))$/;"	f
 ft_dlstfirst	libft/src/ft_dlstfirst.c	/^t_dlist	*ft_dlstfirst(t_dlist *lst)$/;"	f
@@ -216,6 +222,7 @@ ft_dlstnew	libft/src/ft_dlstnew.c	/^t_dlist	*ft_dlstnew(void *content)$/;"	f
 ft_dlstsize	libft/src/ft_dlstsize.c	/^int	ft_dlstsize(t_dlist *lst)$/;"	f
 ft_dlsttotab	libft/src/ft_dlsttotab.c	/^void	*ft_dlsttotab(t_dlist *lst, size_t type_size, int *array_size)$/;"	f
 ft_double_abs	libft/src/ft_abs.c	/^double	ft_double_abs(double x)$/;"	f
+ft_getenv	srcs/envlist_interface.c	/^char	*ft_getenv(const char *key, t_list *envlist)$/;"	f
 ft_gnl_read_buffer	libft/src/get_next_line_utils.c	/^	ft_gnl_read_buffer(int fd, char **line, t_parse_state *st)$/;"	f
 ft_gnl_read_file	libft/src/get_next_line_utils.c	/^	ft_gnl_read_file(int fd, char **line, t_parse_state *st)$/;"	f
 ft_isalnum	libft/src/ft_isalnum.c	/^int		ft_isalnum(int c)$/;"	f
@@ -251,6 +258,7 @@ ft_putendl_fd	libft/src/ft_putendl_fd.c	/^void	ft_putendl_fd(char *s, int fd)$/;
 ft_putnbr_fd	libft/src/ft_putnbr_fd.c	/^void	ft_putnbr_fd(int n, int fd)$/;"	f
 ft_putstr_fd	libft/src/ft_putstr_fd.c	/^void	ft_putstr_fd(char *s, int fd)$/;"	f
 ft_realloc	libft/src/ft_realloc.c	/^void	*ft_realloc(void *area, size_t in_bytes_n, size_t out_bytes_n)$/;"	f
+ft_setenv	srcs/envlist_interface.c	/^int		ft_setenv(char *key, char *value, t_list **envlistp)$/;"	f
 ft_split	libft/src/ft_split.c	/^char			**ft_split(char const *s, char c)$/;"	f
 ft_split_blank	libft/src/ft_split_blank.c	/^char			**ft_split_blank(char const *s)$/;"	f
 ft_split_dict	libft/src/ft_split_dict.c	/^int		ft_split_dict(const char *s, char c, char **key, char **value)$/;"	f
@@ -300,7 +308,6 @@ init_sign_nb	libft/src/ft_printf/di_convert.c	/^static char	init_sign_nb(t_conv 
 init_simple_command	srcs/simple_command_parser.c	/^void	init_simple_command(t_simple_command *command)$/;"	f
 init_transitions_tb	srcs/assignment_detector.c	/^static void	init_transitions_tb(unsigned char transitions[STATE_NB][INPUT_NB])$/;"	f	file:
 initialize_parser	srcs/minishell.c	/^void	initialize_parser(t_llparser *parser, t_lexer *lexer)$/;"	f
-insert	srcs/path.c	/^t_list *insert(char* key, char* value, t_list *assignments)$/;"	f
 int_part	libft/src/ft_atof.c	/^static double	int_part(char **str, double f)$/;"	f	file:
 int_part	libft/src/ft_atof_mv.c	/^static double	int_part(char **str, double f)$/;"	f	file:
 io_number	includes/parser.h	/^	int						io_number;$/;"	m	struct:s_io_redirect
@@ -310,8 +317,8 @@ isredirection_op	srcs/isredirection_op.c	/^int	isredirection_op(t_token *token)$
 key	includes/assignment.h	/^	char					*key;$/;"	m	struct:s_assignment
 launch	srcs/minishell.c	/^void	launch(t_list *command)$/;"	f
 lmc	libft/includes/ft_printf.h	/^	int		lmc;$/;"	m	struct:s_conv
-lookup	srcs/path.c	/^t_list	*lookup(char* key, t_list *assignments)$/;"	f
-main	srcs/environ_transform.c	/^int main(int ac, char **av, char **envp)$/;"	f
+lookup	srcs/envlist_interface.c	/^t_list	*lookup(const char* key, t_list *envlist)$/;"	f
+main	srcs/ft_cd.c	/^int main(int ac, char **av, char **envp)$/;"	f
 main	srcs/test.c	/^int	main()$/;"	f
 make_content	libft/src/ft_tabtodlst.c	/^static void	*make_content(void *array_ptr, int type_size)$/;"	f	file:
 match_operator	srcs/token.c	/^t_token		match_operator(char *tested_op)$/;"	f
@@ -363,6 +370,7 @@ redirect_type	includes/parser.h	25;"	d
 redirections	includes/parser.h	/^	t_list				*redirections;$/;"	m	struct:s_llparser
 redirections	includes/parser.h	/^	t_list		*redirections;$/;"	m	struct:s_simple_command
 ref_token	srcs/parser.c	/^t_token	*ref_token(t_llparser *parser)$/;"	f
+replace_value	srcs/envlist_interface.c	/^static int	replace_value(t_list *index, char *new_value)$/;"	f	file:
 run_once	srcs/minishell.c	/^void	run_once(t_lexer *lexer, t_llparser *parser, char *line)$/;"	f
 s	libft/includes/ft_printf.h	/^	char	s[BUF_SIZE];$/;"	m	struct:s_buf
 s_assignment	includes/assignment.h	/^typedef struct	s_assignment$/;"	s
@@ -387,6 +395,7 @@ split_assignment	srcs/assignment_parser.c	/^int		split_assignment(t_token token,
 star_post_process	libft/src/ft_printf/utils.c	/^int		star_post_process(t_conv *conv)$/;"	f
 state	includes/lexer.h	/^	enum e_fsm	state;$/;"	m	struct:s_fsm	typeref:enum:s_fsm::e_fsm
 state	includes/parser.h	/^	int					state;$/;"	m	struct:s_llparser
+step_back	srcs/ft_cd.c	/^int	step_back(t_list **envlist)	$/;"	f
 store_args	srcs/args_parser.c	/^int	store_args(t_list **args, char *arg)$/;"	f
 store_assignment	srcs/assignment_parser.c	/^int		store_assignment(t_list **assignments, t_assignment *assignment)$/;"	f
 store_pipeline	srcs/list_parser.c	/^int	store_pipeline(t_list **shell_list, t_pipeline *pipeline)$/;"	f
@@ -408,7 +417,8 @@ t_pipeline	includes/parser.h	/^typedef t_dlist	t_pipeline;$/;"	t
 t_shell_list	includes/parser.h	/^typedef t_list	t_shell_list;$/;"	t
 t_simple_command	includes/parser.h	/^}				t_simple_command;$/;"	t	typeref:struct:s_simple_command
 t_token	includes/lexer.h	/^}				t_token;$/;"	t	typeref:struct:s_token
-to_environ_list	srcs/environ_transform.c	/^t_list	*to_environ_list(char **environ)$/;"	f
+to_environ_list	srcs/environ_transform.c	/^t_list	*to_environ_list(char **envp)$/;"	f
+to_home	srcs/ft_cd.c	/^int	to_home(t_list **envlist)$/;"	f
 token_idx	includes/parser.h	/^	int					token_idx;$/;"	m	struct:s_llparser
 tokens	includes/lexer.h	/^	t_token			*tokens;$/;"	m	struct:s_lexer
 tokens	includes/parser.h	/^	t_token				*tokens;$/;"	m	struct:s_llparser
