@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   ft_cd.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/05 23:55:28 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/03 19:07:13 by darbib           ###   ########.fr       */
+/*   Created: 2021/02/02 22:51:12 by darbib            #+#    #+#             */
+/*   Updated: 2021/02/03 19:15:56 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef FT_CD_H
+# define FT_CD_H
 
-# include "lexer.h"
+# include "assignment.h"
 
-# define ENOTHOME	"HOME not set"
-# define ENOTOLDPWD	"OLDPWD not set"
+# define BUFSIZE 8192
 
-void	sys_error_in_lexing(t_lexer *lexer, t_fsm *fsm);
-void	destroy_lexer(t_lexer *lexer);
-void	destroy_fsm(t_fsm *fsm);
+int		ft_cd(int ac, char **av, t_list **envlist);
 #endif

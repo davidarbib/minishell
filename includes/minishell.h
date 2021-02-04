@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/02 13:36:38 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/04 15:55:10 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ t_list	*g_all_childs;
 */
 
 t_list	*g_env;
-
-t_list	*lookup(char *key, t_list *assignments);
 
 /*
 ** execution.c

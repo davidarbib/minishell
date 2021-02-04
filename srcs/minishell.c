@@ -57,7 +57,7 @@ void	run_once(t_reader *reader, char *line)
 	parse(reader, line);
 	eval(reader->parser.current_pipeline, -1);
 }
-
+/*
 int		main(int argc, char **argv)
 {
 	char		*line;
@@ -91,3 +91,4 @@ int		main(int argc, char **argv)
 	}
 	return (0);
 }
+*/
