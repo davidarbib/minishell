@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 14:53:36 by darbib            #+#    #+#              #
-#    Updated: 2021/02/01 13:04:00 by darbib           ###   ########.fr        #
+#    Updated: 2021/02/04 15:53:51 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,9 @@ SRC = ft_atoi.c \
 	ft_lstnew.c \
 	ft_lstsize.c \
 	ft_lstadd_back.c \
+	ft_lstadd_back_elem.c \
+	ft_lstremove_if.c \
+	ft_lstfind_content.c \
 	ft_lstclear.c \
 	ft_lstiter.c \
 	ft_lstlast.c \
@@ -154,8 +157,7 @@ $(NAME): $(OBJ)
 	ranlib $(NAME)
 
 %.o : %.c $(HEADERS)
-	@echo $(BLUE) "compiling" $< $(RESET)
-	@$(CC) -I $(INC_DIR) -c $(CFLAGS) $< 
+	$(CC) -I $(INC_DIR) -c $(CFLAGS) $< 
 
 clean :
 	rm -f $(OBJ)

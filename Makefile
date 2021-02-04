@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/03 19:17:45 by darbib           ###   ########.fr        #
+#    Updated: 2021/02/04 15:56:58 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,11 +66,14 @@ SRC = lexer.c \
 	  isredirection_op.c \
 	  args_parser.c \
 	  minishell.c \
+	  execution.c \
 	  simple_command_parser.c \
 	  pipeline_parser.c \
 	  list_parser.c \
 	  environ_transform.c \
 	  envlist_interface.c \
+	  parser_interface.c \
+	  echo.c \
 	  ft_cd.c
 
 # ------------------------------------------------------------------------------
@@ -86,17 +89,15 @@ all : $(NAME)
 bonus : $(NAME)
 
 $(NAME): $(OBJ) $(LIB_LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
-	@echo $(GREEN) $@ " is ready to use !" $(RESET)
+	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@mkdir -p objs
-	@echo $(BLUE) "compiling" $< $(RESET)
-	@$(CC) $(INC) $(CFLAGS) -c $< -o $@
+	$(CC) $(INC) $(CFLAGS) -c $< -o $@
 
 $(LIB_LIBFT) :
 	@echo "Compile libft.."
-	@make -C $(LIBFT_DIR)
+	@make DEBUG=$(DEBUG) -C $(LIBFT_DIR)
 
 clean :
 	@echo $(MAGENTA) "Cleaning objs..." $(RESET)
