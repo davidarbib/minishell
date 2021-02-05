@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/01 20:02:27 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/05 15:15:15 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ t_token	*ref_token(t_llparser *parser)
 }
 
 /*
+#include "obj_destructor.h"
+#include <stdio.h>
 int main()
 {	
 	//-----parsing tests with shell list-----
 	//
 	printf("-----------------------------\n");
 	//char *input = "echo \'ohoh\'";
-	char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
+	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
+	char *input = "echo \'ohoh\' < lol.txt < prout > lol | cat > toto.txt > robert.txt";
 	//char *input = "echo \"echo 4\"test";
 	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e";
 	//char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
@@ -65,7 +68,7 @@ int main()
 	//int ret = parse_pipeline(&parser, &current_pipeline);
 	printf("parse return : %d\n", ret);
 	printf("parser state : %d\n", parser.state);
-	ret =1;
+	ret = 1;
 	if (!ret)
 	{
 		//destroy_pipeline(&current_pipeline);
