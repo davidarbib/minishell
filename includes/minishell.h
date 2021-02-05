@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/04 15:28:30 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/05 15:56:13 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "lexer.h"
 # include "parser.h"
+# include "font_color.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -42,8 +43,6 @@ t_list	*g_all_childs;
 */
 
 t_list	*g_env;
-
-t_list	*lookup(char *key, t_list *assignments);
 
 /*
 ** g_open_fds is a t_list of ints

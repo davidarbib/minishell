@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/03 15:28:50 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/05 15:55:47 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	run_once(t_reader *reader, char *line)
 	eval_list(reader->parser.shell_list);
 }
 
-/*int		main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	char			*line;
 	int				result;
@@ -78,7 +78,7 @@ void	run_once(t_reader *reader, char *line)
 	{
 		while (1)
 		{
-			printf("minishell-1.0$ ");
+			printf(FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET);
 			fflush(stdout);
 			result = get_next_line(0, &line);
 			if (result == -1)
@@ -99,4 +99,4 @@ void	run_once(t_reader *reader, char *line)
 		wait_all_childs();
 	}
 	return (0);
-}*/
+}

@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   environ.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/05 23:55:28 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/03 19:07:13 by darbib           ###   ########.fr       */
+/*   Created: 2021/02/01 19:55:07 by darbib            #+#    #+#             */
+/*   Updated: 2021/02/03 13:09:19 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef ENVIRON_H
+# define ENVIRON_H
 
-# include "lexer.h"
+# include "libft.h"
 
-# define ENOTHOME	"HOME not set"
-# define ENOTOLDPWD	"OLDPWD not set"
+t_list	*to_environ_list(char **environ);
+char	**to_environ_array(t_list *environ);
+char	*ft_getenv(const char *name, t_list *envlist);
+int		ft_setenv(char *key, char *value, t_list **envlistp);
+char	*ft_getenv(const char *key, t_list *envlist);
+t_list	*lookup(const char* key, t_list *envlist);
 
-void	sys_error_in_lexing(t_lexer *lexer, t_fsm *fsm);
-void	destroy_lexer(t_lexer *lexer);
-void	destroy_fsm(t_fsm *fsm);
 #endif
