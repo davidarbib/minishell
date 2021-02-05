@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/05 14:14:23 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/05 15:39:09 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,38 +79,16 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 	redir_list = command.redirections;
 	while (redir_list)
 	{
-/*<<<<<<< HEAD
-		current_redir = *(t_io_redirect*)redir_list->content;
-		if (current_redir.type == i_redirect)
-		{
-			if ((fd = open(current_redir.filename, O_RDONLY)) < 0)
-			{
-				perror("minishell");
-				return ;
-			}
-			// [io_number]<word
-			dup2(fd, current_redir.io_number == -1 ?
-									0 : current_redir.io_number);
-		}
-		else {
-			// [io_number]>word ou [io_number]>>word
-			if ((fd = open(current_redir.filename,
-							current_redir.type == oc_redirect ? O_WRONLY : O_WRONLY | O_APPEND)))
-		}
-
-=======*/
 		redir = *(t_io_redirect*)redir_list->content;
 		fd = malloc(sizeof(int));
 		if (redir.type == i_redirect)
 		{
-			printf("redirecting stdin to %s\n", redir.filename);
 			*fd = open(redir.filename, O_RDONLY);
 			ft_lstadd_front_elem(&g_open_fds, fd);
 			dup2(*fd, redir.io_number == -1 ? 0 : redir.io_number);
 		}
 		else
 		{
-			printf("redirecting stdout to %s\n", redir.filename);
 			if (redir.type == oc_redirect)
 				*fd = open(redir.filename, O_WRONLY | O_CREAT, 0644);
 			else
@@ -118,8 +96,6 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 			ft_lstadd_front_elem(&g_open_fds, fd);
 			dup2(*fd, redir.io_number == -1 ? 1 : redir.io_number);
 		}
-		fprintf(stderr, "redirs end\n");
->>>>>>> 0a9f93349d3cc8bdbec5006948ddb6b341771fca
 		redir_list = redir_list->next;
 	}
 	launch(command.args);
