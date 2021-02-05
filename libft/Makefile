@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 14:53:36 by darbib            #+#    #+#              #
-#    Updated: 2021/02/03 11:03:25 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/02/03 15:15:07 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ endif
 OBJ = $(SRC:.c=.o)
 
 SRC = ft_atoi.c \
+	ft_atoi_strict.c \
 	ft_atoi_mv.c \
 	ft_atof.c \
 	ft_atof_mv.c \

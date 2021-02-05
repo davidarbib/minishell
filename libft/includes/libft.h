@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/03 11:04:21 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 15:13:44 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *str);
+int					ft_atoi_strict(const char *str);
 double				ft_atof(char *str);
 double				ft_atof_mv(char **str);
 int					ft_atoi_mv(char **str);
