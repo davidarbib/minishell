@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/03 12:11:25 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 15:29:13 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token	*ref_token(t_llparser *parser)
 	return (&parser->tokens[parser->token_idx]);
 }
 
-/*#include <stdio.h> 
+#include <stdio.h> 
 #include "obj_destructor.h"
 int main()
 {	
@@ -117,4 +117,4 @@ int main()
 		}
 		node_shell_list = node_shell_list->next;
 	}
-}*/
+}

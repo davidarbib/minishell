@@ -6,11 +6,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:27:57 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/03 14:08:59 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/03 18:19:04 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <fcntl.h>
 
 void	del(void *arg)
 {
@@ -59,7 +60,10 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 									int p[])
 {
 	t_simple_command	command;
-	t_redirections		redir;
+	t_list				*redir_list;
+	t_io_redirect		current_redir;
+	int					fd;
+	int					ionumber;
 
 	command = *(t_simple_command*)pipeline->content;
 	if (pipe_stdin != -1)
@@ -73,10 +77,28 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 		close(p[1]);
 		close(p[0]);
 	}
-	redir = command->redirections;
-	while (1)
+	redir_list = command.redirections;
+	while (redir_list)
 	{
+		current_redir = *(t_io_redirect*)redir_list->content;
+		if (current_redir.type == i_redirect)
+		{
+			if ((fd = open(current_redir.filename, O_RDONLY)) < 0)
+			{
+				perror("minishell");
+				return ;
+			}
+			// [io_number]<word
+			dup2(fd, current_redir.io_number == -1 ?
+									0 : current_redir.io_number);
+		}
+		else {
+			// [io_number]>word ou [io_number]>>word
+			if ((fd = open(current_redir.filename,
+							current_redir.type == oc_redirect ? O_WRONLY : O_WRONLY | O_APPEND)))
+		}
 
+		redir_list = redir_list->next;
 	}
 	launch(command.args);
 }
