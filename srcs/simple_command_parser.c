@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:35:27 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/29 14:43:31 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/05 15:10:59 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		parse_suffix(t_llparser *parser)
 	parser->state = base;
 	success = parse_word(parser);
 	if (!success)
-		parse_io_redirect(parser);
+		success = parse_io_redirect(parser);
 	if (success)
 		return (parse_suffix(parser));
 	return (0);
