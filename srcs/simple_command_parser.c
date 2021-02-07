@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:35:27 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/05 15:10:59 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/07 19:10:18 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		store_simple_command(t_pipeline **pipeline, t_simple_command *command)
 	static int			pass = 0;
 	
 	pass++;
-	printf("current command arg : %s\n", (char *)command->args->content);
+	/*printf("current command arg : %s\n", (char *)command->args->content);*/
 	pipeline_content = (t_simple_command *)ft_calloc(1, sizeof(t_simple_command));
 	if (!pipeline_content)
 		return (0);
