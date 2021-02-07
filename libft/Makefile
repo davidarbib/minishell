@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 14:53:36 by darbib            #+#    #+#              #
-#    Updated: 2021/02/04 15:53:51 by darbib           ###   ########.fr        #
+#    Updated: 2021/02/07 15:37:13 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,11 +39,11 @@ INC_DIR = includes
 HEADERS += $(INC_DIR)/libft.h 
 HEADERS += $(INC_DIR)/get_next_line.h 
 
-ifeq ($(TEST), 1)
-	HEADERS += $(INC_DIR)/ft_sprintf.h
-else
+#ifeq ($(TEST), 1)
+	#HEADERS += $(INC_DIR)/ft_sprintf.h
+#else
 	HEADERS += $(INC_DIR)/ft_printf.h
-endif
+#endif
 
 OBJ = $(SRC:.c=.o)
 
@@ -120,26 +120,19 @@ SRC = ft_atoi.c \
 	ft_tabtodlst.c \
 	ft_abs.c \
 	ft_pass_spaces.c \
-	ft_printf.c \
-	ft_sprintf.c \
-	conversion.c \
-	utils.c \
-	nocs_convert.c \
-	di_convert.c \
-	u_convert.c \
-	x_convert.c \
-	p_convert.c \
 	ft_realloc.c \
 	ft_split_dict.c
+	#ft_sprintf.c \
 
-ifeq ($(TEST), 1)
+SRC	+= ft_printf_main.c ft_printf_main2.c ft_printf_parse_format.c ft_printf_parse_format2.c ft_printf_print.c ft_printf_print_str.c ft_printf_print_int.c ft_printf_print_int2.c ft_printf_utilities.c
+SRC	+= ft_printf_utilities2.c ft_printf_format.c ft_printf_print_nothing.c ft_printf_print_double.c ft_printf_print_double2.c ft_printf_print_scientific.c ft_printf_print_g.c
+
+#ifeq ($(TEST), 1)
 	#shell echo "compiling test mode buffer.c"
-	SRC += sbuffer.c 
-	SRC += ft_sprintf.c 
-else
-	SRC += buffer.c
-	SRC += ft_printf.c 
-endif
+	#SRC += sbuffer.c 
+	#SRC += ft_sprintf.c 
+#else
+#endif
 	
 PRINTF_DIR = ft_printf
 
