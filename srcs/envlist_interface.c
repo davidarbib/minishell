@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:05:34 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/03 22:25:48 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/07 14:31:58 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,22 @@ static int	append_env(t_assignment *pair, t_list **envlistp)
 	return (1);
 }
 
-t_list	*lookup(const char* key, t_list *envlist)
+t_list	*lookup(const char *key, t_list *envlist)
 {
 	if (!envlist)
 		return (NULL);
 	if (ft_strcmp(((t_assignment *)envlist->content)->key, key) == 0)
 		return (envlist);
 	return (lookup(key, envlist->next));
+}
+
+char	*lookup_value(const char *key, t_list *envlist)
+{
+	if (!envlist)
+		return (NULL);
+	if (ft_strcmp(((t_assignment *)envlist->content)->key, key) == 0)
+		return (((t_assignment*)envlist->content)->value);
+	return (lookup_value(key, envlist->next));
 }
 
 /*

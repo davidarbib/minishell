@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/05 15:56:13 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/07 15:30:33 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@
 # include "lexer.h"
 # include "parser.h"
 # include "font_color.h"
+# include "environ.h"
+# include "ft_cd.h"
+# include "built_ins.h"
 # include <stdio.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <unistd.h>
 # include <fcntl.h>
 
