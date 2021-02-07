@@ -1,3 +1,6 @@
+#ifndef BUILT_INS
+# define BUILT_INS
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,8 +9,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 14:23:19 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/02 14:23:44 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/07 15:31:16 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	echo(int argc, char **argv, char **env);
+# include "libft.h"
+
+int	ft_echo(int ac, char **av, t_list **env);
+
+#endif
