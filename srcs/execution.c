@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/07 19:08:06 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/08 18:39:57 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	maybe_launch_built_in(char **tab)
 		/*printf("executing echo...\n");*/
 		ft_echo(ac, tab, &g_env);
 	}
+	if (ft_strcmp(tab[0], "pwd") == 0)
+		ft_pwd();
 }
 
 void	launch(t_list *command)
