@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/07 19:08:06 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/08 19:01:07 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	wait_all_childs(void)
 	{
 		if (!g_all_childs)
 			break ;
-		pid = ((t_process*)g_all_childs->content)->pid;
+		pid = *(int*)g_all_childs->content;
 		waitpid(pid, &status, WUNTRACED);
 		ft_lstdel_first(&g_all_childs, del);
 	}

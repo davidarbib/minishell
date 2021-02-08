@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/07 15:30:33 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/08 21:19:34 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,8 @@ typedef struct	s_reader {
 	t_llparser	parser;
 }				t_reader;
 
-typedef struct	s_process {
-	int	pid;
-	int	pipe_out;
-}				t_process;
-
 /*
-** g_all_childs is a list of t_process
+** g_all_childs is a list of int
 */
 
 t_list	*g_all_childs;

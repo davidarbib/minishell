@@ -6,11 +6,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/07 14:32:37 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/08 21:18:18 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 void	close_unused_in_parent(t_pipeline *pipeline, int pipe_stdin,
 										int pipe_stdout)
@@ -30,16 +31,19 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 	int			pid;
 	int			p[2];
 	int			next_stdin;
-	t_process	*process;
+	int			*pid_ptr;
 
 	if (!pipeline)
 		return ;
-	process = malloc(sizeof(t_process));
+	if (!(pid_ptr = malloc(sizeof(int))))
+	{
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
 	if (pipeline->next)
 	{
 		pipe(p);
 		next_stdin = p[0];
-		process->pipe_out = p[1];
 	}
 	if ((pid = fork()) == 0)
 	{
@@ -49,9 +53,9 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 	else if (pid < 0)
 		perror("minishell");
 	close_unused_in_parent(pipeline, pipe_stdin, p[1]);
-	process->pid = pid;
+	*pid_ptr = pid;
 	/*ft_lstadd_back_elem(&g_all_childs, process);*/
-	ft_lstadd_front_elem(&g_all_childs, process);
+	ft_lstadd_front_elem(&g_all_childs, pid_ptr);
 	eval(pipeline->next, next_stdin);
 }
 
