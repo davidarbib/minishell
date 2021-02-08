@@ -6,11 +6,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/07 14:32:37 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/08 14:12:06 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 
 void	close_unused_in_parent(t_pipeline *pipeline, int pipe_stdin,
 										int pipe_stdout)
@@ -50,7 +51,6 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 		perror("minishell");
 	close_unused_in_parent(pipeline, pipe_stdin, p[1]);
 	process->pid = pid;
-	/*ft_lstadd_back_elem(&g_all_childs, process);*/
 	ft_lstadd_front_elem(&g_all_childs, process);
 	eval(pipeline->next, next_stdin);
 }
@@ -103,34 +103,44 @@ void	process_env(char **env)
 	}
 }
 
-int		main(int argc, char **argv, char **env)
+void	sigint(int code)
+{
+	(void)code;
+}
+
+void	main_loop()
 {
 	char			*line;
 	int				result;
 	t_reader		reader;
 
+	printf(FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET);
+	fflush(stdout);
+	result = get_next_line(0, &line);
+	if (result == -1)
+		printf("minishell: error in get_next_line\n");
+	else if (result == 0)
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
+	parse(&reader, line);
+	eval_list(reader.parser.shell_list);
+	wait_all_childs();
+	free_all();
+}
+
+int		main(int argc, char **argv, char **env)
+{
+	t_reader reader;
+
+	signal(SIGINT, &sigint);  // ctrl+c
+	/*signal(SIG, &sigTerm);*/
 	process_env(env);
 	(void)argv;
 	if (argc == 1)
-	{
 		while (1)
-		{
-			printf(FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET);
-			fflush(stdout);
-			result = get_next_line(0, &line);
-			if (result == -1)
-				printf("minishell: error in get_next_line\n");
-			else if (result == 0)
-			{
-				printf("exit\n");
-				exit(EXIT_SUCCESS);
-			}
-			parse(&reader, line);
-			eval_list(reader.parser.shell_list);
-			wait_all_childs();
-			free_all();
-		}
-	}
+			main_loop();
 	else	 // for testing
 	{
 		run_once(&reader, argv[1]);
