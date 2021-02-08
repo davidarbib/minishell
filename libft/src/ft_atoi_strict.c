@@ -1,20 +1,24 @@
-#ifndef BUILT_INS
-# define BUILT_INS
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_ins.h                                        :+:      :+:    :+:   */
+/*   ft_atoi_strict.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 14:23:19 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/07 15:31:16 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2019/11/08 19:36:16 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2021/02/03 15:14:48 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+int			ft_atoi_strict(const char *str)
+{
+	int number;
 
-int	ft_echo(int ac, char **av, t_list **env);
-
-#endif
+	number = 0;
+	while ('0' <= *str && *str <= '9')
+	{
+		number = 10 * number + (*str - '0');
+		str++;
+	}
+	return (number);
+}

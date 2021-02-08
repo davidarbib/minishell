@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/06 11:20:09 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/08 11:08:34 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_token	*ref_token(t_llparser *parser)
 	return (&parser->tokens[parser->token_idx]);
 }
 
+/*
 int main()
 {	
 #include "obj_destructor.h"
@@ -36,6 +37,9 @@ int main()
 	printf("-----------------------------\n");
 	//char *input = "echo \'ohoh\'";
 	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
+	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha 0< ok echo test";
+	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
+	//char *input = "echo \'ohoh\' < lol.txt < prout > lol | cat > toto.txt > robert.txt";
 	//char *input = "echo \"echo 4\"test";
 	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e";
 	//char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
@@ -67,7 +71,8 @@ int main()
 	//int ret = parse_pipeline(&parser, &current_pipeline);
 	printf("parse return : %d\n", ret);
 	printf("parser state : %d\n", parser.state);
-	ret =1;
+	ret = 1;
+
 	if (!ret)
 	{
 		//destroy_pipeline(&current_pipeline);
@@ -119,6 +124,7 @@ int main()
 		node_shell_list = node_shell_list->next;
 	}
 }
+*/
 /*
 int main()
 {	

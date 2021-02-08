@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/04 15:56:58 by darbib           ###   ########.fr        #
+#    Updated: 2021/02/07 15:27:17 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ SRC = lexer.c \
 	  environ_transform.c \
 	  envlist_interface.c \
 	  parser_interface.c \
-	  echo.c \
+	  ft_echo.c \
 	  ft_cd.c
 
 # ------------------------------------------------------------------------------

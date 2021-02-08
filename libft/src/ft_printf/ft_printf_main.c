@@ -1,20 +1,37 @@
-#ifndef BUILT_INS
-# define BUILT_INS
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_ins.h                                        :+:      :+:    :+:   */
+/*   ft_printf_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 14:23:19 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/07 15:31:16 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2019/11/22 13:14:27 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2020/04/24 09:27:53 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+#include "ft_printf.h"
 
-int	ft_echo(int ac, char **av, t_list **env);
+int
+	ft_printf(const char *str, ...)
+{
+	va_list	args;
+	int		ret;
 
-#endif
+	va_start(args, str);
+	ret = ft_zprintf(1, str, &args);
+	va_end(args);
+	return (ret);
+}
+
+int
+	ft_dprintf(int fd, const char *str, ...)
+{
+	va_list	args;
+	int		ret;
+
+	va_start(args, str);
+	ret = ft_zprintf(fd, str, &args);
+	va_end(args);
+	return (ret);
+}

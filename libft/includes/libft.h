@@ -63,6 +63,7 @@ size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *str);
+int					ft_atoi_strict(const char *str);
 double				ft_atof(char *str);
 double				ft_atof_mv(char **str);
 int					ft_atoi_mv(char **str);
@@ -85,6 +86,7 @@ t_list				*ft_lstnew(void *content);
 int					ft_lstsize(t_list *lst);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 int					ft_lstadd_back_elem(t_list **alst, void *data);
+int					ft_lstadd_front_elem(t_list **alst, void *data);
 void				*ft_lstfind_content(t_list *alst, void *data_ref,
 						int (*cmp)());
 void				ft_lstremove_if(t_list **alst, void *data_ref,

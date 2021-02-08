@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_printf_utilities2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 13:06:40 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/02 14:24:42 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2019/12/20 15:52:46 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2020/04/16 17:06:08 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "ft_printf.h"
 
-int		echo(int argc, char** argv, char **env)
+void
+	ft_printf_fill_base(t_ft_printf_base *base,
+			const t_ft_printf_format *format)
 {
-	(void)env;
-	int	newline;
-	int i;
-
-	i = 1;
-	newline = 1;
-	if (argc > 1 && ft_strcmp("-n", argv[1]) == 0)
+	if (format->type == HEXA_MIN || format->type == POINTER)
 	{
-		newline = 0;
-		i++;
+		base->str = "0123456789abcdef";
+		base->length = 16;
 	}
-	while (i < argc)
+	else if (format->type == HEXA_MAJ)
 	{
-		printf("%s", argv[i]);
-		if (i != argc - 1)
-			printf(" ");
-		i++;
+		base->str = "0123456789ABCDEF";
+		base->length = 16;
 	}
-	if (newline)
-		printf("\n");
-	return (0);
+	else
+	{
+		base->str = "0123456789";
+		base->length = 10;
+	}
 }

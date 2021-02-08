@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/04 15:55:10 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/07 15:30:33 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,13 @@
 # include "libft.h"
 # include "lexer.h"
 # include "parser.h"
+# include "font_color.h"
+# include "environ.h"
+# include "ft_cd.h"
+# include "built_ins.h"
 # include <stdio.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <unistd.h>
 # include <fcntl.h>
 
@@ -44,6 +49,12 @@ t_list	*g_all_childs;
 t_list	*g_env;
 
 /*
+** g_open_fds is a t_list of ints
+*/
+
+t_list	*g_open_fds;
+
+/*
 ** execution.c
 */
 
@@ -54,7 +65,7 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int p[]);
 ** parser_interface.c
 */
 
-int		parse(t_reader *reader, char *line);
+void	parse(t_reader *reader, char *line);
 void	initialize_parser(t_reader *reader);
 
 #endif
