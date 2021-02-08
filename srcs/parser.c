@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/01 20:02:27 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/06 11:20:09 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ t_token	*ref_token(t_llparser *parser)
 	return (&parser->tokens[parser->token_idx]);
 }
 
-/*
 int main()
 {	
+#include "obj_destructor.h"
+#include <stdio.h>
 	//-----parsing tests with shell list-----
 	//
 	printf("-----------------------------\n");
 	//char *input = "echo \'ohoh\'";
-	char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
+	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
 	//char *input = "echo \"echo 4\"test";
 	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e";
 	//char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
@@ -45,6 +46,7 @@ int main()
 	//char *input = "ls";
 	//char *input = "ls | cat | echo";
 	//char *input = "ls | cat | echo ; oxo";
+	char *input = "echo a\"$HOME\"";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)
@@ -117,7 +119,6 @@ int main()
 		node_shell_list = node_shell_list->next;
 	}
 }
-*/
 /*
 int main()
 {	
