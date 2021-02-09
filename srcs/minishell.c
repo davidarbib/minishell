@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/08 21:18:18 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/09 10:56:07 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,29 @@ void	process_env(char **env)
 	}
 }
 
+void	sigint()
+{
+	t_list	*tmp;
+
+	tmp = g_all_childs;
+	while (g_all_childs)
+	{
+		tmp = g_all_childs;
+		kill(*(int*)tmp->content, SIGINT);
+		free(tmp->content);
+		tmp = tmp->next;
+		free(g_all_childs);
+	}
+}
+
 int		main(int argc, char **argv, char **env)
 {
 	char			*line;
 	int				result;
 	t_reader		reader;
 
+	signal(SIGINT, sigint);
 	process_env(env);
-	(void)argv;
 	if (argc == 1)
 	{
 		while (1)
