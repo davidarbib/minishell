@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/09 10:56:07 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/09 13:43:40 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,15 @@ void	sigint()
 	t_list	*tmp;
 
 	tmp = g_all_childs;
-	while (g_all_childs)
+	while (1)
 	{
-		tmp = g_all_childs;
 		kill(*(int*)tmp->content, SIGINT);
-		free(tmp->content);
+		/*if (tmp->content)*/
+			/*free(tmp->content);*/
 		tmp = tmp->next;
-		free(g_all_childs);
+		/*free(g_all_childs);*/
 	}
+	g_all_childs = NULL;
 }
 
 int		main(int argc, char **argv, char **env)

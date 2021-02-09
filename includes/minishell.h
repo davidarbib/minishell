@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/08 21:19:34 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/09 13:08:35 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <signal.h>
 
 typedef struct	s_reader {
 	t_lexer		lexer;
