@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/09 13:08:35 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:16:00 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@
 # include "parser.h"
 # include "font_color.h"
 # include "environ.h"
-# include "ft_cd.h"
 # include "built_ins.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <signal.h>
+# include <stdlib.h>
 # include <signal.h>
 
 typedef struct	s_reader {

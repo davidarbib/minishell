@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/08 19:01:07 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:16:36 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,14 @@ void	maybe_launch_built_in(char **tab)
 		ac++;
 	if (ft_strcmp(tab[0], "cd") == 0)
 	{
-		/*printf("executing cd...\n");*/
 		if (ft_cd(ac, tab, &g_env) < 0)
 			exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);
 	}
 	if (ft_strcmp(tab[0], "echo") == 0)
-	{
-		/*printf("executing echo...\n");*/
 		ft_echo(ac, tab, &g_env);
-	}
+	if (ft_strcmp(tab[0], "pwd") == 0)
+		ft_pwd();
 }
 
 void	launch(t_list *command)

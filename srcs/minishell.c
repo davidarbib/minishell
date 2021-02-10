@@ -6,13 +6,11 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/10 11:11:22 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:18:40 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <signal.h>
-#include <stdlib.h>
 
 void	close_unused_in_parent(t_pipeline *pipeline, int pipe_stdin,
 										int pipe_stdout)
@@ -107,8 +105,6 @@ void	process_env(char **env)
 	}
 }
 
-void	main_loop();
-
 void	signal_handler(int signal)
 {
 	t_list	*tmp;
@@ -159,10 +155,8 @@ int		main(int argc, char **argv, char **env)
 	signal(SIGQUIT, signal_handler);
 	process_env(env);
 	if (argc == 1)
-	{
 		while (1)
 			main_loop();
-	}
 	else	 // for testing
 	{
 		run_once(&reader, argv[1]);
