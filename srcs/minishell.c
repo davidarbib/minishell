@@ -6,11 +6,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/09 19:47:24 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/10 11:11:22 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <signal.h>
 #include <stdlib.h>
 
 void	close_unused_in_parent(t_pipeline *pipeline, int pipe_stdin,
@@ -54,7 +55,6 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 		perror("minishell");
 	close_unused_in_parent(pipeline, pipe_stdin, p[1]);
 	*pid_ptr = pid;
-	/*ft_lstadd_back_elem(&g_all_childs, process);*/
 	ft_lstadd_front_elem(&g_all_childs, pid_ptr);
 	eval(pipeline->next, next_stdin);
 }
@@ -107,62 +107,61 @@ void	process_env(char **env)
 	}
 }
 
-void	sigint(int number)
+void	main_loop();
+
+void	signal_handler(int signal)
 {
 	t_list	*tmp;
 
-	(void)number;
 	tmp = g_all_childs;
+	if (!tmp)
+	{
+		write(1, FONT_BOLDBLUE "\nminishell-1.0$ " FONT_RESET, 27);
+		return ;
+	}
 	while (tmp)
 	{
-		kill(*(int*)tmp->content, SIGINT);
+		kill(*(int*)tmp->content, signal);
 		tmp = tmp->next;
 	}
-	write(1, "\n", 1);
+	if (signal != SIGINT)
+		printf("Quit: %d", signal);
+	printf("\n");
 }
 
-void	sigquit(int number)
-{
-	t_list	*tmp;
-
-	(void)number;
-	tmp = g_all_childs;
-	while (tmp)
-	{
-		kill(*(int*)tmp->content, SIGQUIT);
-		tmp = tmp->next;
-	}
-	write(1, "\n", 1);
-}
-
-int		main(int argc, char **argv, char **env)
+void	main_loop()
 {
 	char			*line;
 	int				result;
 	t_reader		reader;
 
-	signal(SIGINT, sigint);
-	signal(SIGQUIT, sigquit);
+	write(1, FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET, 26);
+	fflush(stdout);
+	result = get_next_line(0, &line);
+	if (result == -1)
+		printf("minishell: error in get_next_line\n");
+	else if (result == 0)
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
+	parse(&reader, line);
+	eval_list(reader.parser.shell_list);
+	wait_all_childs();
+	free_all();
+}
+
+int		main(int argc, char **argv, char **env)
+{
+	t_reader		reader;
+
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 	process_env(env);
 	if (argc == 1)
 	{
 		while (1)
-		{
-			printf(FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET);
-			fflush(stdout);
-			result = get_next_line(0, &line);
-			if (result == -1)
-				printf("minishell: error in get_next_line\n");
-			else if (result == 0)
-			{
-				printf("exit\n");
-				exit(EXIT_SUCCESS);
-			}
-			parse(&reader, line);
-			eval_list(reader.parser.shell_list);
-			wait_all_childs();
-			free_all();
-		}
+			main_loop();
 	}
 	else	 // for testing
 	{
