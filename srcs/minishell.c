@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/09 13:43:40 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/09 19:47:24 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,20 +107,32 @@ void	process_env(char **env)
 	}
 }
 
-void	sigint()
+void	sigint(int number)
 {
 	t_list	*tmp;
 
+	(void)number;
 	tmp = g_all_childs;
-	while (1)
+	while (tmp)
 	{
 		kill(*(int*)tmp->content, SIGINT);
-		/*if (tmp->content)*/
-			/*free(tmp->content);*/
 		tmp = tmp->next;
-		/*free(g_all_childs);*/
 	}
-	g_all_childs = NULL;
+	write(1, "\n", 1);
+}
+
+void	sigquit(int number)
+{
+	t_list	*tmp;
+
+	(void)number;
+	tmp = g_all_childs;
+	while (tmp)
+	{
+		kill(*(int*)tmp->content, SIGQUIT);
+		tmp = tmp->next;
+	}
+	write(1, "\n", 1);
 }
 
 int		main(int argc, char **argv, char **env)
@@ -130,6 +142,7 @@ int		main(int argc, char **argv, char **env)
 	t_reader		reader;
 
 	signal(SIGINT, sigint);
+	signal(SIGQUIT, sigquit);
 	process_env(env);
 	if (argc == 1)
 	{
