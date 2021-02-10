@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/10 15:11:04 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:16:36 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*find_in_path(char *command)
 	return (command);
 }
 
-int		maybe_launch_built_in(char **tab)
+void	maybe_launch_built_in(char **tab)
 {
 	int	ac;
 
@@ -98,43 +98,51 @@ int		maybe_launch_built_in(char **tab)
 		if (ft_cd(ac, tab, &g_env) < 0)
 			exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);
-		return (BUILT_IN);
 	}
 	if (ft_strcmp(tab[0], "echo") == 0)
-	{
 		ft_echo(ac, tab, &g_env);
-		return (BUILT_IN);
-	}
 	if (ft_strcmp(tab[0], "pwd") == 0)
-	{
 		ft_pwd();
-		return (BUILT_IN);
-	}
-	return (NOT_BUILT_IN);
 }
 
-void	use_pipes(int next_in_pipeline, int pipe_stdin, int p[])
+void	launch(t_list *command)
 {
+	char	**tab;
+	int		size;
+	char	*file;
+
+	tab = (char**)ft_lsttotab(command, 8, &size);
+	/*ft_lstclear(command, del);*/
+	tab[size] = 0;
+	maybe_launch_built_in(tab);
+	file = find_in_path(tab[0]);
+	/*printf("executing %s...\n", file);*/
+	execve(file, (char*const*)tab, NULL);
+	perror("minishell");
+	exit(EXIT_FAILURE);
+}
+
+void	redirect_and_launch(t_pipeline *pipeline,int pipe_stdin,
+									int p[])
+{
+	t_simple_command	command;
+	t_list				*redir_list;
+	t_io_redirect		redir;
+	int					*fd;
+
+	command = *(t_simple_command*)pipeline->content;
 	if (pipe_stdin != -1)
 	{
 		dup2(pipe_stdin, 0);
 		close(pipe_stdin);
 	}
-	if (next_in_pipeline)
+	if (pipeline->next)
 	{
 		dup2(p[1], 1);
 		close(p[1]);
 		close(p[0]);
 	}
-}
-
-void	use_redirections(t_simple_command *simple_command)
-{
-	int		*fd;
-	t_io_redirect	redir;
-	t_list			*redir_list;
-	
-	redir_list = simple_command->redirections;
+	redir_list = command.redirections;
 	while (redir_list)
 	{
 		redir = *(t_io_redirect*)redir_list->content;
@@ -156,51 +164,5 @@ void	use_redirections(t_simple_command *simple_command)
 		}
 		redir_list = redir_list->next;
 	}
-}
-
-void	close_unused_in_parent(int is_next_in_pipeline, int pipe_stdin,
-										int pipe_stdout)
-{
-	if (is_next_in_pipeline)
-		close(pipe_stdout);
-	if (pipe_stdin != 0)
-		close(pipe_stdin);
-}
-
-void	launch(t_simple_command *simple_command, int is_next_in_pipeline, int pipe_stdin, int p[])
-{
-	char	**tab;
-	int		size;
-	char	*file;
-	int		pid;
-	int		*pid_ptr;
-	t_list	*command;
-
-	command = simple_command->args;
-	tab = (char**)ft_lsttotab(command, 8, &size);
-	printf("%s\n", tab[0]);
-	tab[size] = 0;
-	if (maybe_launch_built_in(tab) != BUILT_IN)
-	{
-		file = find_in_path(tab[0]);
-		if ((pid = fork()) == 0)
-		{
-			use_pipes(is_next_in_pipeline, pipe_stdin, p);
-			/*use_redirections(simple_command);*/
-			execve(file, (char*const*)tab, NULL);
-			perror("minishell");
-			exit(EXIT_FAILURE);
-		}
-		else if (pid < 0)
-			perror("minishell");
-		close_unused_in_parent(is_next_in_pipeline, pipe_stdin, p[1]);
-		if (!(pid_ptr = malloc(sizeof(int))))
-		{
-			perror("minishell");
-			exit(EXIT_FAILURE);
-		}
-		*pid_ptr = pid;
-		ft_lstadd_front_elem(&g_all_childs, pid_ptr);
-	}
-	free(tab);
+	launch(command.args);
 }

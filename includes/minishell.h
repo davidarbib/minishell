@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/10 14:57:59 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/10 12:16:00 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <signal.h>
-
-# define BUILT_IN		0
-# define NOT_BUILT_IN	1
 
 typedef struct	s_reader {
 	t_lexer		lexer;
@@ -59,7 +56,7 @@ t_list	*g_open_fds;
 */
 
 void	wait_all_childs(void);
-void	launch(t_simple_command *simple_command, int next_in_pipeline, int pipe_stdin, int p[]);
+void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int p[]);
 
 /*
 ** parser_interface.c
