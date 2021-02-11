@@ -6,36 +6,51 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 15:23:42 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/10 15:28:08 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/11 23:17:16 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expand_quote_removal.h"
-#include "libft.h"
 
-static void	init_transitions_expansion(char transitions[STATE_NB][INPUT_NB])
+static void	init_transitions_lower(char transitions[STATE_NB][INPUT_NB])
+{
+	unsigned char c;
+
+	c = 'a';
+	while (c <= 'z')
+	{
+		transitions[expand_first_state][c] = expand_core_state;
+		transitions[expand_core_state][c] = expand_core_state;
+		transitions[expand_first_in_dq_state][c] = expand_core_in_dq_state;
+		transitions[expand_core_in_dq_state][c] = expand_core_in_dq_state;
+		c++;
+	}
+	transitions[expand_first_state]['_'] = expand_core_state;
+	transitions[expand_core_state]['_'] = expand_core_state;
+	transitions[expand_first_in_dq_state][c] = expand_core_in_dq_state;
+	transitions[expand_core_in_dq_state][c] = expand_core_in_dq_state;
+}
+
+static void	init_transitions_digits_upper(char transitions[STATE_NB][INPUT_NB])
 {
 	unsigned char c;
 
 	c = '0';
 	while (c <= '9')
-		transitions[expand_core_state][c++] = expand_core_state;	
+	{
+		transitions[expand_core_state][c] = expand_core_state;
+		transitions[expand_core_in_dq_state][c] = expand_core_in_dq_state;
+		c++;
+	}
 	c = 'A';
 	while (c <= 'Z')
 	{
-		transitions[expand_first_state][c] = expand_core_state;	
+		transitions[expand_first_state][c] = expand_core_state;
 		transitions[expand_core_state][c] = expand_core_state;
+		transitions[expand_first_in_dq_state][c] = expand_core_in_dq_state;
+		transitions[expand_core_in_dq_state][c] = expand_core_in_dq_state;
 		c++;
 	}
-	c = 'a';
-	while (c <= 'z')
-	{
-		transitions[expand_first_state][c] = expand_core_state;	
-		transitions[expand_core_state][c] = expand_core_state;	
-		c++;
-	}
-	transitions[expand_first_state]['_'] = expand_core_state;
-	transitions[expand_core_state]['_'] = expand_core_state;
 }
 
 void	init_transitions(char transitions[STATE_NB][INPUT_NB])
@@ -49,40 +64,101 @@ void	init_transitions(char transitions[STATE_NB][INPUT_NB])
 	transitions[squote_state]['\''] = base_state;
 	ft_memset(transitions[dquote_state], dquote_state, INPUT_NB);
 	transitions[dquote_state]['\"'] = base_state;
-	transitions[dquote_state]['\\'] = equote_in_dquote_state;
-	transitions[dquote_state]['$'] = expand_first_state;
+	transitions[dquote_state]['\\'] = equote_in_dq_state;
+	transitions[dquote_state]['$'] = expand_first_in_dq_state;
 	ft_memset(transitions[equote_state], base_state, INPUT_NB);
 	ft_memset(transitions[expand_first_state], base_state, INPUT_NB);
 	ft_memset(transitions[expand_core_state], base_state, INPUT_NB);
-	ft_memset(transitions[equote_in_dquote_state], dquote_state, INPUT_NB);
-	init_transitions_expansion(transitions);
+	ft_memset(transitions[equote_in_dq_state], dquote_state, INPUT_NB);
+	ft_memset(transitions[expand_first_in_dq_state], dquote_state, INPUT_NB);
+	ft_memset(transitions[expand_core_in_dq_state], dquote_state, INPUT_NB);
+	init_transitions_digits_upper(transitions);
+	init_transitions_lower(transitions);
 }
 
-void	init_actions(int (*actions[STATE_NB][INPUT_NB])(t_expand*))
+static void	init_expand_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))
 {
-	ft_bzero(actions, STATE_NB * INPUT_NB * sizeof(void*));
+	actions[expand_first_in_dq_state][expand_core_in_dq_state] = 
+		copy_to_search_buffer;
+	actions[expand_first_in_dq_state][dquote_state] = fetch_special_var;
+	actions[expand_core_in_dq_state][expand_core_in_dq_state] =
+		copy_to_search_buffer;
+	actions[base_state][base_state] = copy_to_result_buffer;
+	actions[base_state][base_state] = copy_to_result_buffer;
+}
+
+void	init_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))
+{
+	int	i;
+	int	j;
+
+	ft_bzero(actions, STATE_NB * STATE_NB * sizeof(void*));
+	i = base_state;
+	while (i < STATE_NB)
+	{
+		j = base_state;
+		while (j < STATE_NB)
+			actions[i][j++] = NULL;
+		i++;
+	}
+	actions[base_state][base_state] = copy_to_result_buffer;
+	actions[equote_state][base_state] = copy_to_result_buffer;
+	actions[squote_state][squote_state] = copy_to_result_buffer;
+	actions[dquote_state][dquote_state] = copy_to_result_buffer;
+	actions[dquote_state][expand_first_in_dq_state] = copy_to_search_buffer;
+	actions[equote_in_dq_state][dquote_state] = check_do_escaping;
+}
+
+int		add_char_to_buffer(char *buf, size_t *size, size_t *count, char c)
+{
+	if ((size_t)(*count) + 1 == *size)
+	{
+		buf = (char *)ft_realloc(buf, *size, *size * 2);
+		if (!buf)
+			return (0);
+		*size *= 2;
+	}
+	buf[*count] = c;
+	(*count)++;
+	return (1);
+}
+
+int		init_expansion(t_expand *fsm) 
+{
+	fsm->state = base_state;
+	fsm->search_buf_size = DEFAULT_BUFSIZE;
+	fsm->result_buf_size = DEFAULT_BUFSIZE;
+	fsm->search_buf = NULL;
+	fsm->result_buf = NULL;
+	fsm->search_buf = (char *)ft_calloc(fsm->search_buf_size, sizeof(char));
+	fsm->result_buf = (char *)ft_calloc(fsm->result_buf_size, sizeof(char));
+	fsm->search_buf_count = 0;
+	fsm->result_buf_count = 0;
+	if (fsm->search_buf && fsm->result_buf)
+		return (1);
+	return (0);
 }
 
 #include <stdio.h>
-int	expand(char **word)
+int		expand(char **word)
 {
-	//int		(*actions[STATE_NB][INPUT_NB])(t_expand*);
-	char	transitions[STATE_NB][INPUT_NB];
+	int			(*actions[STATE_NB][INPUT_NB])(t_expand*);
+	char		transitions[STATE_NB][INPUT_NB];
 	const char	*s;
-	int		i;
-	char	state;
+	int			i;
+	t_expand	fsm;
 
 	s = *word;
+	init_expansion(&fsm);
 	init_transitions(transitions);
 	//init_actions(actions);
-	state = base_state;
-	printf("state : %d\n", state);
+	printf("state : %d\n", fsm.state);
 	i = 0;
 	while (s[i])
 	{
 		printf("--%c--\n", s[i]);
-		state = transitions[(int)state][(int)s[i]];
-		printf("state : %d\n", state);
+		fsm.state = transitions[(int)fsm.state][(int)s[i]];
+		printf("state : %d\n", fsm.state);
 		i++;
 	}
 	return (1);
