@@ -6,61 +6,44 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/10 14:57:37 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:59:33 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** pipe_stdin = -1 for the first process of stdin
+** pipe_stdin = 0 for the first process of stdin
 */
 
 void	eval(t_pipeline *pipeline, int pipe_stdin)
 {
-	/*int			pid;*/
 	int			p[2];
 	int			next_stdin;
-	/*int			*pid_ptr;*/
 
 	next_stdin = 0;
 	if (!pipeline)
 		return ;
-	/*if (!(pid_ptr = malloc(sizeof(int))))
-	{
-		perror("minishell");
-		exit(EXIT_FAILURE);
-	}*/
 	if (pipeline->next)
 	{
 		pipe(p);
 		next_stdin = p[0];
 	}
-	/*if ((pid = fork()) == 0)*/
-	/*{*/
-		launch(pipeline->content, pipeline ? 1 : 0, pipe_stdin, p);
-		/*return ;*/
-	/*}*/
-	/*else if (pid < 0)*/
-		/*perror("minishell");*/
-	/*close_unused_in_parent(pipeline, pipe_stdin, p[1]);*/
-	/**pid_ptr = pid;*/
-	/*ft_lstadd_front_elem(&g_all_childs, pid_ptr);*/
+	launch(pipeline->content, pipeline->next ? 1 : 0, pipe_stdin, p);
 	eval(pipeline->next, next_stdin);
 }
 
 void	eval_list(t_shell_list *list)
 {
+	int	run_in_subprocess;
+
+	run_in_subprocess = 1;
 	if (!list)
 		return ;
-	eval(list->content, 0);
-	/*if (list->next)
+	if (!((t_pipeline*)list->content)->next)
+		run_in_subprocess = maybe_launch_built_in(list->content);
+	if (run_in_subprocess)
 		eval(list->content, 0);
-	else
-	{
-
-	}*/
-		
 	eval_list(list->next);
 }
 
@@ -124,14 +107,13 @@ void	signal_handler(int signal)
 	printf("\n");
 }
 
-void	main_loop()
+void	main_loop(void)
 {
 	char			*line;
 	int				result;
 	t_reader		reader;
 
 	write(1, FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET, 26);
-	fflush(stdout);
 	result = get_next_line(0, &line);
 	if (result == -1)
 		printf("minishell: error in get_next_line\n");

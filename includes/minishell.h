@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/10 14:57:59 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:42:29 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_list	*g_open_fds;
 ** execution.c
 */
 
+int		maybe_launch_built_in(t_pipeline* pipeline);
 void	wait_all_childs(void);
 void	launch(t_simple_command *simple_command, int next_in_pipeline, int pipe_stdin, int p[]);
 
