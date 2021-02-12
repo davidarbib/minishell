@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_ins.h                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 14:23:19 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 15:32:46 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2021/02/12 15:31:46 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2021/02/12 15:59:12 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILT_INS_H
-# define BUILT_INS_H
+#include "minishell.h"
 
-# include "libft.h"
+int		ft_exit(int ac, char **av, t_list **envlist)
+{
+	int i = 0;
 
-# define BUFSIZE 8192
+	while (av[1][i])
+		if (!('0' <= av[1][i] && av[1][i] <= '9'))
+		{
+			dprintf(2, "exit\n"
+					"minishell: exit: %s: numeric argument required\n");
+			exit(255);
+		}
 
-int		ft_cd(int ac, char **av, t_list **envlist);
-int		ft_echo(int ac, char **av, t_list **envlist);
-int		ft_pwd(void);
 
-#endif
+	exit(av[1]);
+}
