@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 19:22:37 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/10 18:59:16 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 15:07:48 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_pwd(void)
 	while (1)
 	{
 		if (do_malloc(buf, size) == -1)
-			return (-1);
+			return (1);
 		ret = getcwd(buf, size);
 		if (!ret && errno != ERANGE)
 		{
