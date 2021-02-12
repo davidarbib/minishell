@@ -6,11 +6,13 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/10 18:59:36 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/11 23:13:23 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	del(void *arg)
 {
@@ -38,6 +40,13 @@ void	wait_all_childs(void)
 			break ;
 		pid = *(int*)g_all_childs->content;
 		waitpid(pid, &status, WUNTRACED);
+		/*if (!g_all_childs->next)
+		{
+			if (WEXITED(status))
+				g_last_command_result = WEXITSTATUS(status);
+			if (WSTOPPED(status))
+				g_last_command_result = WSTOPSIG(status);
+		}*/
 		ft_lstdel_first(&g_all_childs, del);
 	}
 }
@@ -86,42 +95,14 @@ char	*find_in_path(char *command)
 	return (command);
 }
 
-/*int		maybe_launch_built_in(char **tab)
-{
-	int	ac;
-
-	ac = 0;
-	while (tab[ac])
-		ac++;
-	if (ft_strcmp(tab[0], "cd") == 0)
-	{
-		if (ft_cd(ac, tab, &g_env) < 0)
-			exit(EXIT_FAILURE);
-		exit(EXIT_SUCCESS);
-		return (BUILT_IN);
-	}
-	if (ft_strcmp(tab[0], "echo") == 0)
-	{
-		ft_echo(ac, tab, &g_env);
-		return (BUILT_IN);
-	}
-	if (ft_strcmp(tab[0], "pwd") == 0)
-	{
-		ft_pwd();
-		return (BUILT_IN);
-	}
-	return (NOT_BUILT_IN);
-}*/
-int		maybe_launch_built_in(t_pipeline* pipeline)
+int		maybe_launch_built_in(t_simple_command* simple_command)
 {
 	int					ac;
-	t_simple_command	*simple_command;
 	char				**tab;
 	int					size;
 	int					ret;
 
 	ret = 1;
-	simple_command = pipeline->content;
 	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
 	tab[size] = 0;
 	ac = 0;
@@ -130,7 +111,7 @@ int		maybe_launch_built_in(t_pipeline* pipeline)
 	if (ft_strcmp(tab[0], "cd") == 0)
 	{
 		if (ft_cd(ac, tab, &g_env) < 0)
-			exit(EXIT_FAILURE);
+			ret = 1;
 		ret = 0;
 	}
 	if (ft_strcmp(tab[0], "echo") == 0)
@@ -209,13 +190,11 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	char	*file;
 	int		pid;
 	int		*pid_ptr;
-	t_list	*command;
 
-	command = simple_command->args;
-	tab = (char**)ft_lsttotab(command, 8, &size);
+	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
 	tab[size] = 0;
-	/*if (maybe_launch_built_in(tab) != BUILT_IN)*/
-	/*{*/
+	if (maybe_launch_built_in(simple_command) != BUILT_IN)
+	{
 		file = find_in_path(tab[0]);
 		if ((pid = fork()) == 0)
 		{
@@ -235,6 +214,6 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 		}
 		*pid_ptr = pid;
 		ft_lstadd_front_elem(&g_all_childs, pid_ptr);
-	/*}*/
+	}
 	free(tab);
 }
