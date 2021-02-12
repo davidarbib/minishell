@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 15:26:18 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/11 22:55:14 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/12 21:33:14 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,7 @@ int		add_char_to_buffer(char *buf, size_t *size, size_t *count, char c);
 int		copy_to_search_buffer(t_expand *fsm);
 int		copy_to_result_buffer(t_expand *fsm);
 int		fetch_env_var(t_expand *fsm);
+int		fetch_special_var(t_expand *fsm);
+int		check_do_escaping(t_expand *fsm);
+int		copy_char_in_search_buffer_and_fetch(t_expand *fsm);
 #endif

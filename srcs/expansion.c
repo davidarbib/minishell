@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 15:23:42 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/12 15:29:35 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/13 00:19:39 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,14 @@ static void	init_transitions_lower(char transitions[STATE_NB][INPUT_NB])
 	}
 	transitions[expand_first_state]['_'] = expand_core_state;
 	transitions[expand_core_state]['_'] = expand_core_state;
-	transitions[expand_first_in_dq_state][c] = expand_core_in_dq_state;
-	transitions[expand_core_in_dq_state][c] = expand_core_in_dq_state;
+	transitions[expand_first_in_dq_state]['_'] = expand_core_in_dq_state;
+	transitions[expand_core_in_dq_state]['_'] = expand_core_in_dq_state;
+	transitions[expand_core_state]['$'] = expand_first_state;
+	transitions[expand_core_in_dq_state]['$'] = expand_first_in_dq_state;
+	transitions[expand_first_state]['\\'] = equote_state;
+	transitions[expand_first_in_dq_state]['\\'] = equote_in_dq_state;
+	transitions[expand_core_state]['\\'] = equote_state;
+	transitions[expand_core_in_dq_state]['\\'] = equote_in_dq_state;
 }
 
 static void	init_transitions_digits_upper(char transitions[STATE_NB][INPUT_NB])
@@ -78,13 +84,19 @@ void	init_transitions(char transitions[STATE_NB][INPUT_NB])
 
 static void	init_expand_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))
 {
+	actions[expand_first_state][expand_core_state] = copy_to_search_buffer;
+	actions[expand_first_state][base_state] = fetch_special_var;
+	actions[expand_core_state][expand_core_state] = copy_to_search_buffer;
+	actions[expand_core_state][expand_first_state] = fetch_env_var;
+	actions[expand_core_state][base_state] = fetch_env_var;
 	actions[expand_first_in_dq_state][expand_core_in_dq_state] = 
 		copy_to_search_buffer;
 	actions[expand_first_in_dq_state][dquote_state] = fetch_special_var;
 	actions[expand_core_in_dq_state][expand_core_in_dq_state] =
 		copy_to_search_buffer;
-	actions[base_state][base_state] = copy_to_result_buffer;
-	actions[base_state][base_state] = copy_to_result_buffer;
+	actions[expand_core_in_dq_state][expand_first_in_dq_state] = fetch_env_var;
+	actions[expand_core_in_dq_state][dquote_state] = fetch_env_var;
+	actions[expand_core_in_dq_state][equote_state] = fetch_env_var;
 }
 
 void	init_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))
@@ -105,8 +117,8 @@ void	init_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))
 	actions[equote_state][base_state] = copy_to_result_buffer;
 	actions[squote_state][squote_state] = copy_to_result_buffer;
 	actions[dquote_state][dquote_state] = copy_to_result_buffer;
-	actions[dquote_state][expand_first_in_dq_state] = copy_to_search_buffer;
 	actions[equote_in_dq_state][dquote_state] = check_do_escaping;
+	init_expand_actions(actions);
 }
 
 int		add_char_to_buffer(char *buf, size_t *size, size_t *count, char c)
@@ -149,14 +161,29 @@ static int	handle_char(char transitions[STATE_NB][INPUT_NB],
 	int			success;
 
 	printf("--%c--\n", current_char);
+	fsm->current_char = current_char;
 	next_state = transitions[(int)fsm->state][(int)current_char];
 	action = actions[(int)fsm->state][(int)next_state];
+	success = 1;
 	if (action)
 		success = action(fsm);
 	if (!success)
 		return (0);
 	fsm->state = next_state;
 	printf("state : %d\n", fsm->state);
+	return (1);
+}
+
+int		expand_last(t_expand *fsm)
+{
+	int	success;
+	
+	success = 1;
+	if (fsm->state == 4)
+		success = fetch_special_var(fsm);
+	if (fsm->search_buf_count)
+		success = fetch_env_var(fsm);
+	return (success);
 }
 
 int		expand(char **word)
@@ -176,17 +203,20 @@ int		expand(char **word)
 		if (handle_char(transitions, actions, &fsm, (*word)[i++]) != 1)
 			return (0);
 	}
+	if (!expand_last(&fsm))
+		return (0);
 	ft_memdel((void**)word);
 	*word = ft_strdup(fsm.result_buf);
-	if (!word)
+	if (!*word)
 		return (0);
 	return (1);
 	//free
 }
 
 #include <string.h>
-int main(int ac, char **av)
+int main(int ac, char **av, char **envp)
 {
+	g_env = to_environ_list(envp);
 	(void)ac;
 	(void)av;
 	//char *word = strdup("$HOME");
@@ -200,12 +230,16 @@ int main(int ac, char **av)
 	//char *word = strdup("$_HOME");
 	//char *word = strdup("_$HOME");
 	//char *word = strdup("$H0ME__OK");
-	//char *word = strdup("\'$H0ME\'__OK");
-	//char *word = strdup("\"$H0ME\"__OK");
-	//char *word = strdup("\\$H0ME__OK");
-	//char *word = strdup("\"\\$H0ME\"__OK");
-	char *word = strdup("\"$H0M\\E\"__OK");
+	//char *word = strdup("\'$HOME\'__OK");
+	//char *word = strdup("\"$HOME\"__OK");
+	//char *word = strdup("\\$HOME__OK");
+	//char *word = strdup("\\$HOME");
+	//char *word = strdup("\"\\$HOME\"__OK");
+	//char *word = strdup("\"$HOM\\E\"__OK");
+	//char *word = strdup("$?");
+	char *word = strdup("$+");
+	//char *word = strdup("$HOME$PWD");
 	expand(&word);
-	printf("cc\n");
+	printf("%s\n", word);
 	return (0);
 }
