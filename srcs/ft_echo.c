@@ -6,13 +6,13 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:06:40 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/10 18:55:49 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 15:10:25 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(int ac, char **av, t_list **env_list)
+int	ft_echo(int ac, char **av, t_list **env_list)
 {
 	int	newline;
 	int i;
@@ -34,4 +34,5 @@ void	ft_echo(int ac, char **av, t_list **env_list)
 	}
 	if (newline)
 		printf("\n");
+	return (0);
 }

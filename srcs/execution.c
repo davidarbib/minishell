@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 11:56:19 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 15:09:23 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	wait_all_childs(void)
 			break ;
 		pid = *(int*)g_all_childs->content;
 		waitpid(pid, &status, WUNTRACED);
-		/*if (!g_all_childs->next)
+		if (!g_all_childs->next)
 		{
-			if (WEXITED(status))
+			if (WIFEXITED(status))
 				g_last_command_result = WEXITSTATUS(status);
-			if (WSTOPPED(status))
-				g_last_command_result = WSTOPSIG(status);
-		}*/
+			if (WIFSTOPPED(status))
+				g_last_command_result = 128 + WSTOPSIG(status);
+		}
 		ft_lstdel_first(&g_all_childs, del);
 	}
 }
