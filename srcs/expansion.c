@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 15:23:42 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/11 23:17:16 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/12 15:29:35 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,28 +140,48 @@ int		init_expansion(t_expand *fsm)
 }
 
 #include <stdio.h>
+static int	handle_char(char transitions[STATE_NB][INPUT_NB], 
+						int (*actions[STATE_NB][STATE_NB])(t_expand*), 
+						t_expand *fsm, char current_char)
+{
+	int			next_state;
+	int			(*action)(t_expand*);
+	int			success;
+
+	printf("--%c--\n", current_char);
+	next_state = transitions[(int)fsm->state][(int)current_char];
+	action = actions[(int)fsm->state][(int)next_state];
+	if (action)
+		success = action(fsm);
+	if (!success)
+		return (0);
+	fsm->state = next_state;
+	printf("state : %d\n", fsm->state);
+}
+
 int		expand(char **word)
 {
-	int			(*actions[STATE_NB][INPUT_NB])(t_expand*);
+	int			(*actions[STATE_NB][STATE_NB])(t_expand*);
 	char		transitions[STATE_NB][INPUT_NB];
-	const char	*s;
 	int			i;
 	t_expand	fsm;
 
-	s = *word;
 	init_expansion(&fsm);
 	init_transitions(transitions);
-	//init_actions(actions);
+	init_actions(actions);
 	printf("state : %d\n", fsm.state);
 	i = 0;
-	while (s[i])
+	while ((*word)[i])
 	{
-		printf("--%c--\n", s[i]);
-		fsm.state = transitions[(int)fsm.state][(int)s[i]];
-		printf("state : %d\n", fsm.state);
-		i++;
+		if (handle_char(transitions, actions, &fsm, (*word)[i++]) != 1)
+			return (0);
 	}
+	ft_memdel((void**)word);
+	*word = ft_strdup(fsm.result_buf);
+	if (!word)
+		return (0);
 	return (1);
+	//free
 }
 
 #include <string.h>
