@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/11 22:11:06 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:50:03 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	eval_list(t_shell_list *list)
 	if (!list)
 		return ;
 	if (!((t_pipeline*)list->content)->next)
-		run_in_subprocess = maybe_launch_built_in(
+		run_in_subprocess = launch_built_in(
 				((t_pipeline*)list->content)->content);
 	if (run_in_subprocess)
 		eval(list->content, 0);

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/11 23:13:23 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:56:19 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,19 @@ char	*find_in_path(char *command)
 	return (command);
 }
 
-int		maybe_launch_built_in(t_simple_command* simple_command)
+int		is_built_in(char *command)
+{
+	int	ret;
+
+	ret = 0;
+	if (ft_strcmp(command, "cd") == 0 || ft_strcmp(command, "echo") == 0
+			|| ft_strcmp(command, "pwd") == 0)
+		ret = 1;
+	return (ret);
+}
+
+
+int		launch_built_in(t_simple_command* simple_command)
 {
 	int					ac;
 	char				**tab;
@@ -191,29 +203,37 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	int		pid;
 	int		*pid_ptr;
 
+	file = NULL;
 	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
 	tab[size] = 0;
-	if (maybe_launch_built_in(simple_command) != BUILT_IN)
-	{
+	if (!is_built_in(tab[0]))
 		file = find_in_path(tab[0]);
-		if ((pid = fork()) == 0)
+	if ((pid = fork()) == 0)
+	{
+		use_pipes(is_next_in_pipeline, pipe_stdin, p);
+		use_redirections(simple_command);
+		if (is_built_in(tab[0]))
 		{
-			use_pipes(is_next_in_pipeline, pipe_stdin, p);
-			use_redirections(simple_command);
+			if (launch_built_in(simple_command) == 0)
+				exit(EXIT_SUCCESS);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
 			execve(file, (char*const*)tab, NULL);
 			perror("minishell");
 			exit(EXIT_FAILURE);
 		}
-		else if (pid < 0)
-			perror("minishell");
-		close_unused_in_parent(is_next_in_pipeline, pipe_stdin, p[1]);
-		if (!(pid_ptr = malloc(sizeof(int))))
-		{
-			perror("minishell");
-			exit(EXIT_FAILURE);
-		}
-		*pid_ptr = pid;
-		ft_lstadd_front_elem(&g_all_childs, pid_ptr);
 	}
+	else if (pid < 0)
+		perror("minishell");
+	close_unused_in_parent(is_next_in_pipeline, pipe_stdin, p[1]);
+	if (!(pid_ptr = malloc(sizeof(int))))
+	{
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
+	*pid_ptr = pid;
+	ft_lstadd_front_elem(&g_all_childs, pid_ptr);
 	free(tab);
 }
