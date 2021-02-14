@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 15:23:42 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/14 22:56:48 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/15 00:17:50 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		expand_arguments(t_list	*args)
 	arg = args;
 	while (arg)
 	{
-		if (expand_and_free((char **)&arg->content, transitions, actions))
+		if (!expand_and_free((char **)&arg->content, transitions, actions))
 			return (0);
 		arg = arg->next;
 	}
