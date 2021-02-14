@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/12 21:42:51 by darbib           ###   ########.fr        #
+#    Updated: 2021/02/14 23:02:07 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,8 +75,11 @@ SRC = lexer.c \
 	  parser_interface.c \
 	  expansion.c \
 	  expansion_actions.c \
+	  expansion_init_and_tools.c \
+	  init_expand_tables.c \
 	  ft_echo.c \
-	  ft_cd.c
+	  ft_cd.c \
+	  ft_pwd.c \
 
 # ------------------------------------------------------------------------------
 

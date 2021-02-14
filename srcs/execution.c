@@ -6,11 +6,13 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/07 19:08:06 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 15:09:23 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	del(void *arg)
 {
@@ -36,8 +38,15 @@ void	wait_all_childs(void)
 	{
 		if (!g_all_childs)
 			break ;
-		pid = ((t_process*)g_all_childs->content)->pid;
+		pid = *(int*)g_all_childs->content;
 		waitpid(pid, &status, WUNTRACED);
+		if (!g_all_childs->next)
+		{
+			if (WIFEXITED(status))
+				g_last_command_result = WEXITSTATUS(status);
+			if (WIFSTOPPED(status))
+				g_last_command_result = 128 + WSTOPSIG(status);
+		}
 		ft_lstdel_first(&g_all_childs, del);
 	}
 }
@@ -86,65 +95,73 @@ char	*find_in_path(char *command)
 	return (command);
 }
 
-void	maybe_launch_built_in(char **tab)
+int		is_built_in(char *command)
 {
-	int	ac;
+	int	ret;
 
+	ret = 0;
+	if (ft_strcmp(command, "cd") == 0 || ft_strcmp(command, "echo") == 0
+			|| ft_strcmp(command, "pwd") == 0)
+		ret = 1;
+	return (ret);
+}
+
+
+int		launch_built_in(t_simple_command* simple_command)
+{
+	int					ac;
+	char				**tab;
+	int					size;
+	int					ret;
+
+	ret = 1;
+	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
+	tab[size] = 0;
 	ac = 0;
 	while (tab[ac])
 		ac++;
 	if (ft_strcmp(tab[0], "cd") == 0)
 	{
-		/*printf("executing cd...\n");*/
 		if (ft_cd(ac, tab, &g_env) < 0)
-			exit(EXIT_FAILURE);
-		exit(EXIT_SUCCESS);
+			ret = 1;
+		ret = 0;
 	}
 	if (ft_strcmp(tab[0], "echo") == 0)
 	{
-		/*printf("executing echo...\n");*/
 		ft_echo(ac, tab, &g_env);
+		ret = 0;
 	}
+	if (ft_strcmp(tab[0], "pwd") == 0)
+	{
+		ft_pwd();
+		ret = 0;
+	}
+	free(tab);
+	return (ret);
 }
 
-void	launch(t_list *command)
+void	use_pipes(int next_in_pipeline, int pipe_stdin, int p[])
 {
-	char	**tab;
-	int		size;
-	char	*file;
-
-	tab = (char**)ft_lsttotab(command, 8, &size);
-	/*ft_lstclear(command, del);*/
-	tab[size] = 0;
-	maybe_launch_built_in(tab);
-	file = find_in_path(tab[0]);
-	/*printf("executing %s...\n", file);*/
-	execve(file, (char*const*)tab, NULL);
-	perror("minishell");
-	exit(EXIT_FAILURE);
-}
-
-void	redirect_and_launch(t_pipeline *pipeline,int pipe_stdin,
-									int p[])
-{
-	t_simple_command	command;
-	t_list				*redir_list;
-	t_io_redirect		redir;
-	int					*fd;
-
-	command = *(t_simple_command*)pipeline->content;
-	if (pipe_stdin != -1)
+	if (pipe_stdin != 0)
 	{
 		dup2(pipe_stdin, 0);
 		close(pipe_stdin);
 	}
-	if (pipeline->next)
+	if (next_in_pipeline)
 	{
 		dup2(p[1], 1);
 		close(p[1]);
 		close(p[0]);
 	}
-	redir_list = command.redirections;
+}
+
+void	use_redirections(t_simple_command *simple_command)
+{
+	int				*fd;
+	t_io_redirect	redir;
+	t_list			*redir_list;
+
+	redir_list = simple_command->redirections;
 	while (redir_list)
 	{
 		redir = *(t_io_redirect*)redir_list->content;
@@ -166,5 +183,57 @@ void	redirect_and_launch(t_pipeline *pipeline,int pipe_stdin,
 		}
 		redir_list = redir_list->next;
 	}
-	launch(command.args);
+}
+
+void	close_unused_in_parent(int is_next_in_pipeline, int pipe_stdin,
+										int pipe_stdout)
+{
+	if (is_next_in_pipeline)
+		close(pipe_stdout);
+	if (pipe_stdin != 0)
+		close(pipe_stdin);
+}
+
+void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
+								int pipe_stdin, int p[])
+{
+	char	**tab;
+	int		size;
+	char	*file;
+	int		pid;
+	int		*pid_ptr;
+
+	file = NULL;
+	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
+	tab[size] = 0;
+	if (!is_built_in(tab[0]))
+		file = find_in_path(tab[0]);
+	if ((pid = fork()) == 0)
+	{
+		use_pipes(is_next_in_pipeline, pipe_stdin, p);
+		use_redirections(simple_command);
+		if (is_built_in(tab[0]))
+		{
+			if (launch_built_in(simple_command) == 0)
+				exit(EXIT_SUCCESS);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			execve(file, (char*const*)tab, NULL);
+			perror("minishell");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (pid < 0)
+		perror("minishell");
+	close_unused_in_parent(is_next_in_pipeline, pipe_stdin, p[1]);
+	if (!(pid_ptr = malloc(sizeof(int))))
+	{
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
+	*pid_ptr = pid;
+	ft_lstadd_front_elem(&g_all_childs, pid_ptr);
+	free(tab);
 }
