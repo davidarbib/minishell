@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:09:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/01 20:18:19 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/14 21:59:20 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "lexer.h"
 # include "libft.h"
-# define STATE_NB		3
-# define INPUT_NB		256
 
 /*
 ** Automata states
@@ -24,10 +22,14 @@
 ** ALPHA : first char accepted, waiting for underscore, alphanumeric or 'equal'
 ** EQUAL : 'equal' accepted, waiting for all chars
 */
+
 # define BASE_STATE 	0
 # define ALPHA_STATE	1
 # define EQUAL_STATE	2
 # define ERROR_STATE	3
+
+# define A_STATE_NB		3
+# define A_INPUT_NB		256
 
 typedef struct	s_assignment
 {
