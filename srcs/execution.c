@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/15 20:23:38 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/15 21:29:27 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ int		is_built_in(t_simple_command *simple_command)
 	command = simple_command->args->content;
 	ret = 0;
 	if (ft_strcmp(command, "cd") == 0 || ft_strcmp(command, "echo") == 0
-		|| ft_strcmp(command, "pwd") == 0 || ft_strcmp(command, "exit") == 0)
+		|| ft_strcmp(command, "pwd") == 0 || ft_strcmp(command, "exit") == 0
+		|| ft_strcmp(command, "env") == 0)
 		ret = 1;
 	return (ret);
 }
@@ -140,6 +141,11 @@ int		launch_built_in(t_simple_command *simple_command)
 	if (ft_strcmp(tab[0], "exit") == 0)
 	{
 		ft_exit(ac, tab, &g_env);
+		ret = 0;
+	}
+	if (ft_strcmp(tab[0], "env") == 0)
+	{
+		ft_env(ac, tab, &g_env);
 		ret = 0;
 	}
 	free(tab);
