@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 09:33:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/01 14:32:35 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/15 16:43:39 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int		parse_assignment(t_llparser *parser)
 	token = read_token(parser);
 	assignment.key = NULL;
 	assignment.value = NULL;
+	detect_assignment(&token);
 	if (token.type == ASSIGNMENT_TOKEN)
 	{
 		eat(parser);
