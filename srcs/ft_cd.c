@@ -6,11 +6,12 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:40:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/10 12:19:01 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/15 12:42:02 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ft_printf.h"
 #include "environ.h"
 #include "built_ins.h"
 #include "error.h"
@@ -21,46 +22,45 @@ static int	travel(char *current_path, t_list **envlist)
 	char	buf[BUFSIZE];
 	
 	if (!getcwd(buf, BUFSIZE))
-		return (-1);
+		return (1);
 	if (chdir(current_path) == -1)
-		return (-1);
+		return (1);
 	if (!ft_setenv("OLDPWD", buf, envlist))
 		return (-2);
 	if (!getcwd(buf, BUFSIZE))
-		return (-1);
+		return (1);
 	if (!ft_setenv("PWD", buf, envlist))
 		return (-2);
-	return (1);
+	return (0);
 }
 
-int	step_back(t_list **envlist)	
+static int	step_back(t_list **envlist)	
 {
 	char	*current_path;
 
 	current_path = ft_getenv("OLDPWD", *envlist);
 	if (!current_path)
 	{
-		printf("%s\n", ENOTOLDPWD);
-		return (0);
+		ft_dprintf(2, "%s\n", ENOTOLDPWD);
+		return (-1);
 	}
 	return (travel(current_path, envlist));
 }
 
-int	to_home(t_list **envlist)
+static int	to_home(t_list **envlist)
 {
 	char 	*current_path;
 
 	current_path = ft_getenv("HOME", *envlist);
 	if (!current_path)
 	{
-		printf("%s\n", ENOTHOME);
-		return (0);
-		//set shell_errno?
+		ft_dprintf(2, "%s\n", ENOTHOME);
+		return (-1);
 	}
 	return (travel(current_path, envlist));
 }
 
-int	normal_cd(char *dir_name, t_list **envlist)
+static int	normal_cd(char *dir_name, t_list **envlist)
 {
 	char 	*current_path;
 
@@ -71,14 +71,14 @@ int	normal_cd(char *dir_name, t_list **envlist)
 int	ft_cd(int ac, char **av, t_list **envlist)
 {
 	if (ac > 2)
-		return (0);
+		return (1);
 	if (ac == 1)
 		return (to_home(envlist));
 	if (ft_strcmp(av[1], "-") == 0)
-		return (step_back(envlist));	
+		return (step_back(envlist));
 	else
 		return (normal_cd(av[1], envlist));
-	return (1);
+	return (0);
 }
 
 /*
