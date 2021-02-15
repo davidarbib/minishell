@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/08 11:08:34 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/15 15:52:22 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_token	*ref_token(t_llparser *parser)
 	return (&parser->tokens[parser->token_idx]);
 }
 
-/*
 int main()
 {	
 #include "obj_destructor.h"
@@ -50,7 +49,10 @@ int main()
 	//char *input = "ls";
 	//char *input = "ls | cat | echo";
 	//char *input = "ls | cat | echo ; oxo";
-	char *input = "echo a\"$HOME\"";
+	//char *input = "echo a\"$HOME\"";
+	//char *input = "a=\"4\" export b=2";
+	//char *input = "\"a=4\" export b=2";
+	char *input = "\"a\"=4 export b=2";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)
@@ -124,7 +126,6 @@ int main()
 		node_shell_list = node_shell_list->next;
 	}
 }
-*/
 /*
 int main()
 {	
