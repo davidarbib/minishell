@@ -1,29 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:31:46 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 15:59:12 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 22:48:08 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int		test_if_numeric(char *str)
+{
+	int i;
+
+	i = 0;
+	if (str[0] != '-' && !('0' <= str[i] && str[i] <= '9'))
+		return (0);
+	i++;
+	while (str[i])
+		if (!('0' <= str[i] && str[i] <= '9'))
+			return (0);
+	return (1);
+}
+
+void	free_and_exit(int i)
+{
+	free_all();
+	exit(i);
+}
+
 int		ft_exit(int ac, char **av, t_list **envlist)
 {
-	int i = 0;
-
-	while (av[1][i])
-		if (!('0' <= av[1][i] && av[1][i] <= '9'))
-		{
-			dprintf(2, "exit\n"
-					"minishell: exit: %s: numeric argument required\n");
-			exit(255);
-		}
-
-
-	exit(av[1]);
+	(void)envlist;
+	dprintf(2, "exit\n");
+	if (ac == 1)
+		free_and_exit(127);
+	if (!(test_if_numeric(av[1])))
+	{
+		dprintf(2, "minishell: exit: %s: numeric argument required\n", av[1]);
+		free_and_exit(2);
+	}
+	if (ac > 2)
+	{
+		dprintf(2, "minishell: exit: too many arguments\n");
+		return (1);
+	}
+	free_and_exit(ft_atoi_strict(av[1]) % 256);
+	return (0);
 }

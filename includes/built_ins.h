@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 14:23:19 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 15:32:46 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 22:18:29 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@
 int		ft_cd(int ac, char **av, t_list **envlist);
 int		ft_echo(int ac, char **av, t_list **envlist);
 int		ft_pwd(void);
+int		ft_exit(int ac, char **av, t_list **envlist);
 
 #endif

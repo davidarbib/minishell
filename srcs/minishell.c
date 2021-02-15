@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 11:50:03 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/15 20:32:03 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 
 void	eval_list(t_shell_list *list)
 {
-	int	run_in_subprocess;
+	int run_in_subprocess;
 
 	run_in_subprocess = 1;
 	if (!list)
 		return ;
-	if (!((t_pipeline*)list->content)->next)
-		run_in_subprocess = launch_built_in(
-				((t_pipeline*)list->content)->content);
-	if (run_in_subprocess)
+	if (!((t_pipeline*)list->content)->next &&
+			is_built_in(((t_pipeline*)list->content)->content))
+		launch_built_in( ((t_pipeline*)list->content)->content);
+	else
 		eval(list->content, 0);
 	eval_list(list->next);
 }
@@ -95,7 +95,7 @@ void	signal_handler(int signal)
 	tmp = g_all_childs;
 	if (!tmp)
 	{
-		write(1, FONT_BOLDBLUE "\nminishell-1.0$ " FONT_RESET, 27);
+		write(2, FONT_BOLDBLUE "\nminishell-1.0$ " FONT_RESET, 27);
 		return ;
 	}
 	while (tmp)
@@ -114,13 +114,13 @@ void	main_loop(void)
 	int				result;
 	t_reader		reader;
 
-	write(1, FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET, 26);
+	write(2, FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET, 26);
 	result = get_next_line(0, &line);
 	if (result == -1)
 		printf("minishell: error in get_next_line\n");
 	else if (result == 0)
 	{
-		printf("exit\n");
+		write(2, "exit\n", 5);
 		exit(EXIT_SUCCESS);
 	}
 	parse(&reader, line);

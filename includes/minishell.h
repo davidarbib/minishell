@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 12:47:20 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/12 23:24:15 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,19 @@ int		g_last_command_result;
 t_list	*g_open_fds;
 
 /*
+** minishell.c
+*/
+
+void	free_all(void);
+
+/*
 ** execution.c
 */
 
-void	launch(t_simple_command* simple_command, int next_in_pipeline, int pipe_stdin, int p[]);
-int		launch_built_in(t_simple_command* simple_command);
+int		is_built_in(t_simple_command *simple_command);
+void	launch(t_simple_command *simple_command, int next_in_pipeline,
+			int pipe_stdin, int p[]);
+int		launch_built_in(t_simple_command *simple_command);
 void	wait_all_childs(void);
 void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int p[]);
 
