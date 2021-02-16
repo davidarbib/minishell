@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 13:53:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/16 15:07:15 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/16 16:01:44 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <stdio.h>
 #include "minishell.h"
 
-void	ft_swap(void **a, void **b)
+void	ft_swap(t_assignment *a, t_assignment *b)
 {
-	void	*tmp;
+	t_assignment	tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -41,7 +41,7 @@ t_assignment	*bubble_sort_env(t_assignment *array, int size)
 			if (ft_strcmp(array[j].key, array[j + 1].key) > 0)
 			{
 				chaos = 1;
-				ft_swap((void**)&array[j], (void**)&array[j + 1]);
+				ft_swap((t_assignment*)&array[j], (t_assignment*)&array[j + 1]);
 			}
 			j++;
 		}
