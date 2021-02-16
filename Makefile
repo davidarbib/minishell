@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/15 21:27:45 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/02/16 10:15:51 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,11 @@ SRC = lexer.c \
 	  envlist_interface.c \
 	  parser_interface.c \
 	  ft_env.c \
+	  expansion.c \
+	  expansion_actions.c \
+	  expansion_fetch.c \
+	  expansion_init_and_tools.c \
+	  expansion_init_tables.c \
 	  ft_echo.c \
 	  ft_cd.c \
 	  ft_pwd.c \

@@ -6,11 +6,12 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:24:55 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 15:43:59 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/15 16:58:20 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
 int	store_args(t_list **args, char *arg)
 {
 	t_list			*args_node;
@@ -66,10 +67,22 @@ int	parse_word(t_llparser *parser)
 
 int	parse_cmd_name(t_llparser *parser)
 {
+	t_token	current_token;
+
+	current_token = read_token(parser);
+	detect_assignment(&current_token);
+	if (current_token.type != WORD_TOKEN)
+		return (0);
 	return (parse_word(parser));
 }
 
 int	parse_cmd_word(t_llparser *parser)
 {
+	t_token	current_token;
+
+	current_token = read_token(parser);
+	detect_assignment(&current_token);
+	if (current_token.type != WORD_TOKEN)
+		return (0);
 	return (parse_word(parser));
 }

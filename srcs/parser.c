@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/05 15:15:15 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/15 16:58:04 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ t_token	*ref_token(t_llparser *parser)
 }
 
 /*
-#include "obj_destructor.h"
-#include <stdio.h>
-
 int main()
 {	
+#include "obj_destructor.h"
+#include <stdio.h>
 	//-----parsing tests with shell list-----
 	//
 	printf("-----------------------------\n");
 	//char *input = "echo \'ohoh\'";
-	char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha 0< ok echo test";
 	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
-	char *input = "echo \'ohoh\' < lol.txt < prout > lol | cat > toto.txt > robert.txt";
+	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha 0< ok echo test";
+	//char *input = " a==42 b=67 c=\"4\"45> out 3> less > true >> haha < ok echo test";
+	//char *input = "echo \'ohoh\' < lol.txt < prout > lol | cat > toto.txt > robert.txt";
 	//char *input = "echo \"echo 4\"test";
 	//char *input = "echo test | a=4 cat cc ; ls -l | cat -e";
 	//char *input = "echo test | a=4 cat cc ; ls -l || cat -e";
@@ -50,6 +50,9 @@ int main()
 	//char *input = "ls";
 	//char *input = "ls | cat | echo";
 	//char *input = "ls | cat | echo ; oxo";
+	//char *input = "echo a\"$HOME\"";
+	//char *input = "a=4 export b=3";
+	char *input = "\"a=4\" export b=3";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)
@@ -59,7 +62,7 @@ int main()
 		i++;
 	}
 	detect_ionumber(&lexer);
-	detect_assignments(&lexer);
+	//detect_assignments(&lexer);
 	t_llparser parser;
 	parser.tokens = lexer.tokens;
 	parser.token_idx = 0;

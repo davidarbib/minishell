@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 14:26:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/19 11:02:51 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/14 22:01:31 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 #include "libft.h"
 #include "assignment.h"
 
-static void	init_transitions_tb(unsigned char transitions[STATE_NB][INPUT_NB])
+static void	init_transitions_tb (unsigned char
+											transitions[A_STATE_NB][A_INPUT_NB])
 {
 	unsigned char c;
 
-	ft_memset(transitions[BASE_STATE], ERROR_STATE, INPUT_NB);
-	ft_memset(transitions[ALPHA_STATE], ERROR_STATE, INPUT_NB);
+	ft_memset(transitions[BASE_STATE], ERROR_STATE, A_INPUT_NB);
+	ft_memset(transitions[ALPHA_STATE], ERROR_STATE, A_INPUT_NB);
 	c = '0';
 	while (c <= '9')
 		transitions[ALPHA_STATE][c++] = ALPHA_STATE;	
@@ -40,12 +41,12 @@ static void	init_transitions_tb(unsigned char transitions[STATE_NB][INPUT_NB])
 	transitions[ALPHA_STATE]['='] = EQUAL_STATE;
 	transitions[BASE_STATE]['_'] = ALPHA_STATE;
 	transitions[ALPHA_STATE]['_'] = ALPHA_STATE;
-	ft_memset(transitions[EQUAL_STATE], EQUAL_STATE, INPUT_NB);
+	ft_memset(transitions[EQUAL_STATE], EQUAL_STATE, A_INPUT_NB);
 }
 
 #include <stdio.h>
 static void	check_word(t_token *token,
-						unsigned char transitions[STATE_NB][INPUT_NB])
+						unsigned char transitions[A_STATE_NB][A_INPUT_NB])
 {
 	unsigned char	state;
 	int				i;
@@ -67,7 +68,7 @@ static void	check_word(t_token *token,
 
 void		detect_assignment(t_token *token)
 {
-	static unsigned char	transitions[STATE_NB][INPUT_NB];	
+	static unsigned char	transitions[A_STATE_NB][A_INPUT_NB];	
 	static int				filled_table = 0;
 
 	if (!filled_table)
@@ -95,11 +96,11 @@ void		detect_assignments(t_lexer *lexer)
 #include <unistd.h>
 
 /*
-static void	print_transitions(unsigned char	transitions[STATE_NB][INPUT_NB])
+static void	print_transitions(unsigned char	transitions[A_STATE_NB][A_INPUT_NB])
 {
-	for (int i = 0; i < STATE_NB; i++)
+	for (int i = 0; i < A_STATE_NB; i++)
 	{
-		for (int j = 0; j < INPUT_NB; j++)
+		for (int j = 0; j < A_INPUT_NB; j++)
 		{
 			unsigned char c = transitions[i][j] + '0';
 			write(1, &c, 1);
@@ -111,7 +112,7 @@ static void	print_transitions(unsigned char	transitions[STATE_NB][INPUT_NB])
 int main()
 {
 	t_token token;
-	unsigned char	transitions[STATE_NB][INPUT_NB];	
+	unsigned char	transitions[A_STATE_NB][A_INPUT_NB];	
 
 	init_transitions_tb(transitions); //for UT
 	print_transitions(transitions);

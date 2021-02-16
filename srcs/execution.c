@@ -6,11 +6,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/15 21:29:27 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/16 10:15:05 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "expand_quote_removal.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -117,6 +118,11 @@ int		launch_built_in(t_simple_command *simple_command)
 	int					ret;
 
 	ret = 1;
+	if (!expand_arguments(simple_command->args))
+	{
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
 	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
 	tab[size] = 0;
 	ac = 0;
