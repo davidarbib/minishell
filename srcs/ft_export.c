@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 13:53:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/16 16:01:44 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/16 18:38:32 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		print_env_lexico(t_list *envlist)
 		printf("export %s=\"%s\"\n", envp[i].key, envp[i].value);
 		i++;
 	}
+	ft_memdel((void**)&envp);
 	return (0);
 }
 
@@ -105,9 +106,19 @@ int		parse_export_arg(char *word, t_list **envlistp)
 	if (!ft_strchr(word, '=')) 
 		return (1);
 	if (!ft_split_dict(word, '=', &tmp.key, &tmp.value))
+	{
+		ft_memdel((void**)&tmp.key);
+		ft_memdel((void**)&tmp.value);
 		return (-2);
+	}
 	if (!ft_setenv(tmp.key, tmp.value, envlistp))
+	{
+		ft_memdel((void**)&tmp.key);
+		ft_memdel((void**)&tmp.value);
 		return (-2);
+	}
+	ft_memdel((void**)&tmp.key);
+	ft_memdel((void**)&tmp.value);
 	return (0);
 }
 
@@ -155,6 +166,7 @@ int main(int ac, char **av, char **envp)
 	return (0);
 }
 */
+/*
 #include <string.h>
 #include "obj_destructor.h"
 #include "environ.h"
@@ -168,3 +180,4 @@ int main(int ac, char **av, char **envp)
 	ft_lstclear(&g_env, del_assign_content);
 	return (0);
 }
+*/
