@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_ins.h                                        :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/02 14:23:19 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 10:49:19 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2021/02/16 10:32:10 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2021/02/16 10:53:06 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILT_INS_H
-# define BUILT_INS_H
+#include "minishell.h"
 
-# include "libft.h"
+static int	cmp(void *content, void *data_ref)
+{
+	if (ft_strcmp(((t_assignment*)content)->key, data_ref) == 0)
+		return (0);
+	return (1);
+}
 
-# define BUFSIZE 8192
+void		free_fct(void *ptr)
+{
+	(void)ptr;
+}
 
-int		ft_cd(int ac, char **av, t_list **envlist);
-int		ft_echo(int ac, char **av, t_list **envlist);
-int		ft_pwd(void);
-int		ft_exit(int ac, char **av, t_list **envlist);
-int		ft_env(int ac, char **av, t_list **envlist);
-int		ft_unset(int ac, char **av, t_list **envlist);
+int			ft_unset(int ac, char **av, t_list **envlist)
+{
+	int i;
 
-#endif
+	(void)envlist;
+	i = 1;
+	while (i < ac)
+	{
+		ft_lstremove_if(&g_env, av[i], cmp, free_fct);
+		i++;
+	}
+	return (0);
+}
