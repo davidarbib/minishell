@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 13:53:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/15 22:04:19 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/16 00:09:47 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ int main()
 }
 */
 
-int		print_env_lexico()
+int		print_env_lexico(t_list *envlist)
 {
 	t_assignment	*envp;
 	int				size;
 	int				i;
 
 	envp = 
-		(t_assignment *)ft_lsttotabold(g_env, sizeof(t_assignment), &size);
+		(t_assignment *)ft_lsttotabold(envlist, sizeof(t_assignment), &size);
 	if (!envp)
 		return (-2);
 	bubble_sort_env(envp, size);
@@ -96,24 +96,38 @@ int		print_env_lexico()
 	return (0);
 }
 
-int		parse_export_arg(char *word)
+int		parse_export_arg(char *word, t_list **envlistp)
 {
-	(void)word;
+	t_assignment	tmp;
+
+	tmp.key = NULL;
+	tmp.value = NULL;
+	if (!ft_strchr(word, '=')) 
+		return (1);
+	if (!ft_split_dict(word, '=', &tmp.key, &tmp.value))
+		return (-2);
+	if (!ft_setenv(tmp.key, tmp.value, envlistp))
+		return (-2);
 	return (0);
 }
 
 //int		ft_export(int ac, char **av, t_list *local_var)
-int		ft_export(int ac, char **av)
+int		ft_export(int ac, char **av, t_list **envlistp)
 {
 	int	i;
+	int	success;
+
 	//(void)local_var;
 	(void)av;
 	if (ac == 1)
-		return (print_env_lexico());
+		return (print_env_lexico(*envlistp));
 	i = 0;
 	while (i < ac - 1)
 	{
-		parse_export_arg(av[i]);
+		success = parse_export_arg(av[i], envlistp);
+		if (success != 0)
+			return success;
+		i++;
 	}
 	return (0);
 }
@@ -123,10 +137,13 @@ int		ft_export(int ac, char **av)
 #include "environ.h"
 int main(int ac, char **av, char **envp)
 {
-	g_env = to_environ_list(envp);
+	t_list	*envlist;
+
+	envlist = to_environ_list(envp);
 	(void)ac;
 	(void)av;
-	ft_export(ac, av);
-	ft_lstclear(&g_env, del_assign_content);
+	ft_export(ac, av, &envlist);
+	printf("a=%s\n", ft_getenv("a", envlist));
+	ft_lstclear(&envlist, del_assign_content);
 	return (0);
 }
