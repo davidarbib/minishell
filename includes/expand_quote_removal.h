@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 15:26:18 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/14 22:56:44 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/15 21:46:52 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct	s_expand
 }				t_expand;
 
 extern t_list	*g_env;
+//for tests
 
 void	init_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*));
 void	init_transitions(char transitions[STATE_NB][INPUT_NB]);

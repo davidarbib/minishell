@@ -16,8 +16,8 @@ BUFFER_SIZE	libft/includes/ft_printf.h	20;"	d
 BUFFER_SIZE	libft/includes/get_next_line.h	21;"	d
 BUFFER_SIZE	libft/src/ft_printf/ft_printf.h	20;"	d
 BUFOUT_SIZE	libft/includes/ft_sprintf.h	20;"	d
-BUFSIZE	includes/ft_cd.h	18;"	d
-BUILT_INS	includes/built_ins.h	2;"	d
+BUFSIZE	includes/built_ins.h	18;"	d
+BUILT_INS_H	includes/built_ins.h	14;"	d
 CC	Makefile	/^CC = clang$/;"	m
 CC	libft/Makefile	/^CC = clang$/;"	m
 CFLAGS	Makefile	/^CFLAGS= -Wall -Wextra -Werror $/;"	m
@@ -51,7 +51,6 @@ FONT_RED8	includes/font_color.h	18;"	d
 FONT_RESET	includes/font_color.h	25;"	d
 FONT_YELLOW	includes/font_color.h	20;"	d
 FSMBUFSIZE	includes/lexer.h	18;"	d
-FT_CD_H	includes/ft_cd.h	14;"	d
 FT_PRINTF_H	libft/includes/ft_printf.h	14;"	d
 FT_PRINTF_H	libft/src/ft_printf/ft_printf.h	14;"	d
 FT_SPRINTF_H	libft/includes/ft_sprintf.h	14;"	d
@@ -141,7 +140,7 @@ YELLOW	Makefile	/^YELLOW = 	'\\033[1;33m'$/;"	m
 YELLOW	libft/Makefile	/^YELLOW = 	'\\033[1;33m'$/;"	m
 abs	libft/includes/ft_printf.h	/^	long long unsigned	abs;$/;"	m	struct:s_ft_printf_integer
 abs	libft/src/ft_printf/ft_printf.h	/^	long long unsigned	abs;$/;"	m	struct:s_ft_printf_integer
-add_char_to_buffer	srcs/expansion.c	/^int		add_char_to_buffer(char *buf, size_t *size, size_t *count, char c)$/;"	f
+add_char_to_buffer	srcs/expansion_init_and_tools.c	/^int		add_char_to_buffer(char *buf, size_t *size, size_t *count, char c)$/;"	f
 add_char_to_fsm_buffer	srcs/lexer_fsm_tools.c	/^int		add_char_to_fsm_buffer(t_fsm *fsm, char c)$/;"	f
 add_node	libft/src/ft_tabtodlst.c	/^static int	add_node(t_dlist **alst, void *array, int type_size)$/;"	f	file:
 add_token	srcs/lexer_fsm_tools.c	/^int		add_token(t_lexer *lexer, t_token token)$/;"	f
@@ -168,7 +167,7 @@ check_operator_completion	srcs/char_handling_fts.c	/^int			check_operator_comple
 check_quoting_char	srcs/char_handling_fts.c	/^int			check_quoting_char(t_fsm *fsm, char current_char)$/;"	f
 check_substitution_mark	srcs/char_handling_fts.c	/^int			check_substitution_mark(t_fsm *fsm, char current_char)$/;"	f
 check_word	srcs/assignment_detector.c	/^static void	check_word(t_token *token,$/;"	f	file:
-close_unused_in_parent	srcs/minishell.c	/^void	close_unused_in_parent(t_pipeline *pipeline, int pipe_stdin,$/;"	f
+close_unused_in_parent	srcs/execution.c	/^void	close_unused_in_parent(int is_next_in_pipeline, int pipe_stdin,$/;"	f
 cmd_name_type	includes/parser.h	20;"	d
 cmd_prefix_type	includes/parser.h	19;"	d
 cmd_suffix_type	includes/parser.h	22;"	d
@@ -176,7 +175,7 @@ cmd_word_type	includes/parser.h	21;"	d
 content	libft/includes/libft.h	/^	void			*content;$/;"	m	struct:s_dlist
 content	libft/includes/libft.h	/^	void			*content;$/;"	m	struct:s_list
 copy_char_in_search_buffer_and_fetch	srcs/expansion_actions.c	/^int		copy_char_in_search_buffer_and_fetch(t_expand *fsm)$/;"	f
-copy_char_in_search_buffer_and_fetch_special	srcs/expansion_actions.c	/^int		copy_char_in_search_buffer_and_fetch_special(t_expand *fsm)$/;"	f
+copy_char_in_search_buffer_and_fetch_special	srcs/expansion_fetch.c	/^int		copy_char_in_search_buffer_and_fetch_special(t_expand *fsm)$/;"	f
 copy_to_result_buffer	srcs/expansion_actions.c	/^int		copy_to_result_buffer(t_expand *fsm)$/;"	f
 copy_to_search_buffer	srcs/expansion_actions.c	/^int		copy_to_search_buffer(t_expand *fsm)$/;"	f
 count	includes/lexer.h	/^	int				count;$/;"	m	struct:s_lexer
@@ -215,6 +214,7 @@ detect_assignments	srcs/assignment_detector.c	/^void		detect_assignments(t_lexer
 detect_ionumber	srcs/ionumber_detector.c	/^void	detect_ionumber(t_lexer *lexer)$/;"	f
 divide	libft/src/ft_split.c	/^static char		**divide(char const *s, char c, size_t nb)$/;"	f	file:
 divide	libft/src/ft_split_blank.c	/^static char		**divide(char const *s, size_t nb)$/;"	f	file:
+do_malloc	srcs/ft_pwd.c	/^int		do_malloc(char *buf, size_t size)$/;"	f
 dquote_state	includes/expand_quote_removal.h	/^	dquote_state,$/;"	e	enum:e_expand_fsm
 e_expand_fsm	includes/expand_quote_removal.h	/^typedef enum	e_expand_fsm$/;"	g
 e_fsm	includes/lexer.h	/^enum			e_fsm$/;"	g
@@ -231,17 +231,18 @@ equote_state	includes/expand_quote_removal.h	/^	equote_state,$/;"	e	enum:e_expan
 eval	srcs/minishell.c	/^void	eval(t_pipeline *pipeline, int pipe_stdin)$/;"	f
 eval_list	srcs/minishell.c	/^void	eval_list(t_shell_list *list)$/;"	f
 exit_lexing	srcs/destroy.c	/^void	exit_lexing(t_lexer *lexer, t_fsm *fsm)$/;"	f
-expand	srcs/expansion.c	/^int		expand(char **word, t_expand *fsm)$/;"	f
-expand_and_free	srcs/expansion.c	/^int		expand_and_free(char **word)$/;"	f
+expand	srcs/expansion.c	/^static int		expand(char **word, t_expand *fsm,$/;"	f	file:
+expand_and_free	srcs/expansion.c	/^int		expand_and_free(char **word, char transitions[STATE_NB][INPUT_NB], $/;"	f
+expand_arguments	srcs/expansion.c	/^int		expand_arguments(t_list	*args)$/;"	f
 expand_core_in_dq_state	includes/expand_quote_removal.h	/^	expand_core_in_dq_state$/;"	e	enum:e_expand_fsm
 expand_core_state	includes/expand_quote_removal.h	/^	expand_core_state,$/;"	e	enum:e_expand_fsm
 expand_first_in_dq_state	includes/expand_quote_removal.h	/^	expand_first_in_dq_state,$/;"	e	enum:e_expand_fsm
 expand_first_state	includes/expand_quote_removal.h	/^	expand_first_state,$/;"	e	enum:e_expand_fsm
-expand_last	srcs/expansion.c	/^int		expand_last(t_expand *fsm)$/;"	f
+expand_last	srcs/expansion.c	/^static int		expand_last(t_expand *fsm)$/;"	f	file:
 extract_word	srcs/args_parser.c	/^char	*extract_word(t_token token)$/;"	f
-fetch_and_copy_char_in_search_buffer	srcs/expansion_actions.c	/^int		fetch_and_copy_char_in_search_buffer(t_expand *fsm)$/;"	f
-fetch_env_var	srcs/expansion_actions.c	/^int		fetch_env_var(t_expand *fsm)$/;"	f
-fetch_special_var	srcs/expansion_actions.c	/^int	fetch_special_var(t_expand *fsm)$/;"	f
+fetch_env_var	srcs/expansion_fetch.c	/^int		fetch_env_var(t_expand *fsm)$/;"	f
+fetch_exit_status	srcs/expansion_fetch.c	/^static int	fetch_exit_status(t_expand *fsm)$/;"	f	file:
+fetch_special_var	srcs/expansion_fetch.c	/^int	fetch_special_var(t_expand *fsm)$/;"	f
 filename	includes/parser.h	/^	char					*filename;$/;"	m	struct:s_io_redirect
 find_in_path	srcs/execution.c	/^char	*find_in_path(char *command)$/;"	f
 flag	libft/includes/get_next_line.h	/^	int		flag;$/;"	m	struct:s_parse_state
@@ -271,7 +272,8 @@ ft_dlstsize	libft/src/ft_dlstsize.c	/^int	ft_dlstsize(t_dlist *lst)$/;"	f
 ft_dlsttotab	libft/src/ft_dlsttotab.c	/^void	*ft_dlsttotab(t_dlist *lst, size_t type_size, int *array_size)$/;"	f
 ft_double_abs	libft/src/ft_abs.c	/^double	ft_double_abs(double x)$/;"	f
 ft_dprintf	libft/src/ft_printf/ft_printf_main.c	/^	ft_dprintf(int fd, const char *str, ...)$/;"	f
-ft_echo	srcs/ft_echo.c	/^int		ft_echo(int ac, char** av, t_list **env_list)$/;"	f
+ft_echo	srcs/ft_echo.c	/^int	ft_echo(int ac, char **av, t_list **env_list)$/;"	f
+ft_export	srcs/ft_export.c	/^int		ft_export(int ac, char **av, t_list **envlist)$/;"	f
 ft_getenv	srcs/envlist_interface.c	/^char	*ft_getenv(const char *key, t_list *envlist)$/;"	f
 ft_gnl_read_buffer	libft/src/get_next_line_utils.c	/^	ft_gnl_read_buffer(int fd, char **line, t_parse_state *st)$/;"	f
 ft_gnl_read_file	libft/src/get_next_line_utils.c	/^	ft_gnl_read_file(int fd, char **line, t_parse_state *st)$/;"	f
@@ -296,6 +298,7 @@ ft_lstnew	libft/src/ft_lstnew.c	/^t_list	*ft_lstnew(void *content)$/;"	f
 ft_lstremove_if	libft/src/ft_lstremove_if.c	/^void				ft_lstremove_if(t_list **alst, void *data_ref,$/;"	f
 ft_lstsize	libft/src/ft_lstsize.c	/^int	ft_lstsize(t_list *lst)$/;"	f
 ft_lsttotab	libft/src/ft_lsttotab.c	/^void	**ft_lsttotab(t_list *lst, size_t type_size, int *array_size)$/;"	f
+ft_lsttotabold	libft/src/ft_lsttotabold.c	/^void	*ft_lsttotabold(t_list *lst, size_t type_size, int *array_size)$/;"	f
 ft_max	libft/src/ft_max.c	/^int	ft_max(int a, int b)$/;"	f
 ft_memccpy	libft/src/ft_memccpy.c	/^void	*ft_memccpy(void *dst, const void *src, int c, size_t n)$/;"	f
 ft_memchr	libft/src/ft_memchr.c	/^void	*ft_memchr(const void *s, int c, size_t n)$/;"	f
@@ -345,6 +348,7 @@ ft_putchar_fd	libft/src/ft_putchar_fd.c	/^void	ft_putchar_fd(char c, int fd)$/;"
 ft_putendl_fd	libft/src/ft_putendl_fd.c	/^void	ft_putendl_fd(char *s, int fd)$/;"	f
 ft_putnbr_fd	libft/src/ft_putnbr_fd.c	/^void	ft_putnbr_fd(int n, int fd)$/;"	f
 ft_putstr_fd	libft/src/ft_putstr_fd.c	/^void	ft_putstr_fd(char *s, int fd)$/;"	f
+ft_pwd	srcs/ft_pwd.c	/^int		ft_pwd(void)$/;"	f
 ft_realloc	libft/src/ft_realloc.c	/^void	*ft_realloc(void *area, size_t in_bytes_n, size_t out_bytes_n)$/;"	f
 ft_setenv	srcs/envlist_interface.c	/^int		ft_setenv(char *key, char *value, t_list **envlistp)$/;"	f
 ft_split	libft/src/ft_split.c	/^char			**ft_split(char const *s, char c)$/;"	f
@@ -375,6 +379,7 @@ g_all_childs	includes/minishell.h	/^t_list	*g_all_childs;$/;"	v
 g_buffer	libft/src/ft_printf/ft_printf_main2.c	/^static t_ft_printf_buff g_buffer;$/;"	v	file:
 g_env	includes/minishell.h	/^t_list	*g_env;$/;"	v
 g_ft_printf_return_value	libft/src/ft_printf/ft_printf_main2.c	/^int g_ft_printf_return_value = 0;$/;"	v
+g_last_command_result	includes/minishell.h	/^int		g_last_command_result;$/;"	v
 g_open_fds	includes/minishell.h	/^t_list	*g_open_fds;$/;"	v
 g_seeked_tokens	srcs/lexer.c	/^t_token		const g_seeked_tokens[TOKENS_NB] = $/;"	v
 get_int_from_arg	libft/src/ft_printf/ft_printf_print_int.c	/^	get_int_from_arg(va_list *args, const t_ft_printf_format *format)$/;"	f	file:
@@ -383,29 +388,31 @@ get_redirection_type	srcs/redirection_parser.c	/^enum e_redirect_type	get_redire
 get_unsigned_int_from_arg	libft/src/ft_printf/ft_printf_print_int.c	/^	get_unsigned_int_from_arg(va_list *args, const t_ft_printf_format *format)$/;"	f	file:
 handle_char	srcs/expansion.c	/^static int	handle_char(char transitions[STATE_NB][INPUT_NB], $/;"	f	file:
 handle_notquoted_char	srcs/lexer.c	/^int			handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)$/;"	f
-handle_quote_after_dollar	srcs/expansion_actions.c	/^int		handle_quote_after_dollar(t_expand *fsm)$/;"	f
+handle_quote_after_dollar	srcs/expansion_fetch.c	/^static int		handle_quote_after_dollar(t_expand *fsm)$/;"	f	file:
 handle_quote_cancel_char	srcs/lexer.c	/^void		handle_quote_cancel_char(t_fsm *fsm, char current_char)$/;"	f
 handle_sign	libft/src/ft_atof.c	/^static int		handle_sign(char **str)$/;"	f	file:
 handle_sign	libft/src/ft_atof_mv.c	/^static int		handle_sign(char **str)$/;"	f	file:
 i_redirect	includes/parser.h	/^	i_redirect,$/;"	e	enum:e_redirect_type
-init_actions	srcs/expansion.c	/^void	init_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))$/;"	f
-init_expand_actions	srcs/expansion.c	/^static void	init_expand_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))$/;"	f	file:
-init_expansion	srcs/expansion.c	/^int		init_expansion(t_expand *fsm) $/;"	f
+init_actions	srcs/expansion_init_tables.c	/^void	init_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))$/;"	f
+init_expand_actions	srcs/expansion_init_tables.c	/^static void	init_expand_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))$/;"	f	file:
+init_expansion	srcs/expansion_init_and_tools.c	/^int		init_expansion(t_expand *fsm) $/;"	f
 init_lexer_fsm	srcs/lexer_fsm_tools.c	/^int		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)$/;"	f
 init_simple_command	srcs/simple_command_parser.c	/^void	init_simple_command(t_simple_command *command)$/;"	f
-init_transitions	srcs/expansion.c	/^void	init_transitions(char transitions[STATE_NB][INPUT_NB])$/;"	f
-init_transitions_digits_upper	srcs/expansion.c	/^static void	init_transitions_digits_upper(char transitions[STATE_NB][INPUT_NB])$/;"	f	file:
-init_transitions_lower	srcs/expansion.c	/^static void	init_transitions_lower(char transitions[STATE_NB][INPUT_NB])$/;"	f	file:
+init_transitions	srcs/expansion_init_tables.c	/^void	init_transitions(char transitions[STATE_NB][INPUT_NB])$/;"	f
+init_transitions_digits_upper	srcs/expansion_init_tables.c	/^static void	init_transitions_digits_upper(char transitions[STATE_NB][INPUT_NB])$/;"	f	file:
+init_transitions_lower	srcs/expansion_init_tables.c	/^static void	init_transitions_lower(char transitions[STATE_NB][INPUT_NB])$/;"	f	file:
 init_transitions_tb	srcs/assignment_detector.c	/^static void	init_transitions_tb (unsigned char$/;"	f	file:
 initialize_parser	srcs/parser_interface.c	/^void	initialize_parser(t_reader *reader)$/;"	f
 initialize_sign_absolute_value	libft/src/ft_printf/ft_printf_print_double.c	/^	initialize_sign_absolute_value(double *x)$/;"	f	file:
 int_part	libft/src/ft_atof.c	/^static double	int_part(char **str, double f)$/;"	f	file:
 int_part	libft/src/ft_atof_mv.c	/^static double	int_part(char **str, double f)$/;"	f	file:
 io_number	includes/parser.h	/^	int						io_number;$/;"	m	struct:s_io_redirect
+is_built_in	srcs/execution.c	/^int		is_built_in(char *command)$/;"	f
 is_operator	srcs/token.c	/^int		is_operator(t_token *token)$/;"	f
 isredirection_op	srcs/isredirection_op.c	/^int	isredirection_op(t_token *token)$/;"	f
 key	includes/assignment.h	/^	char					*key;$/;"	m	struct:s_assignment
-launch	srcs/execution.c	/^void	launch(t_list *command)$/;"	f
+launch	srcs/execution.c	/^void	launch(t_simple_command *simple_command, int is_next_in_pipeline,$/;"	f
+launch_built_in	srcs/execution.c	/^int		launch_built_in(t_simple_command* simple_command)$/;"	f
 len_padding	libft/includes/ft_printf.h	/^	int		len_padding;$/;"	m	struct:s_ft_printf_print_params
 len_padding	libft/src/ft_printf/ft_printf.h	/^	int		len_padding;$/;"	m	struct:s_ft_printf_print_params
 len_proper	libft/includes/ft_printf.h	/^	int		len_proper;$/;"	m	struct:s_ft_printf_print_params
@@ -421,10 +428,10 @@ load_params	libft/src/ft_printf/ft_printf_print_int2.c	/^	load_params(t_ft_print
 load_params	libft/src/ft_printf/ft_printf_print_scientific.c	/^	load_params(t_ft_printf_print_params *params,$/;"	f	file:
 lookup	srcs/envlist_interface.c	/^t_list	*lookup(const char *key, t_list *envlist)$/;"	f
 lookup_value	srcs/envlist_interface.c	/^char	*lookup_value(const char *key, t_list *envlist)$/;"	f
-main	srcs/expansion.c	/^int main(int ac, char **av, char **envp)$/;"	f
+main	srcs/parser.c	/^int main()$/;"	f
+main_loop	srcs/minishell.c	/^void	main_loop(void)$/;"	f
 make_content	libft/src/ft_tabtodlst.c	/^static void	*make_content(void *array_ptr, int type_size)$/;"	f	file:
 match_operator	srcs/token.c	/^t_token		match_operator(char *tested_op)$/;"	f
-maybe_launch_built_in	srcs/execution.c	/^void	maybe_launch_built_in(char **tab)$/;"	f
 minus	libft/includes/ft_printf.h	/^	int						minus;$/;"	m	struct:s_ft_printf_format
 minus	libft/src/ft_printf/ft_printf.h	/^	int						minus;$/;"	m	struct:s_ft_printf_format
 modifier	libft/includes/ft_printf.h	/^	t_ft_printf_modifier	modifier;$/;"	m	struct:s_ft_printf_format
@@ -435,7 +442,7 @@ next	libft/includes/libft.h	/^	struct s_dlist	*next;$/;"	m	struct:s_dlist	typere
 next	libft/includes/libft.h	/^	struct s_list	*next;$/;"	m	struct:s_list	typeref:struct:s_list::s_list
 next_state	includes/expand_quote_removal.h	/^	int		next_state;$/;"	m	struct:s_expand
 no_filename_error	includes/parser.h	/^	no_filename_error,$/;"	e	enum:e_parser_state
-normal_cd	srcs/ft_cd.c	/^int	normal_cd(char *dir_name, t_list **envlist)$/;"	f
+normal_cd	srcs/ft_cd.c	/^static int	normal_cd(char *dir_name, t_list **envlist)$/;"	f	file:
 number_of_decimals_double	libft/src/ft_printf/ft_printf_print_g.c	/^	number_of_decimals_double(double x, int digits)$/;"	f	file:
 number_of_decimals_double_acc	libft/src/ft_printf/ft_printf_print_g.c	/^	number_of_decimals_double_acc(double x, int digits, int i)$/;"	f	file:
 oa_redirect	includes/parser.h	/^	oa_redirect$/;"	e	enum:e_redirect_type
@@ -462,8 +469,6 @@ parse_suffix	srcs/simple_command_parser.c	/^int		parse_suffix(t_llparser *parser
 parse_width	libft/src/ft_printf/ft_printf_parse_format.c	/^	parse_width(t_ft_printf_format *format, va_list *args,$/;"	f	file:
 parse_word	srcs/args_parser.c	/^int	parse_word(t_llparser *parser)$/;"	f
 parser	includes/minishell.h	/^	t_llparser	parser;$/;"	m	struct:s_reader
-pid	includes/minishell.h	/^	int	pid;$/;"	m	struct:s_process
-pipe_out	includes/minishell.h	/^	int	pipe_out;$/;"	m	struct:s_process
 plus	libft/includes/ft_printf.h	/^	int						plus;$/;"	m	struct:s_ft_printf_format
 plus	libft/src/ft_printf/ft_printf.h	/^	int						plus;$/;"	m	struct:s_ft_printf_format
 precision	libft/includes/ft_printf.h	/^	int						precision;$/;"	m	struct:s_ft_printf_format
@@ -473,6 +478,7 @@ print_digits	libft/src/ft_itoa_base.c	/^static void	print_digits(int n, char *ba
 print_digits	libft/src/ft_ptoa.c	/^static void	print_digits(unsigned long n, int base, size_t *i, char *s_nb)$/;"	f	file:
 print_digits	libft/src/ft_utoa_base.c	/^static void	print_digits(unsigned int n, char *base, size_t *i, char *s_nb)$/;"	f	file:
 print_double_absolute_value	libft/src/ft_printf/ft_printf_print_double.c	/^	print_double_absolute_value(double x, const t_ft_printf_format *format)$/;"	f	file:
+print_env_lexico	srcs/ft_export.c	/^int		print_env_lexico(t_list **envlist)$/;"	f
 print_int_acc_no_minus_helper	libft/src/ft_printf/ft_printf_print_int2.c	/^	print_int_acc_no_minus_helper(int sign, const t_ft_printf_format *format,$/;"	f	file:
 print_nbr	libft/src/ft_printf/ft_printf_print_int2.c	/^	print_nbr(unsigned long long n, t_ft_printf_base *base,$/;"	f	file:
 print_scientific_absolute_value	libft/src/ft_printf/ft_printf_print_scientific.c	/^	print_scientific_absolute_value(double x, const t_ft_printf_format *format)$/;"	f	file:
@@ -481,7 +487,6 @@ process_env	srcs/minishell.c	/^void	process_env(char **env)$/;"	f
 put_dollar_to_result	srcs/expansion_actions.c	/^int		put_dollar_to_result(t_expand *fsm)$/;"	f
 putstr_fd	libft/src/ft_putstr_fd.c	/^int		putstr_fd(char *s, int fd)$/;"	f
 read_token	srcs/parser.c	/^t_token	read_token(t_llparser *parser)$/;"	f
-redirect_and_launch	srcs/execution.c	/^void	redirect_and_launch(t_pipeline *pipeline,int pipe_stdin,$/;"	f
 redirect_type	includes/parser.h	25;"	d
 redirections	includes/parser.h	/^	t_list				*redirections;$/;"	m	struct:s_llparser
 redirections	includes/parser.h	/^	t_list		*redirections;$/;"	m	struct:s_simple_command
@@ -513,7 +518,6 @@ s_lexer	includes/lexer.h	/^typedef struct	s_lexer$/;"	s
 s_list	libft/includes/libft.h	/^typedef struct		s_list$/;"	s
 s_llparser	includes/parser.h	/^typedef struct	s_llparser$/;"	s
 s_parse_state	libft/includes/get_next_line.h	/^typedef struct	s_parse_state {$/;"	s
-s_process	includes/minishell.h	/^typedef struct	s_process {$/;"	s
 s_reader	includes/minishell.h	/^typedef struct	s_reader {$/;"	s
 s_simple_command	includes/parser.h	/^typedef struct	s_simple_command$/;"	s
 s_token	includes/lexer.h	/^typedef struct	s_token$/;"	s
@@ -525,6 +529,7 @@ sharp	libft/src/ft_printf/ft_printf.h	/^	int						sharp;$/;"	m	struct:s_ft_print
 shell_list	includes/parser.h	/^	t_shell_list		*shell_list;$/;"	m	struct:s_llparser
 sign	libft/includes/ft_printf.h	/^	int					sign;$/;"	m	struct:s_ft_printf_integer
 sign	libft/src/ft_printf/ft_printf.h	/^	int					sign;$/;"	m	struct:s_ft_printf_integer
+signal_handler	srcs/minishell.c	/^void	signal_handler(int signal)$/;"	f
 size	includes/lexer.h	/^	size_t			size;$/;"	m	struct:s_lexer
 size	includes/lexer.h	/^	size_t			size;$/;"	m	struct:s_token
 size	includes/lexer.h	/^	size_t		size;$/;"	m	struct:s_fsm
@@ -533,7 +538,7 @@ squote_state	includes/expand_quote_removal.h	/^	squote_state,$/;"	e	enum:e_expan
 state	includes/expand_quote_removal.h	/^	int		state;$/;"	m	struct:s_expand
 state	includes/lexer.h	/^	enum e_fsm	state;$/;"	m	struct:s_fsm	typeref:enum:s_fsm::e_fsm
 state	includes/parser.h	/^	int					state;$/;"	m	struct:s_llparser
-step_back	srcs/ft_cd.c	/^int	step_back(t_list **envlist)	$/;"	f
+step_back	srcs/ft_cd.c	/^static int	step_back(t_list **envlist)	$/;"	f	file:
 store_args	srcs/args_parser.c	/^int	store_args(t_list **args, char *arg)$/;"	f
 store_assignment	srcs/assignment_parser.c	/^int		store_assignment(t_list **assignments, t_assignment *assignment)$/;"	f
 store_pipeline	srcs/list_parser.c	/^int	store_pipeline(t_list **shell_list, t_pipeline *pipeline)$/;"	f
@@ -570,13 +575,12 @@ t_list	libft/includes/libft.h	/^}					t_list;$/;"	t	typeref:struct:s_list
 t_llparser	includes/parser.h	/^}				t_llparser;$/;"	t	typeref:struct:s_llparser
 t_parse_state	libft/includes/get_next_line.h	/^}				t_parse_state;$/;"	t	typeref:struct:s_parse_state
 t_pipeline	includes/parser.h	/^typedef t_dlist	t_pipeline;$/;"	t
-t_process	includes/minishell.h	/^}				t_process;$/;"	t	typeref:struct:s_process
 t_reader	includes/minishell.h	/^}				t_reader;$/;"	t	typeref:struct:s_reader
 t_shell_list	includes/parser.h	/^typedef t_list	t_shell_list;$/;"	t
 t_simple_command	includes/parser.h	/^}				t_simple_command;$/;"	t	typeref:struct:s_simple_command
 t_token	includes/lexer.h	/^}				t_token;$/;"	t	typeref:struct:s_token
 to_environ_list	srcs/environ_transform.c	/^t_list	*to_environ_list(char **envp)$/;"	f
-to_home	srcs/ft_cd.c	/^int	to_home(t_list **envlist)$/;"	f
+to_home	srcs/ft_cd.c	/^static int	to_home(t_list **envlist)$/;"	f	file:
 token_idx	includes/parser.h	/^	int					token_idx;$/;"	m	struct:s_llparser
 tokens	includes/lexer.h	/^	t_token			*tokens;$/;"	m	struct:s_lexer
 tokens	includes/parser.h	/^	t_token				*tokens;$/;"	m	struct:s_llparser
@@ -586,6 +590,8 @@ type	includes/parser.h	/^	enum e_redirect_type	type;$/;"	m	struct:s_io_redirect	
 type	libft/includes/ft_printf.h	/^	t_ft_printf_type		type;$/;"	m	struct:s_ft_printf_format
 type	libft/src/ft_printf/ft_printf.h	/^	t_ft_printf_type		type;$/;"	m	struct:s_ft_printf_format
 update	libft/src/get_next_line_utils.c	/^	*update(char **line, t_parse_state *st, size_t n)$/;"	f	file:
+use_pipes	srcs/execution.c	/^void	use_pipes(int next_in_pipeline, int pipe_stdin, int p[])$/;"	f
+use_redirections	srcs/execution.c	/^void	use_redirections(t_simple_command *simple_command)$/;"	f
 value	includes/assignment.h	/^	char					*value;$/;"	m	struct:s_assignment
 value	includes/lexer.h	/^	char			*value;$/;"	m	struct:s_token
 wait_all_childs	srcs/execution.c	/^void	wait_all_childs(void)$/;"	f
