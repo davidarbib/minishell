@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/15 15:12:15 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/16 18:55:56 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ void	main_loop(void)
 	free_all();
 }
 
-/*
 int		main(int argc, char **argv, char **env)
 {
 	t_reader		reader;
@@ -148,4 +147,3 @@ int		main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
-*/
