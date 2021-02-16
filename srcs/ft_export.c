@@ -6,14 +6,14 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 13:53:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/16 00:09:47 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/16 15:07:15 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "assignment.h"
 #include <stdio.h>
-#include "expand_quote_removal.h"
+#include "minishell.h"
 
 void	ft_swap(void **a, void **b)
 {
@@ -112,7 +112,7 @@ int		parse_export_arg(char *word, t_list **envlistp)
 }
 
 //int		ft_export(int ac, char **av, t_list *local_var)
-int		ft_export(int ac, char **av, t_list **envlistp)
+int		ft_export(int ac, char **av)
 {
 	int	i;
 	int	success;
@@ -120,11 +120,11 @@ int		ft_export(int ac, char **av, t_list **envlistp)
 	//(void)local_var;
 	(void)av;
 	if (ac == 1)
-		return (print_env_lexico(*envlistp));
-	i = 0;
-	while (i < ac - 1)
+		return (print_env_lexico(g_env));
+	i = 1;
+	while (i < ac)
 	{
-		success = parse_export_arg(av[i], envlistp);
+		success = parse_export_arg(av[i], &g_env);
 		if (success != 0)
 			return success;
 		i++;
@@ -132,18 +132,39 @@ int		ft_export(int ac, char **av, t_list **envlistp)
 	return (0);
 }
 
+/*
 #include <string.h>
 #include "obj_destructor.h"
 #include "environ.h"
+
 int main(int ac, char **av, char **envp)
 {
-	t_list	*envlist;
+	t_list *node;
 
-	envlist = to_environ_list(envp);
 	(void)ac;
 	(void)av;
-	ft_export(ac, av, &envlist);
-	printf("a=%s\n", ft_getenv("a", envlist));
-	ft_lstclear(&envlist, del_assign_content);
+	g_env = to_environ_list(envp);
+	node = g_env;
+	while (node)
+	{
+		t_assignment *tmp;
+		tmp = (t_assignment*)node->content;
+		printf("export : %s=\"%s\"\n", tmp->key, tmp->value);
+		node = node->next;
+	}
+	return (0);
+}
+*/
+#include <string.h>
+#include "obj_destructor.h"
+#include "environ.h"
+
+int main(int ac, char **av, char **envp)
+{
+	g_env = to_environ_list(envp);
+	ft_export(ac, av);
+	printf("a=%s\n", ft_getenv("a", g_env));
+	printf("d=%s\n", ft_getenv("d", g_env));
+	ft_lstclear(&g_env, del_assign_content);
 	return (0);
 }
