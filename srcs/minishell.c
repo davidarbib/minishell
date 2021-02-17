@@ -6,38 +6,11 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 10:21:46 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 12:12:15 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_built_in	g_built_in[6] = {
-	{
-		.name = "cd",
-		.handler = ft_cd
-	},
-	{
-		.name = "echo",
-		.handler = ft_echo
-	},
-	{
-		.name = "env",
-		.handler = ft_env
-	},
-	{
-		.name = "unset",
-		.handler = ft_unset
-	},
-	{
-		.name = "exit",
-		.handler = ft_exit
-	},
-	{
-		.name = "pwd",
-		.handler = ft_pwd
-	}
-};
 
 void		run_once(t_reader *reader, char *line)
 {

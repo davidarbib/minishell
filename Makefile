@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/17 10:16:39 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/02/17 12:17:38 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ SRC = lexer.c \
 	  ft_pwd.c \
 	  ft_exit.c \
 	  ft_unset.c \
+	  ft_export.c \
 	  free.c \
 	  signals.c \
 	  built_ins.c \

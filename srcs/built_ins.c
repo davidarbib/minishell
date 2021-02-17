@@ -6,26 +6,59 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 12:18:14 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 10:46:46 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 12:19:02 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_built_in	g_built_in[BUILT_IN_NUMBER] = {
+	{
+		.name = "cd",
+		.handler = ft_cd
+	},
+	{
+		.name = "echo",
+		.handler = ft_echo
+	},
+	{
+		.name = "env",
+		.handler = ft_env
+	},
+	{
+		.name = "unset",
+		.handler = ft_unset
+	},
+	{
+		.name = "exit",
+		.handler = ft_exit
+	},
+	{
+		.name = "pwd",
+		.handler = ft_pwd
+	},
+	{
+		.name = "export",
+		.handler = ft_export
+	}
+};
+
 int			is_built_in(t_simple_command *simple_command)
 {
-	int		ret;
 	char	*command;
+	int		i;
 
 	if (!simple_command->args)
 		return (0);
 	command = simple_command->args->content;
-	ret = 0;
-	if (ft_strcmp(command, "cd") == 0 || ft_strcmp(command, "echo") == 0
-		|| ft_strcmp(command, "pwd") == 0 || ft_strcmp(command, "exit") == 0
-		|| ft_strcmp(command, "env") == 0 || ft_strcmp(command, "unset") == 0)
-		ret = 1;
-	return (ret);
+	i = 0;
+	while (i < BUILT_IN_NUMBER)
+	{
+		if (ft_strcmp(command, g_built_in[i].name) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 static int	run_built_in(char **tab, int ac)
