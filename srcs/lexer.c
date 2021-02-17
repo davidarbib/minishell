@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/04 15:50:58 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 15:12:03 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,40 @@ void		handle_quote_cancel_char(t_fsm *fsm, char current_char)
 /*
 ** Token recognition rule 9 is ignored on purpose here ('#' handling)
 */
-t_lexer		analyse_command(char *command)
+t_lexer		analyse_command(char *command, t_lexer *lexer, t_fsm *fsm)
 {
-	t_lexer		lexer;
-	t_fsm		fsm;
-	int			i;
+	int		i;
 
-	init_lexer_fsm(&lexer, &fsm);
 	i = -1;
 	while (command[++i])
 	{
-		if (handle_notquoted_char(&lexer, &fsm, command[i]))
+		if (handle_notquoted_char(lexer, fsm, command[i]))
 			continue;
-		handle_quote_cancel_char(&fsm, command[i]);
-		if (!add_char_to_fsm_buffer(&fsm, command[i]))
-			exit_lexing(&lexer, &fsm);
-		fsm.current_token.type = WORD_TOKEN;
-		if (fsm.state == ESCAPE_STATE)
-			fsm.state = NORMAL_STATE;
+		handle_quote_cancel_char(fsm, command[i]);
+		if (!add_char_to_fsm_buffer(fsm, command[i]))
+		{
+			lexer->state = KO_STATE;
+			return (*lexer);
+		}
+		fsm->current_token.type = WORD_TOKEN;
+		if (fsm->state == ESCAPE_STATE)
+			fsm->state = NORMAL_STATE;
 	}
-	if (fsm.state != NORMAL_STATE)
-		lexer.multiline = 1;
-	if (!delimit_token(&lexer, &fsm))
-		exit_lexing(&lexer, &fsm);
-	ft_memdel((void **)&fsm.buf);
+	if (fsm->state >= QUOTE_STATE && fsm->state <= ESCAPE_STATE)
+		lexer->state = MULTILINE_STATE;
+	if (!delimit_token(lexer, fsm))
+		lexer->state = KO_STATE;
+	return (*lexer);
+}
+
+t_lexer		analyse_command_wrapper(char *command)
+{
+	t_lexer		lexer;
+	t_fsm		fsm;
+
+	init_lexer_fsm(&lexer, &fsm);
+	analyse_command(command, &lexer, &fsm);
+	exit_lexing(&lexer, &fsm);
 	return (lexer);
 }
 

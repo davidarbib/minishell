@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 21:40:12 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/31 13:40:51 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 12:08:37 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		init_lexer_fsm(t_lexer *lexer, t_fsm *fsm)
 	lexer->size = LEXERSIZE;
 	lexer->count = 0;
 	lexer->tokens = (t_token *)ft_calloc(lexer->size, sizeof(t_token));
-	lexer->multiline = 0;
+	lexer->state = OK_STATE;
 	fsm->buf = NULL;
 	fsm->state = NORMAL_STATE;
 	fsm->current_token.type = DUMMY_TOKEN;
