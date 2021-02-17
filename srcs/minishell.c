@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 12:28:46 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 14:11:36 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,6 @@ void		process_env(char **env)
 	}
 }
 
-static void	del(void *arg)
-{
-	free(arg);
-}
-
-void		wait_all_childs(void)
-{
-	int			status;
-	int			pid;
-
-	while (1)
-	{
-		if (!g_all_childs)
-			break ;
-		pid = *(int*)g_all_childs->content;
-		waitpid(pid, &status, WUNTRACED);
-		if (!g_all_childs->next)
-		{
-			if (WIFEXITED(status))
-				g_last_command_result = WEXITSTATUS(status);
-			if (WIFSTOPPED(status))
-				g_last_command_result = 128 + WSTOPSIG(status);
-		}
-		ft_lstdel_first(&g_all_childs, del);
-	}
-}
-
 void		main_loop(void)
 {
 	char			*line;
@@ -91,7 +64,6 @@ void		main_loop(void)
 	}
 	parse(&reader, line);
 	eval_list(reader.parser.shell_list);
-	wait_all_childs();
 	free_all();
 }
 
