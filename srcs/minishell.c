@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 10:14:40 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/16 12:03:20 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	eval_list(t_shell_list *list)
 		return ;
 	if (!((t_pipeline*)list->content)->next &&
 			is_built_in(((t_pipeline*)list->content)->content))
-		launch_built_in( ((t_pipeline*)list->content)->content);
+		launch_built_in(((t_pipeline*)list->content)->content);
 	else
 		eval(list->content, 0);
 	eval_list(list->next);
@@ -52,11 +52,6 @@ void	run_once(t_reader *reader, char *line)
 {
 	parse(reader, line);
 	eval_list(reader->parser.shell_list);
-}
-
-void	free_all(void)
-{
-	ft_lstclear(&g_open_fds, free);
 }
 
 void	process_env(char **env)
@@ -86,26 +81,6 @@ void	process_env(char **env)
 		ft_lstadd_front_elem(&g_env, assignment);
 		env++;
 	}
-}
-
-void	signal_handler(int signal)
-{
-	t_list	*tmp;
-
-	tmp = g_all_childs;
-	if (!tmp)
-	{
-		write(2, FONT_BOLDBLUE "\nminishell-1.0$ " FONT_RESET, 27);
-		return ;
-	}
-	while (tmp)
-	{
-		kill(*(int*)tmp->content, signal);
-		tmp = tmp->next;
-	}
-	if (signal != SIGINT)
-		printf("Quit: %d", signal);
-	printf("\n");
 }
 
 void	main_loop(void)
@@ -139,7 +114,7 @@ int		main(int argc, char **argv, char **env)
 	if (argc == 1)
 		while (1)
 			main_loop();
-	else	 // for testing
+	else
 	{
 		run_once(&reader, argv[1]);
 		wait_all_childs();

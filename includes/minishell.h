@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 23:24:15 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/16 18:53:16 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 # include "font_color.h"
 # include "environ.h"
 # include "built_ins.h"
+# include "expand_quote_removal.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/types.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <signal.h>
@@ -76,5 +78,17 @@ void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int p[]);
 
 void	parse(t_reader *reader, char *line);
 void	initialize_parser(t_reader *reader);
+
+/*
+** free.c
+*/
+
+void	free_all(void);
+
+/*
+** signals.c
+*/
+
+void	signal_handler(int signal);
 
 #endif

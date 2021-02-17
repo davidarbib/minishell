@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/04 15:52:47 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/16 12:00:26 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char				*ft_strnstr(const char *haystack, const char *needle,
 					size_t len);
 t_list				*ft_lstnew(void *content);
 int					ft_lstsize(t_list *lst);
+void				ft_lstdel_first(t_list **lst, void (*del)(void*));
 void				ft_lstadd_back(t_list **alst, t_list *new);
 int					ft_lstadd_back_elem(t_list **alst, void *data);
 int					ft_lstadd_front_elem(t_list **alst, void *data);

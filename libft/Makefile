@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 14:53:36 by darbib            #+#    #+#              #
-#    Updated: 2021/02/07 15:37:13 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/02/16 12:00:16 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,7 @@ SRC = ft_atoi.c \
 	get_next_line_utils.c \
 	ft_lstnew.c \
 	ft_lstsize.c \
+	ft_lstdel_first.c \
 	ft_lstadd_back.c \
 	ft_lstadd_back_elem.c \
 	ft_lstadd_front_elem.c \

@@ -6,13 +6,14 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 19:22:37 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 15:07:48 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/16 11:41:04 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "errno.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 int		do_malloc(char *buf, size_t size)
 {
@@ -36,8 +37,7 @@ int		ft_pwd(void)
 	{
 		if (do_malloc(buf, size) == -1)
 			return (1);
-		ret = getcwd(buf, size);
-		if (!ret && errno != ERANGE)
+		if (!(ret = getcwd(buf, size)) && errno != ERANGE)
 		{
 			perror("pwd");
 			break ;

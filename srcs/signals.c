@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/15 21:26:25 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 11:35:20 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2021/02/16 11:51:31 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2021/02/16 11:51:39 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		ft_env(int ac, char **av, t_list **envlist)
+void	signal_handler(int signal)
 {
 	t_list	*tmp;
 
-	(void)ac;
-	(void)av;
-	(void)envlist;
-	tmp = g_env;
+	tmp = g_all_childs;
+	if (!tmp)
+	{
+		write(2, FONT_BOLDBLUE "\nminishell-1.0$ " FONT_RESET, 27);
+		return ;
+	}
 	while (tmp)
 	{
-		printf("%s=%s\n", ((t_assignment*)tmp->content)->key,
-				((t_assignment*)tmp->content)->value);
+		kill(*(int*)tmp->content, signal);
 		tmp = tmp->next;
 	}
-	return (0);
+	if (signal != SIGINT)
+		printf("Quit: %d", signal);
+	printf("\n");
 }
