@@ -6,55 +6,46 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 12:03:20 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 10:21:46 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-** pipe_stdin = 0 for the first process of stdin
-*/
-
-void	eval(t_pipeline *pipeline, int pipe_stdin)
-{
-	int			p[2];
-	int			next_stdin;
-
-	next_stdin = 0;
-	if (!pipeline)
-		return ;
-	if (pipeline->next)
+t_built_in	g_built_in[6] = {
 	{
-		pipe(p);
-		next_stdin = p[0];
+		.name = "cd",
+		.handler = ft_cd
+	},
+	{
+		.name = "echo",
+		.handler = ft_echo
+	},
+	{
+		.name = "env",
+		.handler = ft_env
+	},
+	{
+		.name = "unset",
+		.handler = ft_unset
+	},
+	{
+		.name = "exit",
+		.handler = ft_exit
+	},
+	{
+		.name = "pwd",
+		.handler = ft_pwd
 	}
-	launch(pipeline->content, pipeline->next ? 1 : 0, pipe_stdin, p);
-	eval(pipeline->next, next_stdin);
-}
+};
 
-void	eval_list(t_shell_list *list)
-{
-	int run_in_subprocess;
-
-	run_in_subprocess = 1;
-	if (!list)
-		return ;
-	if (!((t_pipeline*)list->content)->next &&
-			is_built_in(((t_pipeline*)list->content)->content))
-		launch_built_in(((t_pipeline*)list->content)->content);
-	else
-		eval(list->content, 0);
-	eval_list(list->next);
-}
-
-void	run_once(t_reader *reader, char *line)
+void		run_once(t_reader *reader, char *line)
 {
 	parse(reader, line);
 	eval_list(reader->parser.shell_list);
 }
 
-void	process_env(char **env)
+void		process_env(char **env)
 {
 	t_assignment	*assignment;
 	char			*key;
@@ -83,7 +74,34 @@ void	process_env(char **env)
 	}
 }
 
-void	main_loop(void)
+static void	del(void *arg)
+{
+	free(arg);
+}
+
+void		wait_all_childs(void)
+{
+	int			status;
+	int			pid;
+
+	while (1)
+	{
+		if (!g_all_childs)
+			break ;
+		pid = *(int*)g_all_childs->content;
+		waitpid(pid, &status, WUNTRACED);
+		if (!g_all_childs->next)
+		{
+			if (WIFEXITED(status))
+				g_last_command_result = WEXITSTATUS(status);
+			if (WIFSTOPPED(status))
+				g_last_command_result = 128 + WSTOPSIG(status);
+		}
+		ft_lstdel_first(&g_all_childs, del);
+	}
+}
+
+void		main_loop(void)
 {
 	char			*line;
 	int				result;
@@ -104,7 +122,7 @@ void	main_loop(void)
 	free_all();
 }
 
-int		main(int argc, char **argv, char **env)
+int			main(int argc, char **argv, char **env)
 {
 	t_reader		reader;
 

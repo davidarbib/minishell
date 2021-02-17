@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 14:23:19 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 19:04:53 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 10:09:41 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,6 @@ typedef struct	s_built_in {
 	int			(*handler)();
 }				t_built_in;
 
-t_built_in g_built_in[6] = {
-	{
-		.name = "cd",
-		.handler = ft_cd
-	},
-	{
-		.name = "echo",
-		.handler = ft_echo
-	},
-	{
-		.name = "env",
-		.handler = ft_env
-	},
-	{
-		.name = "unset",
-		.handler = ft_unset
-	},
-	{
-		.name = "exit",
-		.handler = ft_exit
-	},
-	{
-		.name = "pwd",
-		.handler = ft_pwd
-	}
-};
+t_built_in g_built_in[6];
 
 #endif

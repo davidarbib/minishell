@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/16 12:21:17 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/02/17 10:16:39 by fyusuf-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SRC = lexer.c \
 	  args_parser.c \
 	  minishell.c \
 	  execution.c \
+	  evaluation.c \
 	  simple_command_parser.c \
 	  pipeline_parser.c \
 	  list_parser.c \

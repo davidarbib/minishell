@@ -6,47 +6,11 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 12:20:17 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 11:02:07 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	del(void *arg)
-{
-	free(arg);
-}
-
-void	wait_all_childs(void)
-{
-	int			status;
-	int			pid;
-
-	while (1)
-	{
-		if (!g_all_childs)
-			break ;
-		pid = *(int*)g_all_childs->content;
-		waitpid(pid, &status, WUNTRACED);
-		if (!g_all_childs->next)
-		{
-			if (WIFEXITED(status))
-				g_last_command_result = WEXITSTATUS(status);
-			if (WIFSTOPPED(status))
-				g_last_command_result = 128 + WSTOPSIG(status);
-		}
-		ft_lstdel_first(&g_all_childs, del);
-	}
-}
-
-void	free_tab(char **tab)
-{
-	while (*tab)
-	{
-		free(*tab);
-		tab++;
-	}
-}
 
 char	*find_in_path(char *command)
 {
@@ -83,20 +47,6 @@ char	*find_in_path(char *command)
 	return (command);
 }
 
-int		is_built_in(t_simple_command *simple_command)
-{
-	int		ret;
-	char	*command;
-
-	command = simple_command->args->content;
-	ret = 0;
-	if (ft_strcmp(command, "cd") == 0 || ft_strcmp(command, "echo") == 0
-		|| ft_strcmp(command, "pwd") == 0 || ft_strcmp(command, "exit") == 0
-		|| ft_strcmp(command, "env") == 0 || ft_strcmp(command, "unset") == 0)
-		ret = 1;
-	return (ret);
-}
-
 void	use_pipes(int next_in_pipeline, int pipe_stdin, int p[])
 {
 	if (pipe_stdin != 0)
@@ -131,10 +81,8 @@ void	use_redirections(t_simple_command *simple_command)
 		}
 		else
 		{
-			if (redir.type == oc_redirect)
-				*fd = open(redir.filename, O_WRONLY | O_CREAT, 0644);
-			else
-				*fd = open(redir.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			*fd = open(redir.filename, O_WRONLY | O_CREAT
+					| (redir.type == oc_redirect ? 0 : O_APPEND), 0644);
 			ft_lstadd_front_elem(&g_open_fds, fd);
 			dup2(*fd, redir.io_number == -1 ? 1 : redir.io_number);
 		}
@@ -161,6 +109,8 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	int		*pid_ptr;
 
 	file = NULL;
+	if (!simple_command->args)
+		return ;
 	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
 	tab[size] = 0;
 	if (!is_built_in(simple_command))
@@ -170,11 +120,7 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 		use_pipes(is_next_in_pipeline, pipe_stdin, p);
 		use_redirections(simple_command);
 		if (is_built_in(simple_command))
-		{
-			if (launch_built_in(simple_command) == 0)
-				exit(EXIT_SUCCESS);
-			exit(EXIT_FAILURE);
-		}
+			exit(launch_built_in(simple_command));
 		else
 		{
 			execve(file, (char*const*)tab, NULL);

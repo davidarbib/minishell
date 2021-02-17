@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 18:53:16 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 10:47:21 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,29 @@ t_list	*g_open_fds;
 */
 
 void	free_all(void);
+void	free_tab(char **tab);
+
+/*
+** evaluation.c
+*/
+
+void	eval_list(t_shell_list *list);
 
 /*
 ** execution.c
 */
 
-int		is_built_in(t_simple_command *simple_command);
 void	launch(t_simple_command *simple_command, int next_in_pipeline,
 			int pipe_stdin, int p[]);
-int		launch_built_in(t_simple_command *simple_command);
-void	wait_all_childs(void);
 void	redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int p[]);
+void	use_redirections(t_simple_command *simple_command);
+
+/*
+** built_ins.c
+*/
+
+int		is_built_in(t_simple_command *simple_command);
+int		launch_built_in(t_simple_command *simple_command);
 
 /*
 ** parser_interface.c
