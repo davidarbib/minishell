@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/16 12:00:26 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 13:55:26 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstlast(t_list *lst);
 void				**ft_lsttotab(t_list *lst, size_t type_size,
+					int *array_size);
+void				*ft_lsttotabold(t_list *lst, size_t type_size,
 					int *array_size);
 t_dlist				*ft_dlstnew(void *content);
 int					ft_dlstsize(t_dlist *lst);

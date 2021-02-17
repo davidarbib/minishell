@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/15 16:58:04 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/16 18:59:17 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int main()
 	//char *input = "ls | cat | echo ; oxo";
 	//char *input = "echo a\"$HOME\"";
 	//char *input = "a=4 export b=3";
-	char *input = "\"a=4\" export b=3";
+	//char *input = "\"a=4\" export b=3";
+	//char *input = "a=\"4\" export b=2";
+	//char *input = "\"a=4\" export b=2";
+	//char *input = "\"a\"=4 export b=2";
 	t_lexer lexer = analyse_command(input);
 	int i = 0;
 	while (i < lexer.count)

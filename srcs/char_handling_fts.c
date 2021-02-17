@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 11:37:03 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/05 19:19:04 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 00:19:03 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,24 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "lexer.h"
+#include "libft.h"
 
 int			check_operator_completion(t_lexer *lexer, t_fsm *fsm, 
 			char current_char)
 {
-	char	test_op[3];
+	char	test_op[4];
 	t_token	matched_token;
 
-	test_op[0] = fsm->buf[fsm->count - 1];
-	test_op[1] = current_char;
-	test_op[2] = 0;
-	if (!(strstr(fsm->current_token.value, test_op)))
+	ft_bzero(test_op, 4);
+	ft_memmove(test_op, fsm->current_token.value, fsm->current_token.size);
+	test_op[fsm->current_token.size] = current_char;
+	matched_token = match_operator(test_op);
+	if (matched_token.type == DUMMY_TOKEN)
 	{
-		matched_token = match_operator(test_op);
-		if (matched_token.type == DUMMY_TOKEN)
-		{
-			delimit_token(lexer, fsm);
-			return (0);
-		}
-		fsm->current_token = matched_token;
+		delimit_token(lexer, fsm);
+		return (0);
 	}
+	fsm->current_token = matched_token;
 	fsm->buf[fsm->count++] = current_char;	
 	return (1);
 }
