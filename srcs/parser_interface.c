@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:51:43 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 15:19:18 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 21:17:10 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int		lex(t_reader *reader, char *line)
 	}
 	if (reader->lexer.state == KO_STATE)
 	{
+		destroy_lexer(&reader->lexer);
 		perror("minishell");
 		return (-1);
 	}

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 15:12:03 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 21:15:55 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_lexer		analyse_command_wrapper(char *command)
 
 	init_lexer_fsm(&lexer, &fsm);
 	analyse_command(command, &lexer, &fsm);
-	exit_lexing(&lexer, &fsm);
+	destroy_fsm(&fsm);
 	return (lexer);
 }
 

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 12:12:17 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 21:17:28 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,6 @@ int			init_lexer_fsm(t_lexer *lexer, t_fsm *fsm);
 int			add_char_to_fsm_buffer(t_fsm *fsm, char c);
 int			add_token(t_lexer *lexer, t_token token);
 void		exit_lexing(t_lexer *lexer, t_fsm *fsm);
+void		destroy_fsm(t_fsm *fsm);
+void		destroy_lexer(t_lexer *lexer);
 #endif
