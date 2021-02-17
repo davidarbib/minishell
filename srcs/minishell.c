@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 15:05:33 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 14:34:58 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void		process_env(char **env)
 	char			*value;
 	int				i;
 	int				j;
+	int				shlvl;
 
 	while (*env)
 	{
@@ -36,12 +37,20 @@ void		process_env(char **env)
 		ft_strlcpy(key, *env, i + 1);
 		assignment->key = key;
 		i++;
-		j = 0;
-		while ((*env)[i + j])
-			j++;
-		value = malloc(j + 1);
-		ft_strlcpy(value, *env + i, j + 1);
-		assignment->value = value;
+		if (ft_strcmp(key, "SHLVL") == 0)
+		{
+			shlvl = ft_atoi(*env + i);
+			assignment->value = ft_itoa(shlvl + 1);
+		}
+		else
+		{
+			j = 0;
+			while ((*env)[i + j])
+				j++;
+			value = malloc(j + 1);
+			ft_strlcpy(value, *env + i, j + 1);
+			assignment->value = value;
+		}
 		ft_lstadd_front_elem(&g_env, assignment);
 		env++;
 	}
@@ -60,12 +69,12 @@ void		main_loop(void)
 	else if (result == 0)
 	{
 		write(2, "exit\n", 5);
+		free_all();
 		exit(EXIT_SUCCESS);
 	}
 	parse(&reader, line);
 	eval_list(reader.parser.shell_list);
 	/*destroy_shell_list(&reader.parser.shell_list);*/ //necessary to free, but segfaults
-	free_all();
 }
 
 int			main(int argc, char **argv, char **env)
@@ -82,7 +91,6 @@ int			main(int argc, char **argv, char **env)
 	{
 		run_once(&reader, argv[1]);
 		wait_all_childs();
-		free_all();
 	}
 	return (0);
 }
