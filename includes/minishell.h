@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 14:11:17 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 14:45:08 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "environ.h"
 # include "built_ins.h"
 # include "expand_quote_removal.h"
+# include "obj_destructor.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
