@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 14:45:08 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 21:38:11 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		launch_built_in(t_simple_command *simple_command);
 ** parser_interface.c
 */
 
-void	parse(t_reader *reader, char *line);
+int		lex_parse(t_reader *reader, char *line);
 void	initialize_parser(t_reader *reader);
 
 /*

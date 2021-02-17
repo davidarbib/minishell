@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 23:19:24 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/31 13:28:09 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 11:38:07 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,4 @@ void	exit_lexing(t_lexer *lexer, t_fsm *fsm)
 {
 	destroy_lexer(lexer);
 	destroy_fsm(fsm);
-	perror("Error : ");
-	exit(EXIT_FAILURE);
 }

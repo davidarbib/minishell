@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/31 13:39:49 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 21:17:28 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,14 @@ enum			e_fsm
 	QUOTE_STATE,
 	DQUOTE_STATE,
 	ESCAPE_STATE,
-	COMMENT_STATE
+	COMMENT_STATE,
+};
+
+enum			e_lexer
+{
+	OK_STATE,
+	MULTILINE_STATE,
+	KO_STATE
 };
 
 typedef struct	s_token
@@ -77,7 +84,7 @@ typedef struct	s_lexer
 	t_token			*tokens;
 	int				count;
 	size_t			size;
-	int				multiline;
+	enum e_lexer	state;
 }				t_lexer;
 
 typedef struct	s_fsm
@@ -98,9 +105,12 @@ int			check_quoting_char(t_fsm *fsm, char current_char);
 int			check_substitution_mark(t_fsm *fsm, char current_char);
 int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char);
 int			check_blank(t_lexer *lexer, t_fsm *fsm, char current_char);
-t_lexer		analyse_command(char *command);
+t_lexer		analyse_command_wrapper(char *command);
+t_lexer		analyse_command(char *command, t_lexer *lexer, t_fsm *fsm);
 int			init_lexer_fsm(t_lexer *lexer, t_fsm *fsm);
 int			add_char_to_fsm_buffer(t_fsm *fsm, char c);
 int			add_token(t_lexer *lexer, t_token token);
 void		exit_lexing(t_lexer *lexer, t_fsm *fsm);
+void		destroy_fsm(t_fsm *fsm);
+void		destroy_lexer(t_lexer *lexer);
 #endif
