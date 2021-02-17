@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/17 21:38:33 by darbib           ###   ########.fr        #
+#    Updated: 2021/02/17 23:44:05 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,8 @@ SRC = lexer.c \
 	  error.c \
 	  destroy.c \
 	  obj_destructor.c \
+	  list_pipeline_destructor.c \
+	  token_destructor.c \
 	  char_handling_fts.c \
 	  lexer_fsm_tools.c \
 	  assignment_detector.c \

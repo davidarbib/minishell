@@ -6,18 +6,18 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 16:45:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/27 17:17:31 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 23:29:20 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "obj_destructor.h"
 
-int		store_redirection(t_list **redirections, t_io_redirect *redirection)
+int	store_redirection(t_list **redirections, t_io_redirect *redirection)
 {
 	t_io_redirect	*redirection_content;
 	t_list			*redirection_node;
-	
+
 	redirection_content = (t_io_redirect *)ft_calloc(1, sizeof(t_io_redirect));
 	if (!redirection_content)
 		return (0);
@@ -46,7 +46,7 @@ enum e_redirect_type	get_redirection_type(t_token token)
 
 int	parse_filename(t_llparser *parser, t_io_redirect *redirection)
 {
-	t_token current_token;
+	t_token	current_token;
 
 	current_token = read_token(parser);
 	if (current_token.type == WORD_TOKEN)
@@ -67,8 +67,8 @@ int	parse_filename(t_llparser *parser, t_io_redirect *redirection)
 
 int	parse_io_file(t_llparser *parser, t_io_redirect *redirection)
 {
-	t_token current_token;
-	
+	t_token	current_token;
+
 	current_token = read_token(parser);
 	if (isredirection_op(&current_token))
 	{
@@ -87,7 +87,7 @@ int	parse_io_redirect(t_llparser *parser)
 	t_token			current_token;
 
 	current_token = read_token(parser);
-	redirection.io_number = -1; 
+	redirection.io_number = -1;
 	if (current_token.type == IONUMBER_TOKEN)
 	{
 		eat(parser);
@@ -96,10 +96,10 @@ int	parse_io_redirect(t_llparser *parser)
 	if (parse_io_file(parser, &redirection))
 	{
 		if (!store_redirection(&parser->current_command->redirections,
-								&redirection))
+				&redirection))
 		{
 			ft_memdel((void **)&redirection.filename);
-			parser->state = sys_error; 
+			parser->state = sys_error;
 			return (0);
 		}
 		return (1);

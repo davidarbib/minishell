@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:35:27 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/07 19:10:18 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 23:20:22 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,16 @@
 #include <stdio.h>
 #include <string.h>
 
-int		store_simple_command(t_pipeline **pipeline, t_simple_command *command)
+int	store_simple_command(t_pipeline **pipeline, t_simple_command *command)
 {
 	t_simple_command	*pipeline_content;
 	t_pipeline			*pipeline_node;
-	static int			pass = 0;
-	
-	pass++;
-	/*printf("current command arg : %s\n", (char *)command->args->content);*/
-	pipeline_content = (t_simple_command *)ft_calloc(1, sizeof(t_simple_command));
+
+	pipeline_content = (t_simple_command *)ft_calloc
+		(1, sizeof(t_simple_command));
 	if (!pipeline_content)
 		return (0);
 	*pipeline_content = *command;
-	//pipeline_content = (void *)strdup("test\n");
-	//if (pass == 3)
-	//	exit(0);
 	pipeline_node = ft_dlstnew(pipeline_content);
 	if (!pipeline_node)
 	{
@@ -50,9 +45,10 @@ void	init_simple_command(t_simple_command *command)
 	command->args = NULL;
 }
 
-int		parse_prefix(t_llparser *parser)
+int	parse_prefix(t_llparser *parser)
 {
-	int success;
+	int	success;
+
 	success = parse_assignment(parser);
 	if (!success)
 		success = parse_io_redirect(parser);
@@ -64,9 +60,9 @@ int		parse_prefix(t_llparser *parser)
 	return (0);
 }
 
-int		parse_suffix(t_llparser *parser)
+int	parse_suffix(t_llparser *parser)
 {
-	int success;
+	int	success;
 
 	parser->state = base;
 	success = parse_word(parser);
@@ -77,7 +73,7 @@ int		parse_suffix(t_llparser *parser)
 	return (0);
 }
 
-int		parse_simple_command(t_llparser *parser, t_pipeline **current_pipeline)
+int	parse_simple_command(t_llparser *parser, t_pipeline **current_pipeline)
 {
 	t_simple_command	command;
 
@@ -93,7 +89,7 @@ int		parse_simple_command(t_llparser *parser, t_pipeline **current_pipeline)
 		if (parse_cmd_word(parser))
 			parse_suffix(parser);
 	}
-	if (parser->state == sys_error || parser->state == no_filename_error)	
+	if (parser->state == sys_error || parser->state == no_filename_error)
 	{
 		destroy_command(parser->current_command);
 		return (0);

@@ -6,13 +6,13 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:51:43 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 21:49:03 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 23:33:26 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			initialize_parser(t_reader *reader)
+void	initialize_parser(t_reader *reader)
 {
 	reader->parser.tokens = reader->lexer.tokens;
 	reader->parser.token_idx = 0;
@@ -20,7 +20,7 @@ void			initialize_parser(t_reader *reader)
 	reader->parser.shell_list = NULL;
 }
 
-static int		lex(t_reader *reader, char *line)
+static int	lex(t_reader *reader, char *line)
 {
 	reader->lexer = analyse_command_wrapper(line);
 	if (reader->lexer.state == MULTILINE_STATE)
@@ -37,7 +37,7 @@ static int		lex(t_reader *reader, char *line)
 	return (0);
 }
 
-static int		parse(t_reader *reader)
+static int	parse(t_reader *reader)
 {
 	initialize_parser(reader);
 	parse_shell_list(&reader->parser, &reader->parser.shell_list);
@@ -61,9 +61,9 @@ static int		parse(t_reader *reader)
 	return (0);
 }
 
-int				lex_parse(t_reader *reader, char *line)
+int	lex_parse(t_reader *reader, char *line)
 {
-	int result;
+	int	result;
 
 	result = lex(reader, line);
 	if (result)

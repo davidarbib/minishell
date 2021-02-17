@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 21:17:28 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 00:24:07 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,14 @@ typedef struct	s_fsm
 {
 	enum e_fsm	state;
 	t_token		current_token;
+	t_token		seeked_tokens[TOKENS_NB];
 	char		*buf;
 	int			count;
 	size_t		size;
 }				t_fsm;
 
 int			is_operator(t_token *token);
-t_token		match_operator(char *tested_op);
+t_token		match_operator(char *tested_op, t_fsm *fsm);
 int			delimit_token(t_lexer *lexer, t_fsm *fsm);
 int			check_operator_completion(t_lexer *lexer, t_fsm *fsm, 
 			char current_char);

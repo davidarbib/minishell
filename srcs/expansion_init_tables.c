@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_tables.c                                      :+:      :+:    :+:   */
+/*   expansion_init_tables.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 22:40:59 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/14 22:42:03 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 00:30:15 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "expand_quote_removal.h"
 
 static void	init_transitions_lower(char transitions[STATE_NB][INPUT_NB])
 {
-	unsigned char c;
+	unsigned char	c;
 
 	c = 'a';
 	while (c <= 'z')
@@ -40,7 +39,7 @@ static void	init_transitions_lower(char transitions[STATE_NB][INPUT_NB])
 
 static void	init_transitions_digits_upper(char transitions[STATE_NB][INPUT_NB])
 {
-	unsigned char c;
+	unsigned char	c;
 
 	c = '0';
 	while (c <= '9')
@@ -86,20 +85,20 @@ void	init_transitions(char transitions[STATE_NB][INPUT_NB])
 static void	init_expand_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))
 {
 	actions[expand_first_state][expand_core_state] = copy_to_search_buffer;
-	actions[expand_first_state][base_state] = 
-		copy_char_in_search_buffer_and_fetch_special;
+	actions[expand_first_state][base_state]
+		= copy_char_in_search_buffer_and_fetch_special;
 	actions[expand_first_state][equote_state] = put_dollar_to_result;
 	actions[expand_core_state][expand_core_state] = copy_to_search_buffer;
 	actions[expand_core_state][expand_first_state] = fetch_env_var;
 	actions[expand_core_state][base_state] = fetch_env_var;
-	actions[expand_first_in_dq_state][expand_core_in_dq_state] = 
-		copy_to_search_buffer;
-	actions[expand_first_in_dq_state][dquote_state] =
-		copy_char_in_search_buffer_and_fetch_special;
-	actions[expand_first_in_dq_state][equote_in_dq_state] = 
-		put_dollar_to_result;
-	actions[expand_core_in_dq_state][expand_core_in_dq_state] =
-		copy_to_search_buffer;
+	actions[expand_first_in_dq_state][expand_core_in_dq_state]
+		= copy_to_search_buffer;
+	actions[expand_first_in_dq_state][dquote_state]
+		= copy_char_in_search_buffer_and_fetch_special;
+	actions[expand_first_in_dq_state][equote_in_dq_state]
+		= put_dollar_to_result;
+	actions[expand_core_in_dq_state][expand_core_in_dq_state]
+		= copy_to_search_buffer;
 	actions[expand_core_in_dq_state][expand_first_in_dq_state] = fetch_env_var;
 	actions[expand_core_in_dq_state][dquote_state] = fetch_env_var;
 	actions[expand_core_in_dq_state][equote_state] = fetch_env_var;

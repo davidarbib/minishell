@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:40:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/15 12:42:02 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 00:17:55 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 static int	travel(char *current_path, t_list **envlist)
 {
 	char	buf[BUFSIZE];
-	
+
 	if (!getcwd(buf, BUFSIZE))
 		return (1);
 	if (chdir(current_path) == -1)
@@ -49,7 +49,7 @@ static int	step_back(t_list **envlist)
 
 static int	to_home(t_list **envlist)
 {
-	char 	*current_path;
+	char	*current_path;
 
 	current_path = ft_getenv("HOME", *envlist);
 	if (!current_path)
@@ -62,7 +62,7 @@ static int	to_home(t_list **envlist)
 
 static int	normal_cd(char *dir_name, t_list **envlist)
 {
-	char 	*current_path;
+	char	*current_path;
 
 	current_path = dir_name;
 	return (travel(current_path, envlist));
@@ -80,26 +80,3 @@ int	ft_cd(int ac, char **av, t_list **envlist)
 		return (normal_cd(av[1], envlist));
 	return (0);
 }
-
-/*
-#include "obj_destructor.h"
-int main(int ac, char **av, char **envp)
-{
-	t_list *envlist = to_environ_list(envp);
-	char buf[BUFSIZE];
-	getcwd(buf, BUFSIZE);
-	printf("current dir : %s\n", buf);
-	if ((ft_cd(ac, av, &envlist) < 0))
-	{
-		perror("cd");
-		ft_lstclear(&envlist, del_assign_content);
-		return (1);
-	}
-	getcwd(buf, BUFSIZE);
-	printf("current dir : %s\n", buf);
-	printf("pwd in list : %s\n", ft_getenv("PWD", envlist));
-	printf("oldpwd in list : %s\n", ft_getenv("OLDPWD", envlist));
-	ft_lstclear(&envlist, del_assign_content);
-	return (0);
-}
-*/
