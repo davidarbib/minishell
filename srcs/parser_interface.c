@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:51:43 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 21:35:03 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 21:49:03 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ static int		parse(t_reader *reader)
 	parse_shell_list(&reader->parser, &reader->parser.shell_list);
 	if (reader->parser.state == no_filename_error)
 	{
+		g_last_command_result = 2;
 		printf("minishell : syntax error near redirection token\n");
 		return (1);
 	}
 	if (reader->parser.state == multiline)
 	{
+		g_last_command_result = 1;
 		printf("Error : multiline not handled\n");
 		return (1);
 	}
