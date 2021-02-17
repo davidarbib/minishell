@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 11:02:07 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/17 16:00:13 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*find_in_path(char *command)
 	char		**tab;
 	char		**tab_mem;
 	char		*concatenated;
+	char		*result;
 	size_t		l1;
 	size_t		l2;
 	struct stat	buf;
@@ -24,6 +25,7 @@ char	*find_in_path(char *command)
 	tab = ft_split(lookup_value("PATH", g_env), ':');
 	tab_mem = tab;
 	l2 = ft_strlen(command);
+	result = ft_strdup(command);
 	while (*tab)
 	{
 		l1 = ft_strlen(*tab);
@@ -34,9 +36,9 @@ char	*find_in_path(char *command)
 		ft_strlcat(concatenated, command, l1 + l2 + 2);
 		if (stat(concatenated, &buf) == 0)
 		{
-			free(command);
-			command = malloc(l1 + l2 + 2);
-			ft_strlcpy(command, concatenated, l1 + l2 + 2);
+			free(result);
+			result = malloc(l1 + l2 + 2);
+			ft_strlcpy(result, concatenated, l1 + l2 + 2);
 			free(concatenated);
 			break ;
 		}
@@ -44,7 +46,7 @@ char	*find_in_path(char *command)
 		tab++;
 	}
 	free_tab(tab_mem);
-	return (command);
+	return (result);
 }
 
 void	use_pipes(int next_in_pipeline, int pipe_stdin, int p[])
