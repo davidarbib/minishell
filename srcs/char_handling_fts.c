@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 11:37:03 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 12:26:16 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 15:27:43 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char)
 
 	tested_op[0] = current_char;
 	tested_op[1] = 0;
-	matched_token = match_operator(tested_op);
+	matched_token = match_operator(tested_op, fsm);
 	if (matched_token.type != DUMMY_TOKEN)
 	{
 		delimit_token(lexer, fsm);

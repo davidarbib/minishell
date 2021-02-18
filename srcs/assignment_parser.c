@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 09:33:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 15:06:16 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 15:29:15 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int			split_assignment(t_token token, t_assignment *assignment)
 
 static void	init_parse_assignment(t_assignment *assignment)
 {
-	assignment.key = NULL;
-	assignment.value = NULL;
+	assignment->key = NULL;
+	assignment->value = NULL;
 }
 
 int			parse_assignment(t_llparser *parser)
@@ -54,7 +54,7 @@ int			parse_assignment(t_llparser *parser)
 	t_token			token;
 	t_assignment	assignment;
 
-	init_parse_assignment(parser, &assignment);
+	init_parse_assignment(&assignment);
 	token = read_token(parser);
 	detect_assignment(&token);
 	if (token.type == ASSIGNMENT_TOKEN)
