@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:05:34 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/15 23:58:14 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 11:50:21 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	append_env(t_assignment *pair, t_list **envlistp)
 	return (1);
 }
 
-t_list	*lookup(const char *key, t_list *envlist)
+t_list		*lookup(const char *key, t_list *envlist)
 {
 	if (!envlist)
 		return (NULL);
@@ -49,32 +49,7 @@ t_list	*lookup(const char *key, t_list *envlist)
 	return (lookup(key, envlist->next));
 }
 
-char	*lookup_value(const char *key, t_list *envlist)
-{
-	if (!envlist)
-		return (NULL);
-	if (ft_strcmp(((t_assignment *)envlist->content)->key, key) == 0)
-		return (((t_assignment*)envlist->content)->value);
-	return (lookup_value(key, envlist->next));
-}
-
-/*
-t_list *insert(char* key, char* value, t_list *envlist)
-{
-	t_list			*index;
-	t_assignment	*new_pair;
-
-	if ((index = lookup(key, envlist)))
-		((t_assignment *)index->content)->value = value;
-	else
-	{
-		new_pair = malloc(sizeof(t_assignment));
-	}
-	return (envlist);
-}
-*/
-
-char	*ft_getenv(const char *key, t_list *envlist)
+char		*ft_getenv(const char *key, t_list *envlist)
 {
 	t_assignment	*pair;
 	t_list			*node;
@@ -88,7 +63,7 @@ char	*ft_getenv(const char *key, t_list *envlist)
 	return (pair->value);
 }
 
-int		ft_setenv(char *key, char *value, t_list **envlistp)
+int			ft_setenv(char *key, char *value, t_list **envlistp)
 {
 	t_assignment	pair;
 	t_list			*index;
@@ -114,40 +89,3 @@ int		ft_setenv(char *key, char *value, t_list **envlistp)
 	}
 	return (1);
 }
-
-/*
-#include "obj_destructor.h"
-#include <string.h>
-int main(int ac, char **av, char **envp)
-{
-	(void)ac;
-	(void)av;
-	t_list *envlist = to_environ_list(envp);
-	ft_setenv("lolo", "lala", &envlist);
-	char *key = "lolo";
-	printf("$%s = %s\n", key, ft_getenv(key, envlist));
-	ft_setenv("lolo", "lulu", &envlist);
-	printf("$%s = %s\n", key, ft_getenv(key, envlist));
-	ft_lstclear(&envlist, del_assign_content);
-	envlist = NULL;
-	printf("$%s = %s\n", key, ft_getenv(key, envlist));
-	ft_setenv("lolo", "lili", &envlist);
-	printf("$%s = %s\n", key, ft_getenv(key, envlist));
-	ft_lstclear(&envlist, del_assign_content);
-	return (0);
-}
-*/
-
-/*
-#include <string.h>
-int main(int ac, char **av, char **envp)
-{
-	if (ac != 2)
-		return (1);
-	char *key = strdup(av[1]);
-	t_list *envlist = to_environ_list(envp);
-	printf("%p\n", envlist);
-	printf("$%s = %s\n", key, ft_getenv(key, envlist));
-	return (0);
-}
-*/

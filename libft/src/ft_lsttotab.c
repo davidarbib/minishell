@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 22:04:16 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/20 16:08:37 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 13:36:59 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	**ft_lsttotab(t_list *lst, size_t type_size, int *array_size)
 	while (lst)
 	{
 		array[i] = lst->content;
-		/*ft_memmove(array + i, (const void *)lst->content, type_size);*/
 		lst = lst->next;
 		i++;
 	}
