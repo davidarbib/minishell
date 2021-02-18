@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 13:53:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 13:56:42 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 11:25:50 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include "minishell.h"
 
-void	ft_swap(t_assignment *a, t_assignment *b)
+void			ft_swap(t_assignment *a, t_assignment *b)
 {
 	t_assignment	tmp;
 
@@ -50,40 +50,13 @@ t_assignment	*bubble_sort_env(t_assignment *array, int size)
 	return (array);
 }
 
-/*
-#include <stdio.h>
-int main()
-{
-	char **array = calloc(4, sizeof(char *));
-	array[2] = ft_strdup("aaa");
-	array[1] = ft_strdup("bbb");
-	array[3] = ft_strdup("ccc");
-	array[0] = ft_strdup("ddd");
-	int i = 0;
-	while (i < 4)
-		printf("%s\n", array[i++]);
-	bubble_sort_str_array(array, 4);
-	printf("--------------------\n");
-	i = 0;
-	while (i < 4)
-		printf("%s\n", array[i++]);
-	free(array[0]);
-	free(array[1]);
-	free(array[2]);
-	free(array[3]);
-	free(array);
-	return (0);
-}
-*/
-
-int		print_env_lexico(t_list *envlist)
+int				print_env_lexico(t_list *envlist)
 {
 	t_assignment	*envp;
 	int				size;
 	int				i;
 
-	envp = 
-		(t_assignment *)ft_lsttotabold(envlist, sizeof(t_assignment), &size);
+	envp = (t_assignment *)ft_lsttotabold(envlist, sizeof(t_assignment), &size);
 	if (!envp)
 		return (-2);
 	bubble_sort_env(envp, size);
@@ -97,13 +70,13 @@ int		print_env_lexico(t_list *envlist)
 	return (0);
 }
 
-int		parse_export_arg(char *word, t_list **envlistp)
+int				parse_export_arg(char *word, t_list **envlistp)
 {
 	t_assignment	tmp;
 
 	tmp.key = NULL;
 	tmp.value = NULL;
-	if (!ft_strchr(word, '=')) 
+	if (!ft_strchr(word, '='))
 		return (1);
 	if (!ft_split_dict(word, '=', &tmp.key, &tmp.value))
 	{
@@ -122,13 +95,12 @@ int		parse_export_arg(char *word, t_list **envlistp)
 	return (0);
 }
 
-int		ft_export(int ac, char **av, t_list **envlist)
+int				ft_export(int ac, char **av, t_list **envlist)
 {
 	int	i;
 	int	success;
 
 	(void)envlist;
-	//(void)local_var;
 	(void)av;
 	if (ac == 1)
 		return (print_env_lexico(g_env));
@@ -137,47 +109,8 @@ int		ft_export(int ac, char **av, t_list **envlist)
 	{
 		success = parse_export_arg(av[i], &g_env);
 		if (success != 0)
-			return success;
+			return (success);
 		i++;
 	}
 	return (0);
 }
-
-/*
-#include <string.h>
-#include "obj_destructor.h"
-#include "environ.h"
-
-int main(int ac, char **av, char **envp)
-{
-	t_list *node;
-
-	(void)ac;
-	(void)av;
-	g_env = to_environ_list(envp);
-	node = g_env;
-	while (node)
-	{
-		t_assignment *tmp;
-		tmp = (t_assignment*)node->content;
-		printf("export : %s=\"%s\"\n", tmp->key, tmp->value);
-		node = node->next;
-	}
-	return (0);
-}
-*/
-/*
-#include <string.h>
-#include "obj_destructor.h"
-#include "environ.h"
-
-int main(int ac, char **av, char **envp)
-{
-	g_env = to_environ_list(envp);
-	ft_export(ac, av);
-	printf("a=%s\n", ft_getenv("a", g_env));
-	printf("d=%s\n", ft_getenv("d", g_env));
-	ft_lstclear(&g_env, del_assign_content);
-	return (0);
-}
-*/

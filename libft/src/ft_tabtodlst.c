@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 14:30:52 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/09 12:46:08 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 13:17:35 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,3 @@ t_dlist		*ft_tabtodlst(void *array, int array_size, int type_size)
 	}
 	return (head);
 }
-/*
-int main()
-{
-	int tab[5] = {78, 42, 0, -42, 103};
-	t_dlist *lst = ft_tabtodlst(tab, 5, sizeof(int));
-	while (lst)
-	{
-		printf("node content : %d\n", *((int *)lst->content));
-		lst = lst->next;
-	}
-	ft_dlstclear(&lst, delete_content);
-}
-*/

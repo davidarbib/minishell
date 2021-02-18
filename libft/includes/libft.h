@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 13:55:26 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 13:37:55 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ int					ft_abs(int x);
 double				ft_double_abs(double x);
 int					ft_min(int a, int b);
 int					ft_max(int a, int b);
-void				*ft_realloc(void *area, size_t in_bytes_n, 
+void				*ft_realloc(void *area, size_t in_bytes_n,
 					size_t out_bytes_n);
 void				ft_memdel(void **area_ptr);
-int					ft_split_dict(const char *s, char c, char **key, 
+int					ft_split_dict(const char *s, char c, char **key,
 					char **value);
 #endif
