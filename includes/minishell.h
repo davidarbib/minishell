@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 15:40:25 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 15:46:41 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,6 @@ t_list			*g_open_fds;
 ** minishell.c
 */
 
-void			free_all(void);
-void			free_tab(char **tab);
-
 /*
 ** evaluation.c
 */
@@ -100,7 +97,8 @@ void			initialize_parser(t_reader *reader);
 ** free.c
 */
 
-void			free_all(void);
+void			free_all(char *line, char *file, char **tab);
+void			free_tab(char **tab);
 
 /*
 ** signals.c

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:31:46 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 10:55:54 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 15:47:14 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		test_if_numeric(char *str)
 
 void	free_and_exit(int i)
 {
-	free_all(NULL, NULL);
+	free_all(NULL, NULL, NULL);
 	exit(i);
 }
 
