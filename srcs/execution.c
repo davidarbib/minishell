@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 16:00:13 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:22:16 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,19 @@ char	*find_in_path(char *command)
 	char		**tab;
 	char		**tab_mem;
 	char		*concatenated;
+	char		*path;
 	char		*result;
 	size_t		l1;
 	size_t		l2;
 	struct stat	buf;
 
-	tab = ft_split(lookup_value("PATH", g_env), ':');
+	result = ft_strdup(command);
+	path = ft_getenv("PATH", g_env);
+	if (!path)
+		return (result);
+	tab = ft_split(path, ':');
 	tab_mem = tab;
 	l2 = ft_strlen(command);
-	result = ft_strdup(command);
 	while (*tab)
 	{
 		l1 = ft_strlen(*tab);
