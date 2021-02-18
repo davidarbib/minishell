@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 14:55:06 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 21:37:55 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	set_redirections(t_pipeline* pipeline)
 				close(redirection->out);
 			if ((redirection->out =
 					open(redir.filename, O_WRONLY | O_CREAT |
-					(redir.type == oa_redirect ? O_APPEND : 0), 0644)) < 0)
+					(redir.type == oc_redirect ? 0 : O_APPEND), 0644)) < 0)
 				exit(EXIT_FAILURE);
 		}
 		redir_list = redir_list->next;

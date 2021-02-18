@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/09 23:05:52 by darbib            #+#    #+#             */
-/*   Updated: 2020/08/09 18:29:26 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 20:54:42 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 		free(head);
 		head = tmp;
 	}
+	*lst = 0;
 	lst = NULL;
 }

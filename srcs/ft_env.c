@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 21:26:25 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 11:35:20 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:03:20 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ft_env(int ac, char **av, t_list **envlist)
 	tmp = g_env;
 	while (tmp)
 	{
-		printf("%s=%s\n", ((t_assignment*)tmp->content)->key,
+		ft_printf("%s=%s\n", ((t_assignment*)tmp->content)->key,
 				((t_assignment*)tmp->content)->value);
 		tmp = tmp->next;
 	}

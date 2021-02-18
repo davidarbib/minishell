@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 14:33:57 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 21:40:19 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include "ft_printf.h"
 # include "lexer.h"
 # include "parser.h"
 # include "font_color.h"
@@ -75,8 +76,6 @@ t_list		*g_temp_redirections;
 ** minishell.c
 */
 
-void		free_tab(char **tab);
-
 /*
 ** evaluation.c
 */
@@ -112,7 +111,9 @@ void		initialize_parser(t_reader *reader);
 ** free.c
 */
 
+void		free_tab(char **tab);
 void		free_all(char *line, char *file, char **tab);
+void	close_and_free(void *content);
 
 /*
 ** signals.c
