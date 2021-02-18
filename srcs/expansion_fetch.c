@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 23:37:51 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 00:36:07 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 11:34:05 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	fetch_exit_status(t_expand *fsm)
 	return (0);
 }
 
-int	fetch_special_var(t_expand *fsm)
+int			fetch_special_var(t_expand *fsm)
 {
 	int		success;
 
@@ -75,7 +75,7 @@ static int	handle_quote_after_dollar(t_expand *fsm)
 	return (1);
 }
 
-int	copy_char_in_search_buffer_and_fetch_special(t_expand *fsm)
+int			copy_char_in_search_buffer_and_fetch_special(t_expand *fsm)
 {
 	int	success;
 
@@ -92,7 +92,7 @@ int	copy_char_in_search_buffer_and_fetch_special(t_expand *fsm)
 	return (success);
 }
 
-int	fetch_env_var(t_expand *fsm)
+int			fetch_env_var(t_expand *fsm)
 {
 	char	*value;
 	int		success;

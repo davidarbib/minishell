@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 14:35:27 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 23:20:22 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 11:22:09 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include <stdio.h>
 #include <string.h>
 
-int	store_simple_command(t_pipeline **pipeline, t_simple_command *command)
+int		store_simple_command(t_pipeline **pipeline, t_simple_command *command)
 {
 	t_simple_command	*pipeline_content;
 	t_pipeline			*pipeline_node;
 
-	pipeline_content = (t_simple_command *)ft_calloc
-		(1, sizeof(t_simple_command));
+	pipeline_content = (t_simple_command *)ft_calloc(1,
+													sizeof(t_simple_command));
 	if (!pipeline_content)
 		return (0);
 	*pipeline_content = *command;
@@ -45,7 +45,7 @@ void	init_simple_command(t_simple_command *command)
 	command->args = NULL;
 }
 
-int	parse_prefix(t_llparser *parser)
+int		parse_prefix(t_llparser *parser)
 {
 	int	success;
 
@@ -60,7 +60,7 @@ int	parse_prefix(t_llparser *parser)
 	return (0);
 }
 
-int	parse_suffix(t_llparser *parser)
+int		parse_suffix(t_llparser *parser)
 {
 	int	success;
 
@@ -73,7 +73,7 @@ int	parse_suffix(t_llparser *parser)
 	return (0);
 }
 
-int	parse_simple_command(t_llparser *parser, t_pipeline **current_pipeline)
+int		parse_simple_command(t_llparser *parser, t_pipeline **current_pipeline)
 {
 	t_simple_command	command;
 

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 00:10:42 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 12:27:27 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 ** handler return 1 if current_char was handled, 0 if not
 */
 
-int	handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)
+int		handle_notquoted_char(t_lexer *lexer, t_fsm *fsm, char current_char)
 {
 	if (fsm->state != NORMAL_STATE)
 		return (0);

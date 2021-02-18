@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 00:24:07 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 11:12:02 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,60 +58,51 @@ enum			e_lexer
 	KO_STATE
 };
 
-typedef struct	s_token
+typedef struct		s_token
 {
 	enum e_token	type;
 	char			*value;
 	size_t			size;
-}				t_token;
+}					t_token;
 
 /*
-typedef struct	s_token
-{
-	enum e_token		type;
-	const unsigned char	*value;
-	size_t				size;
-}				t_token;
-*/
-
-/*
-** in lexer and fsm structures 'size' field refers to allocated memory area for 
-** tokens or buffer. 
+** in lexer and fsm structures 'size' field refers to allocated memory area for
+** tokens or buffer.
 ** 'count' refers to token array or chars buffer current_index.
 */
-typedef struct	s_lexer
+typedef struct		s_lexer
 {
 	t_token			*tokens;
 	int				count;
 	size_t			size;
 	enum e_lexer	state;
-}				t_lexer;
+}					t_lexer;
 
-typedef struct	s_fsm
+typedef struct		s_fsm
 {
-	enum e_fsm	state;
-	t_token		current_token;
-	t_token		seeked_tokens[TOKENS_NB];
-	char		*buf;
-	int			count;
-	size_t		size;
-}				t_fsm;
+	enum e_fsm		state;
+	t_token			current_token;
+	t_token			seeked_tokens[TOKENS_NB];
+	char			*buf;
+	int				count;
+	size_t			size;
+}					t_fsm;
 
-int			is_operator(t_token *token);
-t_token		match_operator(char *tested_op, t_fsm *fsm);
-int			delimit_token(t_lexer *lexer, t_fsm *fsm);
-int			check_operator_completion(t_lexer *lexer, t_fsm *fsm, 
-			char current_char);
-int			check_quoting_char(t_fsm *fsm, char current_char);
-int			check_substitution_mark(t_fsm *fsm, char current_char);
-int			check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char);
-int			check_blank(t_lexer *lexer, t_fsm *fsm, char current_char);
-t_lexer		analyse_command_wrapper(char *command);
-t_lexer		analyse_command(char *command, t_lexer *lexer, t_fsm *fsm);
-int			init_lexer_fsm(t_lexer *lexer, t_fsm *fsm);
-int			add_char_to_fsm_buffer(t_fsm *fsm, char c);
-int			add_token(t_lexer *lexer, t_token token);
-void		exit_lexing(t_lexer *lexer, t_fsm *fsm);
-void		destroy_fsm(t_fsm *fsm);
-void		destroy_lexer(t_lexer *lexer);
+int					is_operator(t_token *token);
+t_token				match_operator(char *tested_op, t_fsm *fsm);
+int					delimit_token(t_lexer *lexer, t_fsm *fsm);
+int					check_operator_completion(t_lexer *lexer, t_fsm *fsm,
+					char current_char);
+int					check_quoting_char(t_fsm *fsm, char current_char);
+int					check_substitution_mark(t_fsm *fsm, char current_char);
+int					check_new_op(t_lexer *lexer, t_fsm *fsm, char current_char);
+int					check_blank(t_lexer *lexer, t_fsm *fsm, char current_char);
+t_lexer				analyse_command_wrapper(char *command);
+t_lexer				analyse_command(char *command, t_lexer *lexer, t_fsm *fsm);
+int					init_lexer_fsm(t_lexer *lexer, t_fsm *fsm);
+int					add_char_to_fsm_buffer(t_fsm *fsm, char c);
+int					add_token(t_lexer *lexer, t_token token);
+void				exit_lexing(t_lexer *lexer, t_fsm *fsm);
+void				destroy_fsm(t_fsm *fsm);
+void				destroy_lexer(t_lexer *lexer);
 #endif

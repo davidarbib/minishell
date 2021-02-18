@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:40:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 00:17:55 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 11:20:29 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	travel(char *current_path, t_list **envlist)
 	return (0);
 }
 
-static int	step_back(t_list **envlist)	
+static int	step_back(t_list **envlist)
 {
 	char	*current_path;
 
@@ -68,7 +68,7 @@ static int	normal_cd(char *dir_name, t_list **envlist)
 	return (travel(current_path, envlist));
 }
 
-int	ft_cd(int ac, char **av, t_list **envlist)
+int			ft_cd(int ac, char **av, t_list **envlist)
 {
 	if (ac > 2)
 		return (1);

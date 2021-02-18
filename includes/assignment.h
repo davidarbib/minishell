@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:09:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 23:10:28 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 11:08:22 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@
 # define A_STATE_NB		3
 # define A_INPUT_NB		256
 
-typedef struct s_assignment
+typedef struct	s_assignment
 {
-	char	*key;
-	char	*value;
+	char		*key;
+	char		*value;
 }				t_assignment;
 
-void		detect_assignment(t_token *token);
-int			store_assignment(t_list **assignments, t_assignment *assignment);
+void			detect_assignment(t_token *token);
+int				store_assignment(t_list **assignments,
+								t_assignment *assignment);
 #endif

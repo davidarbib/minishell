@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   lookup_value.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 22:56:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 11:16:51 by darbib           ###   ########.fr       */
+/*   Created: 2021/02/18 11:42:59 by darbib            #+#    #+#             */
+/*   Updated: 2021/02/18 11:43:37 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
+#include "environ.h"
 
-void	eat(t_llparser *parser)
+char	*lookup_value(const char *key, t_list *envlist)
 {
-	parser->token_idx++;
-}
-
-t_token	read_token(t_llparser *parser)
-{
-	return (parser->tokens[parser->token_idx]);
-}
-
-t_token	*ref_token(t_llparser *parser)
-{
-	return (&parser->tokens[parser->token_idx]);
+	if (!envlist)
+		return (NULL);
+	if (ft_strcmp(((t_assignment *)envlist->content)->key, key) == 0)
+		return (((t_assignment*)envlist->content)->value);
+	return (lookup_value(key, envlist->next));
 }

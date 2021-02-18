@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 16:52:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 23:45:04 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 12:29:11 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	destroy_assignment(t_assignment *assignment)
 }
 
 void	del_redir_content(void *content)
-{	
+{
 	t_io_redirect	*redir;
 
 	redir = (t_io_redirect *)content;

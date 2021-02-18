@@ -6,14 +6,15 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 16:45:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 23:29:20 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 12:31:18 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "obj_destructor.h"
 
-int	store_redirection(t_list **redirections, t_io_redirect *redirection)
+int						store_redirection(t_list **redirections,
+											t_io_redirect *redirection)
 {
 	t_io_redirect	*redirection_content;
 	t_list			*redirection_node;
@@ -44,7 +45,8 @@ enum e_redirect_type	get_redirection_type(t_token token)
 	return (i_redirect);
 }
 
-int	parse_filename(t_llparser *parser, t_io_redirect *redirection)
+int						parse_filename(t_llparser *parser,
+										t_io_redirect *redirection)
 {
 	t_token	current_token;
 
@@ -65,7 +67,8 @@ int	parse_filename(t_llparser *parser, t_io_redirect *redirection)
 	return (0);
 }
 
-int	parse_io_file(t_llparser *parser, t_io_redirect *redirection)
+int						parse_io_file(t_llparser *parser,
+										t_io_redirect *redirection)
 {
 	t_token	current_token;
 

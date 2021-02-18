@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 13:53:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 00:16:08 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 11:25:50 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include "minishell.h"
 
-void	ft_swap(t_assignment *a, t_assignment *b)
+void			ft_swap(t_assignment *a, t_assignment *b)
 {
 	t_assignment	tmp;
 
@@ -50,7 +50,7 @@ t_assignment	*bubble_sort_env(t_assignment *array, int size)
 	return (array);
 }
 
-int	print_env_lexico(t_list *envlist)
+int				print_env_lexico(t_list *envlist)
 {
 	t_assignment	*envp;
 	int				size;
@@ -70,7 +70,7 @@ int	print_env_lexico(t_list *envlist)
 	return (0);
 }
 
-int	parse_export_arg(char *word, t_list **envlistp)
+int				parse_export_arg(char *word, t_list **envlistp)
 {
 	t_assignment	tmp;
 
@@ -95,7 +95,7 @@ int	parse_export_arg(char *word, t_list **envlistp)
 	return (0);
 }
 
-int	ft_export(int ac, char **av, t_list **envlist)
+int				ft_export(int ac, char **av, t_list **envlist)
 {
 	int	i;
 	int	success;
