@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 16:45:37 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 12:31:18 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 13:05:34 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int						parse_io_file(t_llparser *parser,
 	return (0);
 }
 
-int	parse_io_redirect(t_llparser *parser)
+int						parse_io_redirect(t_llparser *parser)
 {
 	t_io_redirect	redirection;
 	t_token			current_token;

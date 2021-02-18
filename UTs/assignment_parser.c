@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstfirst.c                                     :+:      :+:    :+:   */
+/*   assignment_parser.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 15:20:57 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 13:32:58 by darbib           ###   ########.fr       */
+/*   Created: 2021/02/18 13:06:47 by darbib            #+#    #+#             */
+/*   Updated: 2021/02/18 13:19:34 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 
-t_dlist	*ft_dlstfirst(t_dlist *lst)
+/*
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main()
 {
-	while (lst->prev)
-		lst = lst->prev;
-	return (lst);
+	t_token token;
+	t_assignment assignment;
+
+	token.type = 0;
+	token.value = "az=45";
+	token.size = strlen(token.value);
+	assignment.key = NULL;
+	assignment.value = NULL;
+	split_assignment(token, &assignment);
+	printf("key : %s\n", assignment.key);
+	printf("value : %s\n", assignment.value);
 }
+*/
+

@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 16:32:51 by darbib            #+#    #+#             */
-/*   Updated: 2020/12/07 16:40:59 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 15:16:16 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int		ft_isnumber(const char *s)
 {
 	while (*s && ft_isdigit(*s))
-		s++;		
+		s++;
 	if (*s)
 		return (0);
 	return (1);
