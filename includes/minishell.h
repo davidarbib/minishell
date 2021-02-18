@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 12:04:51 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 14:33:57 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,24 @@ t_list		*g_env;
 
 int			g_last_command_result;
 
+typedef struct	s_redirection {
+	int	in;
+	int	out;
+}				t_redirection;
+
 /*
-** g_open_fds is a t_list of ints
+** g_redirections is a t_list of t_redirections
 */
 
-t_list		*g_open_fds;
+t_list		*g_redirections;
+t_list		*g_temp_redirections;
+
+/*
+** g_open_fds is a t_list of ints;
+*/
+
+//t_list		*g_open_fds;
+
 
 /*
 ** minishell.c
@@ -78,7 +91,8 @@ void		eval_list(t_shell_list *list);
 void		launch(t_simple_command *simple_command, int next_in_pipeline,
 				int pipe_stdin, int p[]);
 void		redirect_and_launch(t_pipeline *pipeline, int pipe_stdin, int p[]);
-void		use_redirections(t_simple_command *simple_command);
+void		use_redirections();
+void		set_redirections();
 
 /*
 ** built_ins.c

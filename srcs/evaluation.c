@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 14:11:52 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 14:52:36 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ void	eval_list(t_shell_list *list)
 	run_in_subprocess = 1;
 	if (!list)
 		return ;
+	set_redirections((t_pipeline*)list->content);
+	g_temp_redirections = g_redirections;
 	if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
 			is_built_in(((t_pipeline*)list->content)->content))
-	{
-		//use_redirections(simple_command);
 		g_last_command_result =
 			launch_built_in(((t_pipeline*)list->content)->content);
-	}
 	else
 	{
 		eval(list->content, 0);

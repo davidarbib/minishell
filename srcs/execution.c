@@ -6,11 +6,13 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 12:09:58 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 14:55:06 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <fcntl.h>
+#include <stdlib.h>
 
 char	*find_in_path(char *command)
 {
@@ -64,32 +66,60 @@ void	use_pipes(int next_in_pipeline, int pipe_stdin, int p[])
 	}
 }
 
-void	use_redirections(t_simple_command *simple_command)
+void	use_redirections(void)
 {
-	int				*fd;
+	int in;
+	int out;
+
+	in = ((t_redirection*)g_temp_redirections->content)->in;
+	out = ((t_redirection*)g_temp_redirections->content)->out;
+	if (in != 0)
+		dup2(in, 0);
+	if (out != 1)
+		dup2(out, 1);
+	g_temp_redirections = g_temp_redirections->next;
+}
+
+void	set_redirections(t_pipeline* pipeline)
+{
 	t_io_redirect	redir;
 	t_list			*redir_list;
+	t_redirection	*redirection;
+	int				*fd;
 
-	redir_list = simple_command->redirections;
+	if (!pipeline)
+		return ;
+	redir_list = ((t_simple_command*)pipeline->content)->redirections;
+	/*redir_list = simple_command->redirections;*/
+	if (!(fd = malloc(sizeof(int))))
+		exit(EXIT_FAILURE);
+	redirection = malloc(sizeof(t_redirection));
+	redirection->in = 0;
+	redirection->out = 1;
 	while (redir_list)
 	{
 		redir = *(t_io_redirect*)redir_list->content;
-		fd = malloc(sizeof(int));
 		if (redir.type == i_redirect)
 		{
-			*fd = open(redir.filename, O_RDONLY);
-			ft_lstadd_front_elem(&g_open_fds, fd);
-			dup2(*fd, redir.io_number == -1 ? 0 : redir.io_number);
+			if (redirection->in != 0)
+				close(redirection->in);
+			if ((redirection->in = open(redir.filename, O_RDONLY)) < 0)
+				exit(EXIT_FAILURE);
 		}
 		else
 		{
-			*fd = open(redir.filename, O_WRONLY | O_CREAT
-					| (redir.type == oc_redirect ? 0 : O_APPEND), 0644);
-			ft_lstadd_front_elem(&g_open_fds, fd);
-			dup2(*fd, redir.io_number == -1 ? 1 : redir.io_number);
+			//faire fstat !
+			if (redirection->out != 1)
+				close(redirection->out);
+			if ((redirection->out =
+					open(redir.filename, O_WRONLY | O_CREAT |
+					(redir.type == oa_redirect ? O_APPEND : 0), 0644)) < 0)
+				exit(EXIT_FAILURE);
 		}
 		redir_list = redir_list->next;
 	}
+	ft_lstadd_back_elem(&g_redirections, redirection);
+	set_redirections(pipeline->next);
 }
 
 void	close_unused_in_parent(int is_next_in_pipeline, int pipe_stdin,
@@ -121,7 +151,7 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	{
 		/*free_all(NULL, file, NULL);*/
 		use_pipes(is_next_in_pipeline, pipe_stdin, p);
-		use_redirections(simple_command);
+		use_redirections();
 		if (is_built_in(simple_command))
 			exit(launch_built_in(simple_command));
 		else
