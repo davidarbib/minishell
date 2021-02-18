@@ -3,79 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fyusuf-a <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 11:17:14 by darbib            #+#    #+#             */
-/*   Updated: 2019/11/14 18:28:52 by darbib           ###   ########.fr       */
+/*   Created: 2019/08/14 12:29:27 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2019/11/12 16:00:28 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		free_words(char **w)
+static int	count_words(const char *str, char c)
 {
-	while (*w)
-		free(*w++);
-	free(*w);
-	free(w);
-}
+	int	result;
+	int	sep_before;
 
-static size_t	count_w(char const *s, char c)
-{
-	size_t	i;
-	size_t	nb;
-
-	i = 0;
-	nb = 0;
-	if (!*s)
-		return (nb);
-	while (s[i])
+	result = 0;
+	sep_before = 1;
+	while (*str)
 	{
-		if (s[i] == c && (s[i + 1] != c && s[i + 1]))
-			nb++;
-		i++;
-	}
-	nb++;
-	return (nb);
-}
-
-static char		**divide(char const *s, char c, size_t nb)
-{
-	char	**words;
-	size_t	i;
-	size_t	j;
-
-	if (!(words = ft_calloc(nb + 1, sizeof(char *))))
-		return (NULL);
-	words[nb] = NULL;
-	i = 0;
-	while (i < nb)
-	{
-		j = 0;
-		while (s[j] && s[j] != c)
-			j++;
-		if (!(words[i++] = ft_substr(s, 0, j)))
+		if (*str == c)
+			sep_before = 1;
+		else
 		{
-			free_words(words);
-			return (NULL);
+			if (sep_before)
+				result++;
+			sep_before = 0;
 		}
-		while (s[j] && s[j] == c)
-			j++;
-		s += j;
+		str++;
 	}
-	return (words);
+	return (result);
 }
 
-char			**ft_split(char const *s, char c)
+static char	*fill_and_consume(char **str, char c)
 {
-	char	**words;
-	size_t	i;
+	int		l;
+	int		i;
+	char	*result;
 
+	l = 0;
+	while ((*str)[l] && (*str)[l] != c)
+		l++;
+	result = (char*)malloc((l + 1) * sizeof(char));
+	result[l] = '\0';
 	i = 0;
-	while (s[i] && s[i] == c)
+	while (i < l)
+	{
+		result[i] = **str;
+		(*str)++;
 		i++;
-	s += i;
-	if (!(words = divide(s, c, count_w(s, c))))
+	}
+	return (result);
+}
+
+static void	eat_char(char **str, char c)
+{
+	while (**str && **str == c)
+		(*str)++;
+}
+
+char		**ft_split(char const *str, char c)
+{
+	char	**result;
+	char	*str2;
+	int		count;
+	int		i;
+
+	if (str == NULL)
 		return (NULL);
-	return (words);
+	count = count_words(str, c);
+	result = NULL;
+	result = (char**)malloc((count + 1) * sizeof(char*));
+	if (result == NULL)
+		return (NULL);
+	result[count] = NULL;
+	str2 = (char*)str;
+	eat_char(&str2, c);
+	i = 0;
+	while (i < count)
+	{
+		result[i] = fill_and_consume(&str2, c);
+		eat_char(&str2, c);
+		i++;
+	}
+	return (result);
 }

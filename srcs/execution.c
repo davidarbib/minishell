@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 16:00:13 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 12:09:58 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 		file = find_in_path(tab[0]);
 	if ((pid = fork()) == 0)
 	{
+		/*free_all(NULL, file, NULL);*/
 		use_pipes(is_next_in_pipeline, pipe_stdin, p);
 		use_redirections(simple_command);
 		if (is_built_in(simple_command))
@@ -132,6 +133,7 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	}
 	else if (pid < 0)
 		perror("minishell");
+	free(file);
 	close_unused_in_parent(is_next_in_pipeline, pipe_stdin, p[1]);
 	if (!(pid_ptr = malloc(sizeof(int))))
 	{
@@ -140,5 +142,6 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	}
 	*pid_ptr = pid;
 	ft_lstadd_front_elem(&g_all_childs, pid_ptr);
+	/*free_all(NULL, file, tab);*/
 	free(tab);
 }

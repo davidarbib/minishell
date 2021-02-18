@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:51:43 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 21:35:03 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 10:17:44 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int				lex_parse(t_reader *reader, char *line)
 	int result;
 
 	result = lex(reader, line);
+	free(line);
 	if (result)
 		return (result);
 	detect_ionumber(&reader->lexer);
