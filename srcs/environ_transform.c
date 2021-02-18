@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:31:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/02 22:00:07 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 23:03:20 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,47 @@ t_list	*to_environ_list(char **envp)
 		i++;
 	}
 	return (environ_list);
+}
+
+char	**to_environ_array(t_list *environ)
+{
+	int		l;
+	int		l1;
+	int		l2;
+	int		i;
+	char	**ret;
+
+	l = ft_lstsize(environ);
+	printf("size = %d\n", l);
+	if (!(ret = malloc(l + 1)))
+		return (NULL);
+	ret[l] = 0;
+	i = 0;
+	while (i < l)
+	{
+		printf("size = %d\n", i);
+		l1 = ft_strlen(((t_assignment*)environ->content)->key);
+		l2 = ft_strlen(((t_assignment*)environ->content)->value);
+		ret[i] = malloc(l1 + l2 + 2);
+		ft_strlcpy(ret[i], ((t_assignment*)environ->content)->key, l1 + 1);
+		ret[i][l1] = '=';
+		ft_strlcat(ret[i] + l1 + 1,
+				((t_assignment*)environ->content)->value, l2 + 1);
+		i++;
+		environ = environ->next;
+	}
+	ret[l] = 0;
+	char **lol;
+	lol = ret;
+	i = 0;
+	while (*lol)
+	{
+		printf("%d-->%s\n", i, *lol);
+		lol++;
+		i++;
+	}
+	printf("yo\n");
+	return (ret);
 }
 
 /*

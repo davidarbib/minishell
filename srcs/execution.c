@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 21:37:55 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:53:31 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 								int pipe_stdin, int p[])
 {
 	char	**tab;
+	char	**env;
 	int		size;
 	char	*file;
 	int		pid;
@@ -144,6 +145,7 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	if (!simple_command->args)
 		return ;
 	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
+	env = to_environ_array(g_env);
 	tab[size] = 0;
 	if (!is_built_in(simple_command))
 		file = find_in_path(tab[0]);
@@ -156,7 +158,7 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 			exit(launch_built_in(simple_command));
 		else
 		{
-			execve(file, (char*const*)tab, NULL);
+			execve(file, (char*const*)tab, env);
 			perror("minishell");
 			exit(EXIT_FAILURE);
 		}
