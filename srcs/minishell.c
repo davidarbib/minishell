@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 14:34:58 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 09:34:54 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		run_once(t_reader *reader, char *line)
 {
-	parse(reader, line);
+	lex_parse(reader, line);
 	eval_list(reader->parser.shell_list);
 }
 
@@ -72,9 +72,11 @@ void		main_loop(void)
 		free_all();
 		exit(EXIT_SUCCESS);
 	}
-	parse(&reader, line);
-	eval_list(reader.parser.shell_list);
-	/*destroy_shell_list(&reader.parser.shell_list);*/ //necessary to free, but segfaults
+	result = lex_parse(&reader, line);
+	//if (result == -1)
+	//	free_exit
+	if (result == 0)
+		eval_list(reader.parser.shell_list);
 }
 
 int			main(int argc, char **argv, char **env)
@@ -88,9 +90,6 @@ int			main(int argc, char **argv, char **env)
 		while (1)
 			main_loop();
 	else
-	{
 		run_once(&reader, argv[1]);
-		wait_all_childs();
-	}
 	return (0);
 }
