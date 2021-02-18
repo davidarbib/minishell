@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 15:26:18 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 15:17:59 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 20:40:15 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include "environ.h"
 # include "libft.h"
+# include "parser.h"
 
 # define STATE_NB			9
 # define INPUT_NB			128
@@ -64,4 +65,6 @@ int				expand_arguments(t_list	*args);
 int				expand_and_free(char **word,
 				char transitions[STATE_NB][INPUT_NB],
 				int (*actions[STATE_NB][STATE_NB])(t_expand*));
+int				expand_args_redirections(t_list *args, t_list *redirections);
+int				expand_pipeline(t_pipeline *pipeline);
 #endif

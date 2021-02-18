@@ -6,11 +6,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 14:11:52 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 20:43:01 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "expand_quote_removal.h"
 
 static void	del(void *arg)
 {
@@ -67,6 +68,11 @@ void	eval_list(t_shell_list *list)
 	run_in_subprocess = 1;
 	if (!list)
 		return ;
+	if (expand_pipeline((t_pipeline*)list->content))
+	{
+		perror("minishell");
+		//fatal error
+	}
 	if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
 			is_built_in(((t_pipeline*)list->content)->content))
 	{
