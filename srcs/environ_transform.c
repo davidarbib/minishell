@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:31:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 23:03:20 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 10:21:25 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,12 @@ char	**to_environ_array(t_list *environ)
 	char	**ret;
 
 	l = ft_lstsize(environ);
-	printf("size = %d\n", l);
-	if (!(ret = malloc(l + 1)))
+	if (!(ret = malloc((l + 1) * sizeof(char*))))
 		return (NULL);
 	ret[l] = 0;
 	i = 0;
 	while (i < l)
 	{
-		printf("size = %d\n", i);
 		l1 = ft_strlen(((t_assignment*)environ->content)->key);
 		l2 = ft_strlen(((t_assignment*)environ->content)->value);
 		ret[i] = malloc(l1 + l2 + 2);
@@ -70,17 +68,6 @@ char	**to_environ_array(t_list *environ)
 		i++;
 		environ = environ->next;
 	}
-	ret[l] = 0;
-	char **lol;
-	lol = ret;
-	i = 0;
-	while (*lol)
-	{
-		printf("%d-->%s\n", i, *lol);
-		lol++;
-		i++;
-	}
-	printf("yo\n");
 	return (ret);
 }
 

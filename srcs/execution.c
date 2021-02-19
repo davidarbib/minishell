@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 22:53:31 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 10:25:11 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	}
 	else if (pid < 0)
 		perror("minishell");
+	free_tab(env);
 	free(file);
 	close_unused_in_parent(is_next_in_pipeline, pipe_stdin, p[1]);
 	if (!(pid_ptr = malloc(sizeof(int))))
