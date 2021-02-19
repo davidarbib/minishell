@@ -6,11 +6,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 13:34:04 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 14:18:08 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 void		process_env(char **env)
 {
@@ -44,12 +45,15 @@ void		main_loop(void)
 	else if (result == 0)
 	{
 		write(2, "exit\n", 5);
-		free_all(line, NULL, NULL);
+		free_before_exit(line, NULL, NULL, NULL);
 		exit(EXIT_SUCCESS);
 	}
 	result = lex_parse(&g_reader, line);
-	//if (result == -1)
-	//	free_exit
+	if (result == -1)
+	{
+		free_before_exit(line, NULL, NULL, NULL);
+		exit(EXIT_FAILURE);
+	}
 	if (result == 0)
 		eval_list(g_reader.parser.shell_list);
 	destroy_shell_list(&g_reader.parser.shell_list);

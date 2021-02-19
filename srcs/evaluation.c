@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 13:36:22 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 15:35:13 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,20 @@ void		wait_all_childs(void)
 
 void		eval(t_pipeline *pipeline, int pipe_stdin)
 {
-	int			p[2];
 	int			next_stdin;
+	t_pipe		pip;
 
-	next_stdin = 0;
 	if (!pipeline)
 		return ;
+	next_stdin = 0;
 	if (pipeline->next)
 	{
-		pipe(p);
-		next_stdin = p[0];
+		pipe(pip.p);
+		next_stdin = pip.p[0];
 	}
-	launch(pipeline->content, pipeline->next ? 1 : 0, pipe_stdin, p);
+	pip.is_next_in_pipeline = pipeline->next != NULL;
+	pip.pipe_stdin = pipe_stdin;
+	launch(pipeline->content, pip);
 	eval(pipeline->next, next_stdin);
 }
 
@@ -73,7 +75,8 @@ void		eval_list(t_shell_list *list)
 	if (expand_pipeline((t_pipeline*)list->content))
 	{
 		perror("minishell");
-		//fatal error
+		free_before_exit(NULL, NULL, NULL, NULL);
+		exit(EXIT_FAILURE);
 	}
 	if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
 			is_built_in(((t_pipeline*)list->content)->content))

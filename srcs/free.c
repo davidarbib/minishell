@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 11:45:46 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 12:42:38 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 14:11:58 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ void		free_tab(char **tab)
 {
 	char **tab_mem;
 
-	tab_mem = tab;
-	while (*tab)
+	if (tab)
 	{
-		free(*tab);
-		tab++;
+		tab_mem = tab;
+		while (*tab)
+		{
+			free(*tab);
+			tab++;
+		}
+		free(tab_mem);
 	}
-	free(tab_mem);
 }
 
 static void	free_assignment(void *content)
@@ -32,14 +35,20 @@ static void	free_assignment(void *content)
 	free(content);
 }
 
-void		free_all(char *line, char *file, char **tab)
+void		free_and_continue(char *line, char *file, char **tab, char **env)
 {
-	if (tab)
-		free(tab);
-	if (line)
-		free(line);
-	if (file)
-		free(file);
+	free(tab);
+	free(line);
+	free(file);
+	free_tab(env);
+}
+
+void		free_before_exit(char *line, char *file, char **tab, char **env)
+{
+	free(tab);
+	free(line);
+	free(file);
+	free_tab(env);
 	/*if (g_reader.parser.shell_list)
 		destroy_shell_list(&g_reader.parser.shell_list);*/
 	ft_lstclear(&g_env, free_assignment);
