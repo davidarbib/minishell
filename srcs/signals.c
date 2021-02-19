@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 11:51:31 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 11:51:39 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 13:43:17 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	signal_handler(int signal)
 	tmp = g_all_childs;
 	if (!tmp)
 	{
-		write(2, FONT_BOLDBLUE "\nminishell-1.0$ " FONT_RESET, 27);
+		if (signal != SIGINT)
+			write(2, FONT_BOLDBLUE "\nminishell-1.0$ " FONT_RESET, 27);
 		return ;
 	}
 	while (tmp)
