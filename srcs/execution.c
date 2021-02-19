@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 10:50:35 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/19 13:38:30 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,63 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+char	*try_this_path(char *prefix, char *command, size_t command_length)
+{
+	size_t		l1;
+	char		*concatenated;
+	struct stat	buf;
+
+	l1 = ft_strlen(prefix);
+	concatenated = malloc(l1 + command_length + 2);
+	ft_strlcpy(concatenated, prefix, l1 + 1);
+	concatenated[l1] = '/';
+	concatenated[l1 + 1] = 0;
+	ft_strlcat(concatenated, command, l1 + command_length + 2);
+	if (stat(concatenated, &buf) == 0 && S_ISREG(buf.st_mode))
+		return (concatenated);
+	free(concatenated);
+	return (NULL);
+}
+
+char	*try_this_command(char *command)
+{
+	struct stat	buf;
+	char		*result;
+
+	result = ft_strdup(command);
+	if (stat(result, &buf) == 0 && S_ISREG(buf.st_mode))
+		return (result);
+	free(result);
+	return (NULL);
+}
+
 char	*find_in_path(char *command)
 {
 	char		**tab;
 	char		**tab_mem;
-	char		*concatenated;
 	char		*path;
 	char		*result;
-	size_t		l1;
 	size_t		l2;
-	struct stat	buf;
 
-	result = ft_strdup(command);
 	path = ft_getenv("PATH", g_env);
-	if (!path)
-		return (result);
-	tab = ft_split(path, ':');
-	tab_mem = tab;
-	l2 = ft_strlen(command);
-	while (*tab)
+	if (path)
 	{
-		l1 = ft_strlen(*tab);
-		concatenated = malloc(l1 + l2 + 2);
-		ft_strlcpy(concatenated, *tab, l1 + 1);
-		concatenated[l1] = '/';
-		concatenated[l1 + 1] = 0;
-		ft_strlcat(concatenated, command, l1 + l2 + 2);
-		if (stat(concatenated, &buf) == 0)
+		tab = ft_split(path, ':');
+		tab_mem = tab;
+		l2 = ft_strlen(command);
+		while (*tab)
 		{
+			if ((result = try_this_path(*tab, command, l2)))
+			{
+				free(tab_mem);
+				return (result);
+			}
 			free(result);
-			result = malloc(l1 + l2 + 2);
-			ft_strlcpy(result, concatenated, l1 + l2 + 2);
-			free(concatenated);
-			break ;
+			tab++;
 		}
-		free(concatenated);
-		tab++;
+		free_tab(tab_mem);
 	}
-	free_tab(tab_mem);
-	return (result);
+	return (try_this_command(command));
 }
 
 void	use_pipes(int next_in_pipeline, int pipe_stdin, int p[])
@@ -84,7 +102,7 @@ void	use_redirections(void)
 	g_temp_redirections = g_temp_redirections->next;
 }
 
-void	set_redirections(t_pipeline* pipeline)
+void	set_redirections(t_pipeline *pipeline)
 {
 	t_io_redirect	redir;
 	t_list			*redir_list;
@@ -94,7 +112,6 @@ void	set_redirections(t_pipeline* pipeline)
 	if (!pipeline)
 		return ;
 	redir_list = ((t_simple_command*)pipeline->content)->redirections;
-	/*redir_list = simple_command->redirections;*/
 	if (!(fd = malloc(sizeof(int))))
 		exit(EXIT_FAILURE);
 	redirection = malloc(sizeof(t_redirection));
@@ -112,7 +129,6 @@ void	set_redirections(t_pipeline* pipeline)
 		}
 		else
 		{
-			//faire fstat !
 			if (redirection->out != 1)
 				close(redirection->out);
 			if ((redirection->out =
@@ -153,6 +169,14 @@ void	launch(t_simple_command *simple_command, int is_next_in_pipeline,
 	tab[size] = 0;
 	if (!is_built_in(simple_command))
 		file = find_in_path(tab[0]);
+	if (!file)
+	{
+		free_tab(env);
+		free(tab);
+		g_last_command_result = 127;
+		perror("minishell");
+		return ;
+	}
 	if ((pid = fork()) == 0)
 	{
 		/*free_all(NULL, file, NULL);*/

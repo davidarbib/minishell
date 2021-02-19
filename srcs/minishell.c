@@ -6,17 +6,11 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 11:55:01 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 13:34:04 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void		run_once(t_reader *reader, char *line)
-{
-	lex_parse(reader, line);
-	eval_list(reader->parser.shell_list);
-}
 
 void		process_env(char **env)
 {
@@ -34,6 +28,7 @@ void		process_env(char **env)
 			((t_assignment*)tmp->content)->value = ft_itoa(shlvl + 1);
 			break ;
 		}
+		tmp = tmp->next;
 	}
 }
 
@@ -62,15 +57,12 @@ void		main_loop(void)
 
 int			main(int argc, char **argv, char **env)
 {
-	t_reader		reader;
-
+	(void)argc;
+	(void)argv;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, signal_handler);
 	process_env(env);
-	if (argc == 1)
-		while (1)
-			main_loop();
-	else
-		run_once(&reader, argv[1]);
+	while (1)
+		main_loop();
 	return (0);
 }

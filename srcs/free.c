@@ -6,13 +6,13 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 11:45:46 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 10:40:56 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 12:42:38 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tab(char **tab)
+void		free_tab(char **tab)
 {
 	char **tab_mem;
 
@@ -32,7 +32,7 @@ static void	free_assignment(void *content)
 	free(content);
 }
 
-void	free_all(char *line, char *file, char **tab)
+void		free_all(char *line, char *file, char **tab)
 {
 	if (tab)
 		free(tab);
@@ -46,7 +46,7 @@ void	free_all(char *line, char *file, char **tab)
 	/*ft_lstclear(&g_redirections, free);*/
 }
 
-void	close_and_free(void *content)
+void		close_and_free(void *content)
 {
 	if (((t_redirection*)content)->in != 0)
 		close(((t_redirection*)content)->in);
