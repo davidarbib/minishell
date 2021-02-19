@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:31:46 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 22:03:48 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 11:08:19 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ int		test_if_numeric(char *str)
 		return (0);
 	i++;
 	while (str[i])
+	{
 		if (!('0' <= str[i] && str[i] <= '9'))
 			return (0);
+		i++;
+	}
 	return (1);
 }
 
@@ -40,7 +43,8 @@ int		ft_exit(int ac, char **av, t_list **envlist)
 		free_and_exit(127);
 	if (!(test_if_numeric(av[1])))
 	{
-		ft_dprintf(2, "minishell: exit: %s: numeric argument required\n", av[1]);
+		ft_dprintf(2, "minishell: exit: %s: numeric argument required\n",
+									av[1]);
 		free_and_exit(2);
 	}
 	if (ac > 2)
