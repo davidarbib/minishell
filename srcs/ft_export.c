@@ -6,11 +6,12 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 13:53:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 11:25:50 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/19 11:16:00 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ft_printf.h"
 #include "assignment.h"
 #include <stdio.h>
 #include "minishell.h"
@@ -63,7 +64,7 @@ int				print_env_lexico(t_list *envlist)
 	i = 0;
 	while (i < size)
 	{
-		printf("export %s=\"%s\"\n", envp[i].key, envp[i].value);
+		ft_printf("export %s=\"%s\"\n", envp[i].key, envp[i].value);
 		i++;
 	}
 	ft_memdel((void**)&envp);
@@ -107,6 +108,8 @@ int				ft_export(int ac, char **av, t_list **envlist)
 	i = 1;
 	while (i < ac)
 	{
+		if (!check_export_arg(av[i]))
+			return (1);
 		success = parse_export_arg(av[i], &g_env);
 		if (success != 0)
 			return (success);

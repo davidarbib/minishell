@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 14:23:19 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 12:16:53 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 11:09:06 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		ft_exit(int ac, char **av, t_list **envlist);
 int		ft_env(int ac, char **av, t_list **envlist);
 int		ft_unset(int ac, char **av, t_list **envlist);
 int		ft_export(int ac, char **av, t_list **envlist);
+int		check_export_arg(char *word);
 
 typedef struct	s_built_in {
 	char		*name;
