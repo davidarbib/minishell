@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 21:37:22 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 11:24:28 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		wait_all_childs(void)
 ** pipe_stdin = 0 for the first process of stdin
 */
 
-void	eval(t_pipeline *pipeline, int pipe_stdin)
+void		eval(t_pipeline *pipeline, int pipe_stdin)
 {
 	int			p[2];
 	int			next_stdin;
@@ -61,11 +61,9 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 	eval(pipeline->next, next_stdin);
 }
 
-void	eval_list(t_shell_list *list)
+void		eval_list(t_shell_list *list)
 {
 	int run_in_subprocess;
-	int	old_in;
-	int	old_out;
 
 	run_in_subprocess = 1;
 	if (!list)
@@ -79,17 +77,7 @@ void	eval_list(t_shell_list *list)
 	}
 	if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
 			is_built_in(((t_pipeline*)list->content)->content))
-	{
-		old_in = dup(0);
-		old_out = dup(1);
-		use_redirections();
-		g_last_command_result =
-			launch_built_in(((t_pipeline*)list->content)->content);
-		dup2(old_in, 0);
-		close(old_in);
-		dup2(old_out, 1);
-		close(old_out);
-	}
+		prelaunch_built_in(((t_pipeline*)list->content)->content);
 	else
 	{
 		eval(list->content, 0);

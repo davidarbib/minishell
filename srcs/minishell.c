@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 22:53:07 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 11:55:01 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,20 @@ void		run_once(t_reader *reader, char *line)
 
 void		process_env(char **env)
 {
-	t_assignment	*assignment;
-	char			*key;
-	char			*value;
-	int				i;
-	int				j;
-	int				shlvl;
+	int		shlvl;
+	t_list	*tmp;
 
-	while (*env)
+	g_env = to_environ_list(env);
+	tmp = g_env;
+	while (tmp)
 	{
-		assignment = malloc(sizeof(t_assignment));
-		i = 0;
-		while ((*env)[i] != '=')
-			i++;
-		key = malloc(i + 1);
-		ft_strlcpy(key, *env, i + 1);
-		assignment->key = key;
-		i++;
-		if (ft_strcmp(key, "SHLVL") == 0)
+		if (ft_strcmp(((t_assignment*)tmp->content)->key, "SHLVL") == 0)
 		{
-			shlvl = ft_atoi(*env + i);
-			assignment->value = ft_itoa(shlvl + 1);
+			shlvl = ft_atoi(((t_assignment*)tmp->content)->value);
+			free(((t_assignment*)tmp->content)->value);
+			((t_assignment*)tmp->content)->value = ft_itoa(shlvl + 1);
+			break ;
 		}
-		else
-		{
-			j = 0;
-			while ((*env)[i + j])
-				j++;
-			value = malloc(j + 1);
-			ft_strlcpy(value, *env + i, j + 1);
-			assignment->value = value;
-		}
-		ft_lstadd_front_elem(&g_env, assignment);
-		env++;
 	}
 }
 

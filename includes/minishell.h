@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 10:50:56 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/19 11:23:58 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void			eval_list(t_shell_list *list);
 ** execution.c
 */
 
+void			prelaunch_built_in(t_simple_command *simple_command);
 void			launch(t_simple_command *simple_command, int next_in_pipeline,
 					int pipe_stdin, int p[]);
 void			redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,

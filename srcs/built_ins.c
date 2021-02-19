@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 12:18:14 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 20:44:44 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/19 11:24:34 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,19 @@ int			launch_built_in(t_simple_command *simple_command)
 	ret = run_built_in(tab, ac);
 	free(tab);
 	return (ret);
+}
+
+void		prelaunch_built_in(t_simple_command *simple_command)
+{
+	int	old_in;
+	int	old_out;
+
+	old_in = dup(0);
+	old_out = dup(1);
+	use_redirections();
+	g_last_command_result = launch_built_in(simple_command);
+	dup2(old_in, 0);
+	close(old_in);
+	dup2(old_out, 1);
+	close(old_out);
 }
