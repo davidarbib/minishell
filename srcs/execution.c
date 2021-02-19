@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 15:36:01 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 16:07:18 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,63 +73,70 @@ char	*find_in_path(char *command)
 	return (try_this_command(command));
 }
 
-void	close_unused_in_parent(int is_next_in_pipeline, int pipe_stdin,
-										int pipe_stdout)
+void	close_unused_in_parent(t_pipe pipe)
 {
-	if (is_next_in_pipeline)
-		close(pipe_stdout);
-	if (pipe_stdin != 0)
-		close(pipe_stdin);
+	if (pipe.is_next_in_pipeline)
+		close(pipe.p[1]);
+	if (pipe.pipe_stdin != 0)
+		close(pipe.pipe_stdin);
 }
 
-void	launch(t_simple_command *simple_command, t_pipe pipe)
+void	run_in_subprocess(t_simple_command *simple_command,
+								t_pipe pipe, t_temp temp)
 {
-	char	**tab;
-	char	**env;
-	int		size;
-	char	*file;
-	int		pid;
+	use_pipes(pipe);
+	use_redirections();
+	if (is_built_in(simple_command))
+		exit(launch_built_in(simple_command));
+	else
+	{
+		execve(temp.file, (char*const*)temp.tab, temp.env);
+		perror("minishell");
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	add_pid(int pid, t_temp temp)
+{
 	int		*pid_ptr;
 
-	file = NULL;
-	if (!simple_command->args)
-		return ;
-	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
-	tab[size] = 0;
-	env = to_environ_array(g_env);
-	if (!is_built_in(simple_command))
-		file = find_in_path(tab[0]);
-	if (!file)
-	{
-		free_and_continue(NULL, NULL, tab, env);
-		g_last_command_result = 127;
-		perror("minishell");
-		return ;
-	}
-	if ((pid = fork()) == 0)
-	{
-		use_pipes(pipe);
-		use_redirections();
-		if (is_built_in(simple_command))
-			exit(launch_built_in(simple_command));
-		else
-		{
-			execve(file, (char*const*)tab, env);
-			perror("minishell");
-			exit(EXIT_FAILURE);
-		}
-	}
-	else if (pid < 0)
-		perror("minishell");
-	close_unused_in_parent(pipe.is_next_in_pipeline, pipe.pipe_stdin,
-							pipe.p[1]);
 	if (!(pid_ptr = malloc(sizeof(int))))
 	{
-		free_before_exit(NULL, file, tab, env);
+		free_before_exit(NULL, temp.file, temp.tab, temp.env);
 		perror("minishell");
 		exit(EXIT_FAILURE);
 	}
 	*pid_ptr = pid;
 	ft_lstadd_front_elem(&g_all_childs, pid_ptr);
-	free_and_continue(NULL, file, tab, env);
+}
+
+void	launch(t_simple_command *simple_command, t_pipe pipe)
+{
+	int		size;
+	t_temp	temp;
+	int		pid;
+
+	temp.file = NULL;
+	if (!simple_command->args)
+		return ;
+	temp.tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
+	temp.tab[size] = 0;
+	temp.env = to_environ_array(g_env);
+	if (!is_built_in(simple_command))
+		temp.file = find_in_path(temp.tab[0]);
+	if (!temp.file)
+	{
+		free_and_continue(NULL, NULL, temp.tab, temp.env);
+		g_last_command_result = 127;
+		printf("here\n");
+		perror("minishell");
+		return ;
+	}
+	if ((pid = fork()) == 0)
+		run_in_subprocess(simple_command, pipe, temp);
+	else if (pid < 0)
+		perror("minishell");
+	close_unused_in_parent(pipe);
+	add_pid(pid, temp);
+	free_and_continue(NULL, temp.file, temp.tab, temp.env);
 }

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 14:28:28 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 15:51:08 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,18 @@ typedef struct 	s_pipe {
 	int			p[2];
 }				t_pipe;
 
-void			prelaunch_built_in(t_simple_command *simple_command);
+typedef struct 	s_temp {
+	char		**tab;
+	char		**env;
+	char		*file;
+}				t_temp;
+
 void			launch(t_simple_command *simple_command, t_pipe pipe);
-//void			launch(t_simple_command *simple_command, int next_in_pipeline,
-					//int pipe_stdin, int p[]);
-//void			redirect_and_launch(t_pipeline *pipeline, t_pipe pipe);
-//void			redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
-				//int p[]);
 
 /*
 ** execution2.c
 */
 
-//void			use_pipes(int next_in_pipeline, int pipe_stdin, int p[]);
 void			use_pipes(t_pipe pipe);
 void			set_redirections(t_pipeline	*pipeline);
 void			use_redirections(void);
@@ -103,6 +102,7 @@ void			use_redirections(void);
 ** built_ins.c
 */
 
+void			prelaunch_built_in(t_simple_command *simple_command);
 int				is_built_in(t_simple_command *simple_command);
 int				launch_built_in(t_simple_command *simple_command);
 

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 15:35:13 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 16:04:04 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,13 @@ void		eval_list(t_shell_list *list)
 	}
 	if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
 			is_built_in(((t_pipeline*)list->content)->content))
+	{
+		printf("built_in\n");
 		prelaunch_built_in(((t_pipeline*)list->content)->content);
+	}
 	else
 	{
+		printf("not a built_in\n");
 		eval(list->content, 0);
 		wait_all_childs();
 	}
