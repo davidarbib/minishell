@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_parser.c                                      :+:      :+:    :+:   */
+/*   shell_list_parser.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 22:16:35 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 13:48:25 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/17 23:21:24 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	store_pipeline(t_list **shell_list, t_pipeline *pipeline)
 {
 	t_pipeline		*shell_list_content;
 	t_shell_list	*shell_list_node;
-	
+
 	shell_list_content = (t_pipeline *)ft_calloc(1, sizeof(t_pipeline));
 	if (!shell_list_content)
 		return (0);

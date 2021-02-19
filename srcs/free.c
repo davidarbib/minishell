@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 11:45:46 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 10:24:41 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/19 10:40:56 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	free_all(char *line, char *file, char **tab)
 		destroy_shell_list(&g_reader.parser.shell_list);*/
 	ft_lstclear(&g_env, free_assignment);
 	/*ft_lstclear(&g_redirections, free);*/
-	/*ft_lstclear(&g_open_fds, free);*/
 }
 
 void	close_and_free(void *content)

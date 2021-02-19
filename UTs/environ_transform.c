@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstfirst.c                                     :+:      :+:    :+:   */
+/*   environ_transform.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 15:20:57 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 13:32:58 by darbib           ###   ########.fr       */
+/*   Created: 2021/02/18 13:19:58 by darbib            #+#    #+#             */
+/*   Updated: 2021/02/18 13:20:02 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+/*
+#include "environ.h"
 
-t_dlist	*ft_dlstfirst(t_dlist *lst)
+int main(int ac, char **av, char **envp)
 {
-	while (lst->prev)
-		lst = lst->prev;
-	return (lst);
+	(void)ac;
+	(void)av;
+	t_list *env_list = to_environ_list(envp);
+
+	t_list *node = env_list;
+	while (node)
+	{
+		t_assignment *var = (t_assignment *)node->content;
+		printf("%s=%s\n", var->key, var->value); 
+		node = node->next;
+	}
 }
+*/

@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isnumber.c                                      :+:      :+:    :+:   */
+/*   expansion_application.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/07 16:32:51 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 15:16:16 by darbib           ###   ########.fr       */
+/*   Created: 2021/02/18 20:03:01 by darbib            #+#    #+#             */
+/*   Updated: 2021/02/18 21:07:29 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "expand_quote_removal.h"
+#include "parser.h"
 
-int		ft_isnumber(const char *s)
+int		expand_simple_command(t_simple_command *command)
 {
-	while (*s && ft_isdigit(*s))
-		s++;
-	if (*s)
+	return (!expand_args_redirections(command->args, command->redirections));
+}
+
+int		expand_pipeline(t_pipeline *pipeline)
+{
+	int	error;
+
+	if (!pipeline)
 		return (0);
-	return (1);
+	error = expand_simple_command((t_simple_command *)pipeline->content);
+	if (error)
+		return (error);
+	return (expand_pipeline(pipeline->next));
 }

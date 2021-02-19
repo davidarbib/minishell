@@ -113,9 +113,9 @@ int					ft_abs(int x);
 double				ft_double_abs(double x);
 int					ft_min(int a, int b);
 int					ft_max(int a, int b);
-void				*ft_realloc(void *area, size_t in_bytes_n, 
+void				*ft_realloc(void *area, size_t in_bytes_n,
 					size_t out_bytes_n);
 void				ft_memdel(void **area_ptr);
-int					ft_split_dict(const char *s, char c, char **key, 
+int					ft_split_dict(const char *s, char c, char **key,
 					char **value);
 #endif

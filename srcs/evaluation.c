@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "expand_quote_removal.h"
 
 static void	del(void *arg)
 {
@@ -71,6 +72,11 @@ void	eval_list(t_shell_list *list)
 		return ;
 	set_redirections((t_pipeline*)list->content);
 	g_temp_redirections = g_redirections;
+	if (expand_pipeline((t_pipeline*)list->content))
+	{
+		perror("minishell");
+		//fatal error
+	}
 	if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
 			is_built_in(((t_pipeline*)list->content)->content))
 	{

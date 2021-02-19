@@ -6,16 +6,16 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:24:55 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/15 16:58:20 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 13:29:16 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-int	store_args(t_list **args, char *arg)
+int		store_args(t_list **args, char *arg)
 {
 	t_list			*args_node;
-	
+
 	args_node = ft_lstnew(arg);
 	if (!args_node)
 		return (0);
@@ -37,7 +37,7 @@ char	*extract_word(t_token token)
 	return (word);
 }
 
-int	parse_word(t_llparser *parser)
+int		parse_word(t_llparser *parser)
 {
 	char	*arg;
 	int		success;
@@ -65,7 +65,7 @@ int	parse_word(t_llparser *parser)
 	return (0);
 }
 
-int	parse_cmd_name(t_llparser *parser)
+int		parse_cmd_name(t_llparser *parser)
 {
 	t_token	current_token;
 
@@ -76,7 +76,7 @@ int	parse_cmd_name(t_llparser *parser)
 	return (parse_word(parser));
 }
 
-int	parse_cmd_word(t_llparser *parser)
+int		parse_cmd_word(t_llparser *parser)
 {
 	t_token	current_token;
 

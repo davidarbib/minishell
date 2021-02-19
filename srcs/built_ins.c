@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 12:18:14 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/17 12:19:02 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 20:44:44 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,6 @@ int			launch_built_in(t_simple_command *simple_command)
 	int					ret;
 
 	ret = 1;
-	if (!expand_arguments(simple_command->args))
-	{
-		perror("minishell");
-		exit(EXIT_FAILURE);
-	}
 	tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
 	tab[size] = 0;
 	ac = 0;

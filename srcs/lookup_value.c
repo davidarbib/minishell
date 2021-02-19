@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstfirst.c                                     :+:      :+:    :+:   */
+/*   lookup_value.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 15:20:57 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 13:32:58 by darbib           ###   ########.fr       */
+/*   Created: 2021/02/18 11:42:59 by darbib            #+#    #+#             */
+/*   Updated: 2021/02/18 11:43:37 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
+#include "environ.h"
 
-t_dlist	*ft_dlstfirst(t_dlist *lst)
+char	*lookup_value(const char *key, t_list *envlist)
 {
-	while (lst->prev)
-		lst = lst->prev;
-	return (lst);
+	if (!envlist)
+		return (NULL);
+	if (ft_strcmp(((t_assignment *)envlist->content)->key, key) == 0)
+		return (((t_assignment*)envlist->content)->value);
+	return (lookup_value(key, envlist->next));
 }
