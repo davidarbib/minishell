@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 15:09:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 11:08:22 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/19 11:00:18 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,6 @@ typedef struct	s_assignment
 void			detect_assignment(t_token *token);
 int				store_assignment(t_list **assignments,
 								t_assignment *assignment);
+void			init_transitions_tb(unsigned char
+										transitions[A_STATE_NB][A_INPUT_NB]);
 #endif

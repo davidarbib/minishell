@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:40:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 11:20:29 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/19 14:16:16 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,30 @@
 #include "built_ins.h"
 #include "error.h"
 #include <stdio.h>
+#include <sys/stat.h>
+#include <sys/errno.h>
 
 static int	travel(char *current_path, t_list **envlist)
 {
 	char	buf[BUFSIZE];
 
 	if (!getcwd(buf, BUFSIZE))
+	{
+		perror("minishell : cd");
 		return (1);
+	}
 	if (chdir(current_path) == -1)
+	{
+		perror("minishell : cd");
 		return (1);
+	}
 	if (!ft_setenv("OLDPWD", buf, envlist))
 		return (-2);
 	if (!getcwd(buf, BUFSIZE))
+	{
+		perror("minishell : cd");
 		return (1);
+	}
 	if (!ft_setenv("PWD", buf, envlist))
 		return (-2);
 	return (0);
@@ -62,9 +73,21 @@ static int	to_home(t_list **envlist)
 
 static int	normal_cd(char *dir_name, t_list **envlist)
 {
-	char	*current_path;
+	char			*current_path;
+	struct stat		stat_file;	
 
 	current_path = dir_name;
+	if ((stat(current_path, &stat_file) == -1))
+	{
+		perror("minishell : cd");
+		return (1);
+	}
+	if (!(stat_file.st_mode & S_IFDIR))
+	{
+		errno = ENOTDIR;
+		perror("minishell : cd");
+		return (1);
+	}
 	return (travel(current_path, envlist));
 }
 
