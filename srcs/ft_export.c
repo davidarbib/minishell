@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 13:53:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 11:25:50 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 22:04:11 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int				print_env_lexico(t_list *envlist)
 	i = 0;
 	while (i < size)
 	{
-		printf("export %s=\"%s\"\n", envp[i].key, envp[i].value);
+		ft_printf("export %s=\"%s\"\n", envp[i].key, envp[i].value);
 		i++;
 	}
 	ft_memdel((void**)&envp);

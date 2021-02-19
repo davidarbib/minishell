@@ -66,6 +66,7 @@ int			lex_parse(t_reader *reader, char *line)
 	int	result;
 
 	result = lex(reader, line);
+	free(line);
 	if (result)
 		return (result);
 	detect_ionumber(&reader->lexer);

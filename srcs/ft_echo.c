@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 13:06:40 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/12 15:10:25 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:01:12 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	ft_echo(int ac, char **av, t_list **env_list)
 	}
 	while (i < ac)
 	{
-		printf("%s", av[i]);
+		ft_printf("%s", av[i]);
 		if (i != ac - 1)
-			printf(" ");
+			ft_printf(" ");
 		i++;
 	}
 	if (newline)
-		printf("\n");
+		ft_printf("\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 20:43:01 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 21:37:22 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,14 @@ void	eval(t_pipeline *pipeline, int pipe_stdin)
 void	eval_list(t_shell_list *list)
 {
 	int run_in_subprocess;
+	int	old_in;
+	int	old_out;
 
 	run_in_subprocess = 1;
 	if (!list)
 		return ;
+	set_redirections((t_pipeline*)list->content);
+	g_temp_redirections = g_redirections;
 	if (expand_pipeline((t_pipeline*)list->content))
 	{
 		perror("minishell");
@@ -76,14 +80,21 @@ void	eval_list(t_shell_list *list)
 	if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
 			is_built_in(((t_pipeline*)list->content)->content))
 	{
-		//use_redirections(simple_command);
+		old_in = dup(0);
+		old_out = dup(1);
+		use_redirections();
 		g_last_command_result =
 			launch_built_in(((t_pipeline*)list->content)->content);
+		dup2(old_in, 0);
+		close(old_in);
+		dup2(old_out, 1);
+		close(old_out);
 	}
 	else
 	{
 		eval(list->content, 0);
 		wait_all_childs();
 	}
+	ft_lstclear(&g_redirections, close_and_free);
 	eval_list(list->next);
 }

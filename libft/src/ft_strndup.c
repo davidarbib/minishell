@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/15 21:26:25 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 22:03:20 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2021/02/18 22:36:53 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2021/02/18 22:42:17 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int		ft_env(int ac, char **av, t_list **envlist)
+char	*ft_strndup(const char *s1, size_t size)
 {
-	t_list	*tmp;
+	char	*s_out;
 
-	(void)ac;
-	(void)av;
-	(void)envlist;
-	tmp = g_env;
-	while (tmp)
-	{
-		ft_printf("%s=%s\n", ((t_assignment*)tmp->content)->key,
-				((t_assignment*)tmp->content)->value);
-		tmp = tmp->next;
-	}
-	return (0);
+	if (!(s_out = (char *)malloc(sizeof(char) * (size + 1))))
+		return (NULL);
+	ft_memcpy((void *)s_out, (const void *)s1, size);
+	s_out[size] = 0;
+	return (s_out);
 }

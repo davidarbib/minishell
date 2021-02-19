@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 19:22:37 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 11:41:04 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/18 22:04:26 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_pwd(void)
 		}
 		if (ret)
 		{
-			printf("%s\n", ret);
+			ft_printf("%s\n", ret);
 			break ;
 		}
 		free(buf);

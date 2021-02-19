@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 10:15:53 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 13:37:55 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/18 22:34:35 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 void				*ft_calloc(size_t count, size_t size);
 char				*ft_strdup(const char *s1);
+char				*ft_strndup(const char *s1, size_t size);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);

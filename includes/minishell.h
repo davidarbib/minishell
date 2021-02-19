@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 22:23:01 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/19 10:50:56 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include "ft_printf.h"
 # include "lexer.h"
 # include "parser.h"
 # include "font_color.h"
@@ -36,6 +37,8 @@ typedef struct	s_reader {
 	t_llparser	parser;
 }				t_reader;
 
+t_reader	g_reader;
+
 /*
 ** g_all_childs is a list of int
 */
@@ -50,18 +53,17 @@ t_list			*g_env;
 
 int				g_last_command_result;
 
+typedef struct	s_redirection {
+	int	in;
+	int	out;
+}				t_redirection;
+
 /*
-** g_open_fds is a t_list of ints
+** g_redirections is a t_list of t_redirections
 */
 
-t_list			*g_open_fds;
-
-/*
-** minishell.c
-*/
-
-void			free_all(void);
-void			free_tab(char **tab);
+t_list			*g_redirections;
+t_list			*g_temp_redirections;
 
 /*
 ** evaluation.c
@@ -78,7 +80,8 @@ void			launch(t_simple_command *simple_command, int next_in_pipeline,
 					int pipe_stdin, int p[]);
 void			redirect_and_launch(t_pipeline *pipeline, int pipe_stdin,
 				int p[]);
-void			use_redirections(t_simple_command *simple_command);
+void			set_redirections(t_pipeline	*pipeline);
+void			use_redirections(void);
 
 /*
 ** built_ins.c
@@ -98,7 +101,9 @@ void			initialize_parser(t_reader *reader);
 ** free.c
 */
 
-void			free_all(void);
+void			free_tab(char **tab);
+void			free_all(char *line, char *file, char **tab);
+void			close_and_free(void *content);
 
 /*
 ** signals.c
