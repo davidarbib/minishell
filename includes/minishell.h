@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 15:51:08 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:48:14 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void			eval_list(t_shell_list *list);
 ** execution.c
 */
 
-typedef struct 	s_pipe {
+typedef struct	s_pipe {
 	int			is_next_in_pipeline;
 	int			pipe_stdin;
 	int			p[2];
 }				t_pipe;
 
-typedef struct 	s_temp {
+typedef struct	s_temp {
 	char		**tab;
 	char		**env;
 	char		*file;
@@ -94,9 +94,18 @@ void			launch(t_simple_command *simple_command, t_pipe pipe);
 ** execution2.c
 */
 
+void			run_in_subprocess(t_simple_command *simple_command,
+								t_pipe pipe, t_temp temp);
+void			add_pid(int pid, t_temp temp);
+
+/*
+** redir_pipe.c
+*/
+
 void			use_pipes(t_pipe pipe);
 void			set_redirections(t_pipeline	*pipeline);
 void			use_redirections(void);
+void			close_unused_in_parent(t_pipe pipe);
 
 /*
 ** built_ins.c
@@ -118,8 +127,10 @@ void			initialize_parser(t_reader *reader);
 */
 
 void			free_tab(char **tab);
-void			free_and_continue(char *line, char *file, char **tab, char **env);
-void			free_before_exit(char *line, char *file, char **tab, char **env);
+void			free_and_continue(char *line, char *file, char **tab,
+														char **env);
+void			free_before_exit(char *line, char *file, char **tab,
+														char **env);
 void			close_and_free(void *content);
 
 /*

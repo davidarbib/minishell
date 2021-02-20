@@ -5,81 +5,38 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/19 13:55:43 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 15:35:53 by fyusuf-a         ###   ########.fr       */
+/*   Created: 2021/02/20 10:36:52 by fyusuf-a          #+#    #+#             */
+/*   Updated: 2021/02/20 10:44:02 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	use_pipes(t_pipe pipe)
+void	add_pid(int pid, t_temp temp)
 {
-	if (pipe.pipe_stdin != 0)
+	int		*pid_ptr;
+
+	if (!(pid_ptr = malloc(sizeof(int))))
 	{
-		dup2(pipe.pipe_stdin, 0);
-		close(pipe.pipe_stdin);
+		free_before_exit(NULL, temp.file, temp.tab, temp.env);
+		perror("minishell");
+		exit(EXIT_FAILURE);
 	}
-	if (pipe.is_next_in_pipeline)
-	{
-		dup2(pipe.p[1], 1);
-		close(pipe.p[1]);
-		close(pipe.p[0]);
-	}
+	*pid_ptr = pid;
+	ft_lstadd_front_elem(&g_all_childs, pid_ptr);
 }
 
-void	use_redirections(void)
+void	run_in_subprocess(t_simple_command *simple_command,
+								t_pipe pipe, t_temp temp)
 {
-	int in;
-	int out;
-
-	in = ((t_redirection*)g_temp_redirections->content)->in;
-	out = ((t_redirection*)g_temp_redirections->content)->out;
-	if (in != 0)
-		dup2(in, 0);
-	if (out != 1)
-		dup2(out, 1);
-	g_temp_redirections = g_temp_redirections->next;
-}
-
-void	treat_redir(t_io_redirect *redir, t_redirection *redirection)
-{
-	if (redir->type == i_redirect)
-	{
-		if (redirection->in != 0)
-			close(redirection->in);
-		if ((redirection->in = open(redir->filename, O_RDONLY)) < 0)
-			exit(EXIT_FAILURE);
-	}
+	use_pipes(pipe);
+	use_redirections();
+	if (is_built_in(simple_command))
+		exit(launch_built_in(simple_command));
 	else
 	{
-		if (redirection->out != 1)
-			close(redirection->out);
-		if ((redirection->out =
-				open(redir->filename, O_WRONLY | O_CREAT |
-				(redir->type == oc_redirect ? 0 : O_APPEND), 0644)) < 0)
-			exit(EXIT_FAILURE);
-	}
-}
-
-void	set_redirections(t_pipeline *pipeline)
-{
-	t_list			*redir_list;
-	t_redirection	*redirection;
-	int				*fd;
-
-	if (!pipeline)
-		return ;
-	redir_list = ((t_simple_command*)pipeline->content)->redirections;
-	if (!(fd = malloc(sizeof(int))))
+		execve(temp.file, (char*const*)temp.tab, temp.env);
+		perror("minishell");
 		exit(EXIT_FAILURE);
-	redirection = malloc(sizeof(t_redirection));
-	redirection->in = 0;
-	redirection->out = 1;
-	while (redir_list)
-	{
-		treat_redir(redir_list->content, redirection);
-		redir_list = redir_list->next;
 	}
-	ft_lstadd_back_elem(&g_redirections, redirection);
-	set_redirections(pipeline->next);
 }

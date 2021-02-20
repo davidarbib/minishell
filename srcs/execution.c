@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 16:07:18 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 10:43:59 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,62 +73,30 @@ char	*find_in_path(char *command)
 	return (try_this_command(command));
 }
 
-void	close_unused_in_parent(t_pipe pipe)
+void	init_temp(t_temp *temp, t_simple_command *simple_command)
 {
-	if (pipe.is_next_in_pipeline)
-		close(pipe.p[1]);
-	if (pipe.pipe_stdin != 0)
-		close(pipe.pipe_stdin);
-}
+	int		size;
 
-void	run_in_subprocess(t_simple_command *simple_command,
-								t_pipe pipe, t_temp temp)
-{
-	use_pipes(pipe);
-	use_redirections();
-	if (is_built_in(simple_command))
-		exit(launch_built_in(simple_command));
-	else
-	{
-		execve(temp.file, (char*const*)temp.tab, temp.env);
-		perror("minishell");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	add_pid(int pid, t_temp temp)
-{
-	int		*pid_ptr;
-
-	if (!(pid_ptr = malloc(sizeof(int))))
-	{
-		free_before_exit(NULL, temp.file, temp.tab, temp.env);
-		perror("minishell");
-		exit(EXIT_FAILURE);
-	}
-	*pid_ptr = pid;
-	ft_lstadd_front_elem(&g_all_childs, pid_ptr);
+	temp->file = NULL;
+	temp->tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
+	temp->tab[size] = 0;
+	temp->env = to_environ_array(g_env);
 }
 
 void	launch(t_simple_command *simple_command, t_pipe pipe)
 {
-	int		size;
 	t_temp	temp;
 	int		pid;
 
-	temp.file = NULL;
 	if (!simple_command->args)
 		return ;
-	temp.tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
-	temp.tab[size] = 0;
-	temp.env = to_environ_array(g_env);
+	init_temp(&temp, simple_command);
 	if (!is_built_in(simple_command))
 		temp.file = find_in_path(temp.tab[0]);
 	if (!temp.file)
 	{
 		free_and_continue(NULL, NULL, temp.tab, temp.env);
 		g_last_command_result = 127;
-		printf("here\n");
 		perror("minishell");
 		return ;
 	}
