@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 15:31:46 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 15:12:30 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:14:45 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		ft_exit(int ac, char **av, t_list **envlist)
 	(void)envlist;
 	ft_dprintf(2, "exit\n");
 	if (ac == 1)
-		free_and_exit(127);
+		free_and_exit(0);
 	if (!(test_if_numeric(av[1])))
 	{
 		ft_dprintf(2, "minishell: exit: %s: numeric argument required\n",
