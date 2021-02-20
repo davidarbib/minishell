@@ -6,17 +6,12 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 15:07:11 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 17:09:08 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expand_quote_removal.h"
-
-static void	del(void *arg)
-{
-	free(arg);
-}
 
 void		wait_all_childs(void)
 {
@@ -36,7 +31,7 @@ void		wait_all_childs(void)
 			if (WIFSTOPPED(status))
 				g_last_command_result = 128 + WSTOPSIG(status);
 		}
-		ft_lstdel_first(&g_all_childs, del);
+		ft_lstdel_first(&g_all_childs, free);
 	}
 }
 

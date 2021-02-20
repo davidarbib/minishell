@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 12:18:14 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 15:30:16 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:02:37 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,11 @@ int			launch_built_in(t_simple_command *simple_command)
 	int					ret;
 
 	ret = 1;
-	g_to_be_freed.tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
-	g_to_be_freed.tab[size] = 0;
+	if (!g_to_be_freed.tab)
+	{
+		g_to_be_freed.tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
+		g_to_be_freed.tab[size] = 0;
+	}
 	ac = 0;
 	while (g_to_be_freed.tab[ac])
 		ac++;
@@ -104,4 +107,5 @@ void		prelaunch_built_in(t_simple_command *simple_command)
 	close(old_in);
 	dup2(old_out, 1);
 	close(old_out);
+	free_and_continue(NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 16:51:00 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 17:45:24 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	launch(t_simple_command *simple_command, t_pipe pipe)
 	if (!is_built_in(simple_command))
 		g_to_be_freed.file = find_in_path(g_to_be_freed.tab[0]);
 	else
-		g_to_be_freed.file = simple_command->args->content;
+		g_to_be_freed.file = ft_strdup(simple_command->args->content);
 	if (!g_to_be_freed.file)
 	{
 		free_and_continue(NULL);
