@@ -41,7 +41,7 @@ static int	lex(t_reader *reader, char *line)
 static int	parse(t_reader *reader)
 {
 	initialize_parser(reader);
-	parse_shell_list(&reader->parser, &reader->parser.shell_list);	
+	parse_shell_list(&reader->parser, &reader->parser.shell_list);
 	destroy_parser(&reader->parser);
 	if (reader->parser.state == no_filename_error)
 	{
