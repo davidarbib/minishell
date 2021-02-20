@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 11:51:31 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 18:23:43 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:26:51 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	signal_handler(int signal)
 	{
 		if (signal == SIGINT)
 			write(2, "\nminishell-1.0$ ", 16);
+		else
+			write(1, "\b\b  \b\b", 6);
 		g_last_command_result = 130;
 		return ;
 	}
