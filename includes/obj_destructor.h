@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 16:55:35 by darbib            #+#    #+#             */
-/*   Updated: 2021/01/28 20:43:36 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 15:17:56 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	destroy_command(t_simple_command *command);
 void	destroy_shell_list(t_shell_list **shell_list);
 void	destroy_pipeline(t_pipeline **pipeline);
 void	destroy_tokens(t_token **tokens, size_t size);
+void	destroy_parser(t_llparser *parser);
 void	del_pipeline_content(void *content);
 void	del_arg_content(void *content);
 void	del_assign_content(void *content);

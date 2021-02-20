@@ -6,17 +6,23 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 23:19:24 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/17 11:38:07 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 15:15:51 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
 #include <stdio.h>
+#include "obj_destructor.h"
 
 void	destroy_lexer(t_lexer *lexer)
 {
-	ft_memdel((void **)&lexer->tokens);
+	destroy_tokens(&lexer->tokens, lexer->size);
+}
+
+void	destroy_parser(t_llparser *parser)
+{
+	destroy_tokens(&parser->tokens, parser->tokens_size);
 }
 
 void	destroy_fsm(t_fsm *fsm)

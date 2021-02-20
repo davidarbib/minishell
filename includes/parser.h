@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 13:38:59 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 15:15:04 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 15:15:10 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct				s_llparser
 {
 	t_token					*tokens;
 	int						token_idx;
+	int						tokens_size;
 	int						state;
 	t_list					*redirections;
 	t_list					*assignments;
