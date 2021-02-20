@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 13:51:02 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:10:28 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,38 +73,37 @@ char	*find_in_path(char *command)
 	return (try_this_command(command));
 }
 
-void	init_temp(t_temp *temp, t_simple_command *simple_command)
+void	init_temp(t_simple_command *simple_command)
 {
 	int		size;
 
-	temp->file = NULL;
-	temp->tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
-	temp->tab[size] = 0;
-	temp->env = to_environ_array(g_env);
+	g_to_be_freed.file = NULL;
+	g_to_be_freed.tab = (char**)ft_lsttotab(simple_command->args, 8, &size);
+	g_to_be_freed.tab[size] = 0;
+	g_to_be_freed.env = to_environ_array(g_env);
 }
 
 void	launch(t_simple_command *simple_command, t_pipe pipe)
 {
-	t_temp	temp;
 	int		pid;
 
 	if (!simple_command->args)
 		return ;
-	init_temp(&temp, simple_command);
+	init_temp(simple_command);
 	if (!is_built_in(simple_command))
-		temp.file = find_in_path(temp.tab[0]);
-	if (!temp.file)
+		g_to_be_freed.file = find_in_path(g_to_be_freed.tab[0]);
+	if (!g_to_be_freed.file)
 	{
-		free_and_continue(NULL, NULL, temp.tab, temp.env);
+		free_and_continue(NULL);
 		g_last_command_result = 127;
 		perror("minishell");
 		return ;
 	}
 	if ((pid = fork()) == 0)
-		run_in_subprocess(simple_command, pipe, temp);
+		run_in_subprocess(simple_command, pipe);
 	else if (pid < 0)
 		perror("minishell");
 	close_unused_in_parent(pipe);
-	add_pid(pid, temp);
-	free_and_continue(NULL, temp.file, temp.tab, temp.env);
+	add_pid(pid);
+	free_and_continue(NULL);
 }

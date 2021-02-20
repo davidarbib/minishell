@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 14:17:30 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:10:23 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct	s_temp {
 	char		*file;
 }				t_temp;
 
+t_temp			g_to_be_freed;
+
 void			launch(t_simple_command *simple_command, t_pipe pipe);
 
 /*
@@ -97,8 +99,8 @@ void			launch(t_simple_command *simple_command, t_pipe pipe);
 */
 
 void			run_in_subprocess(t_simple_command *simple_command,
-								t_pipe pipe, t_temp temp);
-void			add_pid(int pid, t_temp temp);
+								t_pipe pipe);
+void			add_pid(int pid);
 
 /*
 ** redir_pipe.c
@@ -129,10 +131,8 @@ void			initialize_parser(t_reader *reader);
 */
 
 void			free_tab(char **tab);
-void			free_and_continue(char *line, char *file, char **tab,
-														char **env);
-void			free_before_exit(char *line, char *file, char **tab,
-														char **env);
+void			free_and_continue(char *line);
+void			free_before_exit(char *line);
 void			close_and_free(void *content);
 
 /*

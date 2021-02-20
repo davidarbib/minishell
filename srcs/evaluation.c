@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 14:30:56 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:07:11 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		eval_list(t_shell_list *list)
 		if (expand_pipeline((t_pipeline*)list->content))
 		{
 			perror("minishell");
-			free_before_exit(NULL, NULL, NULL, NULL);
+			free_before_exit(NULL);
 			exit(EXIT_FAILURE);
 		}
 		if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&

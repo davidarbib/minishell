@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 19:22:37 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/18 22:04:26 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 14:47:45 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int		do_malloc(char *buf, size_t size)
+int			do_malloc(char *buf, size_t size)
 {
 	if (!(buf = malloc(size)))
 	{
@@ -25,7 +25,13 @@ int		do_malloc(char *buf, size_t size)
 	return (0);
 }
 
-int		ft_pwd(void)
+static void	error(void)
+{
+	ft_dprintf(2, "pwd: error retrieving current directory: getcwd:"
+	" cannot access parent directories: %s\n", strerror(errno));
+}
+
+int			ft_pwd(void)
 {
 	char	*buf;
 	size_t	size;
@@ -39,7 +45,7 @@ int		ft_pwd(void)
 			return (1);
 		if (!(ret = getcwd(buf, size)) && errno != ERANGE)
 		{
-			perror("pwd");
+			error();
 			break ;
 		}
 		if (ret)
