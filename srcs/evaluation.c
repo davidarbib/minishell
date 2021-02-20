@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 10:46:02 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:07:11 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,27 +65,28 @@ void		eval(t_pipeline *pipeline, int pipe_stdin)
 
 void		eval_list(t_shell_list *list)
 {
-	int run_in_subprocess;
-
-	run_in_subprocess = 1;
 	if (!list)
 		return ;
-	set_redirections((t_pipeline*)list->content);
-	g_temp_redirections = g_redirections;
-	if (expand_pipeline((t_pipeline*)list->content))
+	if (set_redirections((t_pipeline*)list->content) == 0)
 	{
-		perror("minishell");
-		free_before_exit(NULL, NULL, NULL, NULL);
-		exit(EXIT_FAILURE);
+		g_temp_redirections = g_redirections;
+		if (expand_pipeline((t_pipeline*)list->content))
+		{
+			perror("minishell");
+			free_before_exit(NULL);
+			exit(EXIT_FAILURE);
+		}
+		if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
+				is_built_in(((t_pipeline*)list->content)->content))
+			prelaunch_built_in(((t_pipeline*)list->content)->content);
+		else
+		{
+			eval(list->content, 0);
+			wait_all_childs();
+		}
 	}
-	if ((t_pipeline*)list->content && !((t_pipeline*)list->content)->next &&
-			is_built_in(((t_pipeline*)list->content)->content))
-		prelaunch_built_in(((t_pipeline*)list->content)->content);
 	else
-	{
-		eval(list->content, 0);
-		wait_all_childs();
-	}
+		g_last_command_result = 1;
 	ft_lstclear(&g_redirections, close_and_free);
 	eval_list(list->next);
 }

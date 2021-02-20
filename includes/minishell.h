@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 10:48:14 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:10:23 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "expand_quote_removal.h"
 # include "obj_destructor.h"
 # include <stdio.h>
+# include <string.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
@@ -31,6 +32,7 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <errno.h>
 
 typedef struct	s_reader {
 	t_lexer		lexer;
@@ -88,6 +90,8 @@ typedef struct	s_temp {
 	char		*file;
 }				t_temp;
 
+t_temp			g_to_be_freed;
+
 void			launch(t_simple_command *simple_command, t_pipe pipe);
 
 /*
@@ -95,15 +99,15 @@ void			launch(t_simple_command *simple_command, t_pipe pipe);
 */
 
 void			run_in_subprocess(t_simple_command *simple_command,
-								t_pipe pipe, t_temp temp);
-void			add_pid(int pid, t_temp temp);
+								t_pipe pipe);
+void			add_pid(int pid);
 
 /*
 ** redir_pipe.c
 */
 
 void			use_pipes(t_pipe pipe);
-void			set_redirections(t_pipeline	*pipeline);
+int				set_redirections(t_pipeline	*pipeline);
 void			use_redirections(void);
 void			close_unused_in_parent(t_pipe pipe);
 
@@ -127,10 +131,8 @@ void			initialize_parser(t_reader *reader);
 */
 
 void			free_tab(char **tab);
-void			free_and_continue(char *line, char *file, char **tab,
-														char **env);
-void			free_before_exit(char *line, char *file, char **tab,
-														char **env);
+void			free_and_continue(char *line);
+void			free_before_exit(char *line);
 void			close_and_free(void *content);
 
 /*

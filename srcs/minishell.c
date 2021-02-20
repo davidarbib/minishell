@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 10:52:01 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/19 14:18:08 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:12:05 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void		main_loop(void)
 	else if (result == 0)
 	{
 		write(2, "exit\n", 5);
-		free_before_exit(line, NULL, NULL, NULL);
+		free_before_exit(line);
 		exit(EXIT_SUCCESS);
 	}
 	result = lex_parse(&g_reader, line);
 	if (result == -1)
 	{
-		free_before_exit(line, NULL, NULL, NULL);
+		free_before_exit(line);
 		exit(EXIT_FAILURE);
 	}
 	if (result == 0)
