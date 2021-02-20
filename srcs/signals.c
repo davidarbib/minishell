@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 11:51:31 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 18:26:51 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:36:59 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	signal_handler(int signal)
 		tmp = tmp->next;
 	}
 	if (signal != SIGINT)
-		printf("Quit: %d", signal);
+		printf("Quit");
 	printf("\n");
 }
