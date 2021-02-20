@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 10:48:14 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 14:17:30 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "expand_quote_removal.h"
 # include "obj_destructor.h"
 # include <stdio.h>
+# include <string.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
@@ -31,6 +32,7 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <errno.h>
 
 typedef struct	s_reader {
 	t_lexer		lexer;
@@ -103,7 +105,7 @@ void			add_pid(int pid, t_temp temp);
 */
 
 void			use_pipes(t_pipe pipe);
-void			set_redirections(t_pipeline	*pipeline);
+int				set_redirections(t_pipeline	*pipeline);
 void			use_redirections(void);
 void			close_unused_in_parent(t_pipe pipe);
 

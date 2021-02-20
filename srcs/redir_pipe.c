@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:55:43 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 13:53:21 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 14:18:11 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,17 @@ void	use_redirections(void)
 	g_temp_redirections = g_temp_redirections->next;
 }
 
-void	treat_redir(t_io_redirect *redir, t_redirection *redirection)
+int		treat_redir(t_io_redirect *redir, t_redirection *redirection)
 {
 	if (redir->type == i_redirect)
 	{
 		if (redirection->in != 0)
 			close(redirection->in);
 		if ((redirection->in = open(redir->filename, O_RDONLY)) < 0)
-			exit(EXIT_FAILURE);
+		{
+			dprintf(2, "minishell: %s: %s\n", redir->filename, strerror(errno));
+			return (-1);
+		}
 	}
 	else
 	{
@@ -57,28 +60,33 @@ void	treat_redir(t_io_redirect *redir, t_redirection *redirection)
 		if ((redirection->out =
 				open(redir->filename, O_WRONLY | O_CREAT |
 				(redir->type == oc_redirect ? 0 : O_APPEND), 0644)) < 0)
-			exit(EXIT_FAILURE);
+		{
+			dprintf(2, "minishell: %s: %s\n", redir->filename, strerror(errno));
+			return (-1);
+		}
 	}
+	return (0);
 }
 
-void	set_redirections(t_pipeline *pipeline)
+int		set_redirections(t_pipeline *pipeline)
 {
 	t_list			*redir_list;
 	t_redirection	*redirection;
 
 	if (!pipeline)
-		return ;
+		return (0);
 	redir_list = ((t_simple_command*)pipeline->content)->redirections;
 	redirection = malloc(sizeof(t_redirection));
 	redirection->in = 0;
 	redirection->out = 1;
 	while (redir_list)
 	{
-		treat_redir(redir_list->content, redirection);
+		if (treat_redir(redir_list->content, redirection) < 0)
+			return (-1);
 		redir_list = redir_list->next;
 	}
 	ft_lstadd_back_elem(&g_redirections, redirection);
-	set_redirections(pipeline->next);
+	return (set_redirections(pipeline->next));
 }
 
 void	close_unused_in_parent(t_pipe pipe)
