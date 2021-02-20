@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 14:26:45 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/19 10:59:01 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 13:58:08 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "libft.h"
 #include "assignment.h"
 
-void	init_transitions_tb(unsigned char
-											transitions[A_STATE_NB][A_INPUT_NB])
+void		init_transitions_tb(
+		unsigned char transitions[A_STATE_NB][A_INPUT_NB])
 {
 	unsigned char c;
 

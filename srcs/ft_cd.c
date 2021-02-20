@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 20:40:09 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/19 14:16:16 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 13:55:36 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	to_home(t_list **envlist)
 static int	normal_cd(char *dir_name, t_list **envlist)
 {
 	char			*current_path;
-	struct stat		stat_file;	
+	struct stat		stat_file;
 
 	current_path = dir_name;
 	if ((stat(current_path, &stat_file) == -1))

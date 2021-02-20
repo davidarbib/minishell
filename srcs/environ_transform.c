@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 19:31:38 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/19 11:19:16 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:56:19 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,9 @@ char	**to_environ_array(t_list *environ)
 		ret[i] = malloc(l1 + l2 + 2);
 		ft_strlcpy(ret[i], ((t_assignment*)environ->content)->key, l1 + 1);
 		ret[i][l1] = '=';
-		ft_strlcat(ret[i] + l1 + 1,
-				((t_assignment*)environ->content)->value, l2 + 1);
+		ret[i][l1 + 1] = '\0';
+		ft_strlcat(ret[i],
+				((t_assignment*)environ->content)->value, l1 + l2 + 2);
 		i++;
 		environ = environ->next;
 	}

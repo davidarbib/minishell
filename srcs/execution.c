@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 10:43:59 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:51:02 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*find_in_path(char *command)
 		{
 			if ((result = try_this_path(*tab, command, l2)))
 			{
-				free(tab_mem);
+				free_tab(tab_mem);
 				return (result);
 			}
 			free(result);

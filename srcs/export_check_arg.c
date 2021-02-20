@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 10:56:10 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/19 11:26:31 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 13:59:01 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_word(char *word,
 	return (0);
 }
 
-int		check_export_arg(char *word)
+int			check_export_arg(char *word)
 {
 	static unsigned char	transitions[A_STATE_NB][A_INPUT_NB];
 	static int				filled_table = 0;

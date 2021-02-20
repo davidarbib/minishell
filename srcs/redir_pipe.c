@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:55:43 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 10:46:46 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:53:21 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,10 @@ void	set_redirections(t_pipeline *pipeline)
 {
 	t_list			*redir_list;
 	t_redirection	*redirection;
-	int				*fd;
 
 	if (!pipeline)
 		return ;
 	redir_list = ((t_simple_command*)pipeline->content)->redirections;
-	if (!(fd = malloc(sizeof(int))))
-		exit(EXIT_FAILURE);
 	redirection = malloc(sizeof(t_redirection));
 	redirection->in = 0;
 	redirection->out = 1;
