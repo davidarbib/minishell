@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 23:37:51 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 11:34:05 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 22:11:08 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,19 +98,19 @@ int			fetch_env_var(t_expand *fsm)
 	int		success;
 	int		i;
 
+	success = 1;
 	value = ft_getenv(fsm->search_buf, g_env);
 	if (value)
 	{
 		i = 0;
-		while (value[i])
+		while (value[i] && success)
 		{
 			success = add_char_to_buffer(fsm->result_buf, &fsm->result_buf_size,
-					&fsm->result_buf_count, value[i]);
-			if (!success)
-				return (0);
-			i++;
+					&fsm->result_buf_count, value[i++]);
 		}
 	}
+	if (!success)
+		return (0);
 	ft_bzero(fsm->search_buf, fsm->search_buf_size);
 	fsm->search_buf_count = 0;
 	return (1);

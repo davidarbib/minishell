@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 22:40:59 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 11:19:41 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 21:46:59 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,10 @@ static void	init_expand_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))
 	actions[expand_core_in_dq_state][expand_core_in_dq_state] =
 		copy_to_search_buffer;
 	actions[expand_core_in_dq_state][expand_first_in_dq_state] = fetch_env_var;
-	actions[expand_core_in_dq_state][dquote_state] = fetch_env_var;
+	actions[expand_core_in_dq_state][dquote_state] =
+		fetch_and_copy_char_to_result_buffer;
 	actions[expand_core_in_dq_state][equote_state] = fetch_env_var;
+	actions[expand_core_in_dq_state][equote_in_dq_state] = fetch_env_var;
 }
 
 void		init_actions(int (*actions[STATE_NB][STATE_NB])(t_expand*))

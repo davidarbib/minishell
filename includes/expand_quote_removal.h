@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 15:26:18 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 20:40:15 by darbib           ###   ########.fr       */
+/*   Updated: 2021/02/20 19:40:11 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ int				expand_and_free(char **word,
 				int (*actions[STATE_NB][STATE_NB])(t_expand*));
 int				expand_args_redirections(t_list *args, t_list *redirections);
 int				expand_pipeline(t_pipeline *pipeline);
+int				fetch_and_copy_char_to_result_buffer(t_expand *fsm);
 #endif
