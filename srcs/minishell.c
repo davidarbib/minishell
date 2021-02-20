@@ -38,7 +38,7 @@ void		main_loop(void)
 	char			*line;
 	int				result;
 
-	write(2, FONT_BOLDBLUE "minishell-1.0$ " FONT_RESET, 26);
+	write(2, "minishell-1.0$ ", 15);
 	result = get_next_line(0, &line);
 	if (result == -1)
 		printf("minishell: error in get_next_line\n");

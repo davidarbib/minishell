@@ -20,7 +20,7 @@ void	signal_handler(int signal)
 	if (!tmp)
 	{
 		if (signal != SIGINT)
-			write(2, FONT_BOLDBLUE "\nminishell-1.0$ " FONT_RESET, 27);
+			write(2, "\nminishell-1.0$ ", 16);
 		g_last_command_result = 130;
 		return ;
 	}
