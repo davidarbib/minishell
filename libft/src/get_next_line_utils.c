@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 14:19:55 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2020/04/22 20:25:38 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 14:14:57 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,10 @@ int
 	st->cursor = 0;
 	if ((st->char_nb = read(fd, st->buffer, BUFFER_SIZE)) > 0)
 		return (ft_gnl_read_buffer(fd, line, st));
-	else if (st->char_nb == 0)
+	else if (st->char_nb == 0 && *line[0] == '\0')
 		return (RET_FILE_END);
+	else if (st->char_nb == 0)
+		return (ft_gnl_read_buffer(fd, line, st));
 	else
 		return (RET_ERROR);
 }
