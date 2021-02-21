@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/07 19:22:37 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 14:47:45 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 13:56:53 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int			do_malloc(char *buf, size_t size)
+int			do_malloc(char **buf, size_t size)
 {
-	if (!(buf = malloc(size)))
+	free(*buf);
+	if (!(*buf = malloc(size)))
 	{
 		perror("pwd");
 		return (-1);
@@ -35,22 +36,21 @@ int			ft_pwd(void)
 {
 	char	*buf;
 	size_t	size;
-	char	*ret;
 
 	size = BUFSIZE;
-	buf = 0;
 	while (1)
 	{
-		if (do_malloc(buf, size) == -1)
+		buf = 0;
+		if (do_malloc(&buf, size) == -1)
 			return (1);
-		if (!(ret = getcwd(buf, size)) && errno != ERANGE)
+		if (!(getcwd(buf, size)) && errno != ERANGE)
 		{
 			error();
 			break ;
 		}
-		if (ret)
+		if (buf)
 		{
-			ft_printf("%s\n", ret);
+			ft_printf("%s\n", buf);
 			break ;
 		}
 		free(buf);
