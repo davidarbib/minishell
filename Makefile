@@ -6,7 +6,7 @@
 #    By: darbib <darbib@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/03 12:23:24 by darbib            #+#    #+#              #
-#    Updated: 2021/02/20 10:50:56 by fyusuf-a         ###   ########.fr        #
+#    Updated: 2021/02/20 19:36:22 by darbib           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ SRC = lexer.c \
 	  ft_env.c \
 	  expansion.c \
 	  expansion_actions.c \
+	  expansion_actions2.c \
 	  expansion_fetch.c \
 	  expansion_init_and_tools.c \
 	  expansion_init_tables.c \
