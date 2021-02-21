@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 19:05:40 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/21 14:49:20 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 14:55:26 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ t_list				*ft_lstremove_if_acc(t_list **alst, void *data_ref,
 		*alst = ft_lstremove_if_acc(alst, data_ref, cmp, free_fct);
 		return (*alst);
 	}
-	(*alst)->next = ft_lstremove_if_acc(&((*alst)->next), data_ref, cmp, free_fct);
+	(*alst)->next = ft_lstremove_if_acc(&((*alst)->next),
+							data_ref, cmp, free_fct);
 	return (*alst);
 }
 
