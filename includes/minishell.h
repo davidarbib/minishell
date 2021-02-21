@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/21 11:02:17 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 13:59:49 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void			initialize_parser(t_reader *reader);
 */
 
 void			free_tab(char **tab);
+void		free_assignment(void *content);
 void			free_and_continue(char *line);
 void			free_before_exit(char *line);
 void			close_and_free(void *content);

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 10:32:10 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/16 10:53:06 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 14:00:09 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ static int	cmp(void *content, void *data_ref)
 	return (1);
 }
 
-void		free_fct(void *ptr)
-{
-	(void)ptr;
-}
-
 int			ft_unset(int ac, char **av, t_list **envlist)
 {
 	int i;
@@ -32,7 +27,7 @@ int			ft_unset(int ac, char **av, t_list **envlist)
 	i = 1;
 	while (i < ac)
 	{
-		ft_lstremove_if(&g_env, av[i], cmp, free_fct);
+		ft_lstremove_if(&g_env, av[i], cmp, free_assignment);
 		i++;
 	}
 	return (0);

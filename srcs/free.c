@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 11:45:46 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 17:44:33 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 13:59:21 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		free_tab(char **tab)
 	}
 }
 
-static void	free_assignment(void *content)
+void		free_assignment(void *content)
 {
 	free(((t_assignment*)content)->key);
 	free(((t_assignment*)content)->value);
