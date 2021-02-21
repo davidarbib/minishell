@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 14:13:29 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 17:45:24 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 10:07:27 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,11 @@ void	init_temp(t_simple_command *simple_command)
 	g_to_be_freed.env = to_environ_array(g_env);
 }
 
-void	launch(t_simple_command *simple_command, t_pipe pipe)
+/*
+** indexes are ints from 0 to keep track of where in the pipe one is
+*/
+
+void	launch(t_simple_command *simple_command, t_pipe pipe, int index)
 {
 	int		pid;
 
@@ -102,7 +106,7 @@ void	launch(t_simple_command *simple_command, t_pipe pipe)
 		return ;
 	}
 	if ((pid = fork()) == 0)
-		run_in_subprocess(simple_command, pipe);
+		run_in_subprocess(simple_command, pipe, index);
 	else if (pid < 0)
 		perror("minishell");
 	close_unused_in_parent(pipe);

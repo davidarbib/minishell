@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 12:18:14 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 18:02:37 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 10:02:15 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		prelaunch_built_in(t_simple_command *simple_command)
 
 	old_in = dup(0);
 	old_out = dup(1);
-	use_redirections();
+	use_redirections(0);
 	g_last_command_result = launch_built_in(simple_command);
 	dup2(old_in, 0);
 	close(old_in);

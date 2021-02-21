@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 10:36:52 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 17:48:18 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 10:03:40 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	add_pid(int pid)
 }
 
 void	run_in_subprocess(t_simple_command *simple_command,
-								t_pipe pipe)
+								t_pipe pipe, int index)
 {
 	int	ret;
 
 	use_pipes(pipe);
-	use_redirections();
+	use_redirections(index);
 	if (is_built_in(simple_command))
 	{
 		ret = launch_built_in(simple_command);

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:17:38 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 17:09:08 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 11:01:45 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		wait_all_childs(void)
 ** pipe_stdin = 0 for the first process of stdin
 */
 
-void		eval(t_pipeline *pipeline, int pipe_stdin)
+void		eval(t_pipeline *pipeline, int pipe_stdin, int index)
 {
 	int			next_stdin;
 	t_pipe		pip;
@@ -54,8 +54,8 @@ void		eval(t_pipeline *pipeline, int pipe_stdin)
 	}
 	pip.is_next_in_pipeline = pipeline->next != NULL;
 	pip.pipe_stdin = pipe_stdin;
-	launch(pipeline->content, pip);
-	eval(pipeline->next, next_stdin);
+	launch(pipeline->content, pip, index);
+	eval(pipeline->next, next_stdin, index + 1);
 }
 
 void		eval_list(t_shell_list *list)
@@ -64,7 +64,6 @@ void		eval_list(t_shell_list *list)
 		return ;
 	if (set_redirections((t_pipeline*)list->content) == 0)
 	{
-		g_temp_redirections = g_redirections;
 		if (expand_pipeline((t_pipeline*)list->content))
 		{
 			perror("minishell");
@@ -76,7 +75,7 @@ void		eval_list(t_shell_list *list)
 			prelaunch_built_in(((t_pipeline*)list->content)->content);
 		else
 		{
-			eval(list->content, 0);
+			eval(list->content, 0, 0);
 			wait_all_childs();
 		}
 	}

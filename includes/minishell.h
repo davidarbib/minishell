@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 14:13:58 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 15:10:23 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 11:02:17 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct	s_redirection {
 */
 
 t_list			*g_redirections;
-t_list			*g_temp_redirections;
 
 /*
 ** evaluation.c
@@ -92,14 +91,15 @@ typedef struct	s_temp {
 
 t_temp			g_to_be_freed;
 
-void			launch(t_simple_command *simple_command, t_pipe pipe);
+void			launch(t_simple_command *simple_command, t_pipe pipe,
+							int index);
 
 /*
 ** execution2.c
 */
 
 void			run_in_subprocess(t_simple_command *simple_command,
-								t_pipe pipe);
+								t_pipe pipe, int index);
 void			add_pid(int pid);
 
 /*
@@ -108,7 +108,7 @@ void			add_pid(int pid);
 
 void			use_pipes(t_pipe pipe);
 int				set_redirections(t_pipeline	*pipeline);
-void			use_redirections(void);
+void			use_redirections(int index);
 void			close_unused_in_parent(t_pipe pipe);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: fyusuf-a <fyusuf-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 13:55:43 by fyusuf-a          #+#    #+#             */
-/*   Updated: 2021/02/20 14:18:11 by fyusuf-a         ###   ########.fr       */
+/*   Updated: 2021/02/21 10:58:48 by fyusuf-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,26 @@ void	use_pipes(t_pipe pipe)
 	}
 }
 
-void	use_redirections(void)
+void	use_redirections(int index)
 {
-	int in;
-	int out;
+	int		in;
+	int		out;
+	t_list	*tmp;
+	int		i;
 
-	in = ((t_redirection*)g_temp_redirections->content)->in;
-	out = ((t_redirection*)g_temp_redirections->content)->out;
+	tmp = g_redirections;
+	i = 0;
+	while (i < index)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	in = ((t_redirection*)tmp->content)->in;
+	out = ((t_redirection*)tmp->content)->out;
 	if (in != 0)
 		dup2(in, 0);
 	if (out != 1)
 		dup2(out, 1);
-	g_temp_redirections = g_temp_redirections->next;
 }
 
 int		treat_redir(t_io_redirect *redir, t_redirection *redirection)
@@ -57,9 +65,9 @@ int		treat_redir(t_io_redirect *redir, t_redirection *redirection)
 	{
 		if (redirection->out != 1)
 			close(redirection->out);
-		if ((redirection->out =
-				open(redir->filename, O_WRONLY | O_CREAT |
-				(redir->type == oc_redirect ? 0 : O_APPEND), 0644)) < 0)
+		redirection->out = open(redir->filename, O_WRONLY | O_CREAT |
+				(redir->type == oc_redirect ? O_TRUNC : O_APPEND), 0644);
+		if (redirection->out < 0)
 		{
 			dprintf(2, "minishell: %s: %s\n", redir->filename, strerror(errno));
 			return (-1);
