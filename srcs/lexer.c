@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 15:38:40 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/18 12:27:27 by darbib           ###   ########.fr       */
+/*   Updated: 2021/06/11 17:26:43 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ t_lexer	analyse_command(char *command, t_lexer *lexer, t_fsm *fsm)
 	i = -1;
 	while (command[++i])
 	{
+		if (command[i] < 0 || command[i] > 127)
+		{
+			printf("Error : char non suppported\n");
+			lexer->state = KO_STATE;
+			return (*lexer);
+		}
 		if (handle_notquoted_char(lexer, fsm, command[i]))
 			continue ;
 		handle_quote_cancel_char(fsm, command[i]);

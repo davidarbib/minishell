@@ -6,7 +6,7 @@
 /*   By: darbib <darbib@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 23:19:24 by darbib            #+#    #+#             */
-/*   Updated: 2021/02/20 15:15:51 by darbib           ###   ########.fr       */
+/*   Updated: 2021/06/11 17:29:21 by darbib           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 void	destroy_lexer(t_lexer *lexer)
 {
-	destroy_tokens(&lexer->tokens, lexer->size);
+	if (lexer->tokens)
+		destroy_tokens(&lexer->tokens, lexer->size);
 }
 
 void	destroy_parser(t_llparser *parser)
